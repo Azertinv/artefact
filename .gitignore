@@ -1,0 +1,18 @@
+commit.txt
+
+/target
+Cargo.lock
+flame.svg
+perf.data
+perf.data.old
+
+# Import cache
+.import/
+
+# Binaries
+bin/
+build/
+lib/
+
+# Krita
+*.kra
