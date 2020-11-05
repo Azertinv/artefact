@@ -66,6 +66,29 @@ impl Calculator {
     }
 
     #[export]
+    fn get_lhs(&self, _owner: &Node) -> GodotString {
+        GodotString::from_str(format!("{}", self.lhs))
+    }
+
+    #[export]
+    fn get_rhs(&self, _owner: &Node) -> GodotString {
+        if let Some(rhs) = self.rhs {
+            GodotString::from_str(format!("{}", rhs))
+        } else {
+            GodotString::from_str("")
+        }
+    }
+
+    #[export]
+    fn get_op(&self, _owner: &Node) -> GodotString {
+        if let Some(op) = self.op {
+            GodotString::from_str(format!("{:?}", op))
+        } else {
+            GodotString::from_str("")
+        }
+    }
+
+    #[export]
     fn push_button(&mut self, _owner: &Node, button: i64) {
         match button {
             ZERO | ONE | TERN if self.op.is_some() => {
@@ -110,7 +133,7 @@ impl Calculator {
             SUB => { self.op = Some(Operator::Sub); },
             MUL => { self.op = Some(Operator::Mul); },
             DIV => { self.op = Some(Operator::Div); },
-            _ => panic!(),
+            _ => {},
         }
         if let Some(rhs) = self.rhs {
             godot_print!("{} {:?} {}", self.lhs, self.op.unwrap(), rhs);

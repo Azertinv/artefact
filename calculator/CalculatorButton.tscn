@@ -7,7 +7,7 @@
 ]]
 margin_right = 12.0
 margin_bottom = 20.0
-rect_min_size = Vector2( 32, 32 )
+rect_min_size = Vector2( 64, 64 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "="

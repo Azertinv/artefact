@@ -4,13 +4,13 @@ signal button_pressed(button)
 
 enum BUTTON {
 	Zero = 0,
-	One,
-	Tern,
-	Equal,
-	Add,
-	Sub,
-	Mul,
-	Div,
+	One = 1,
+	Tern = 2,
+	Equal = 3,
+	Add = 4,
+	Sub = 5,
+	Mul = 6,
+	Div = 7,
 }
 
 export(BUTTON) var action = BUTTON.Zero
