@@ -61,11 +61,6 @@ impl Calculator {
     }
 
     #[export]
-    fn _ready(&self, _owner: &Node) {
-        godot_print!("Calculator Initialized");
-    }
-
-    #[export]
     fn get_lhs(&self, _owner: &Node) -> GodotString {
         GodotString::from_str(format!("{}", self.lhs))
     }
@@ -82,7 +77,12 @@ impl Calculator {
     #[export]
     fn get_op(&self, _owner: &Node) -> GodotString {
         if let Some(op) = self.op {
-            GodotString::from_str(format!("{:?}", op))
+            GodotString::from_str(match op {
+                Operator::Add => "I",
+                Operator::Sub => "H",
+                Operator::Mul => "Z",
+                Operator::Div => "X",
+            })
         } else {
             GodotString::from_str("")
         }
@@ -135,13 +135,13 @@ impl Calculator {
             DIV => { self.op = Some(Operator::Div); },
             _ => {},
         }
-        if let Some(rhs) = self.rhs {
-            godot_print!("{} {:?} {}", self.lhs, self.op.unwrap(), rhs);
-        } else if let Some(op) = self.op {
-            godot_print!("{} {:?}", self.lhs, op);
-        } else {
-            godot_print!("{}", self.lhs);
-        }
+        // if let Some(rhs) = self.rhs {
+        //     godot_print!("{} {:?} {}", self.lhs, self.op.unwrap(), rhs);
+        // } else if let Some(op) = self.op {
+        //     godot_print!("{} {:?}", self.lhs, op);
+        // } else {
+        //     godot_print!("{}", self.lhs);
+        // }
     }
 }
 

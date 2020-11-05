@@ -1,8 +1,8 @@
-extends Node2D
+extends VBoxContainer
 
-onready var Op = $MarginContainer/VBoxContainer/HBoxContainer3/Op
-onready var Rhs = $MarginContainer/VBoxContainer/HBoxContainer3/Rhs
-onready var Lhs = $MarginContainer/VBoxContainer/Lhs
+onready var Op = $HBoxContainer3/Op
+onready var Rhs = $HBoxContainer3/Rhs
+onready var Lhs = $Lhs
 
 func _ready():
 	for n in get_tree().get_nodes_in_group("calculator_buttons"):

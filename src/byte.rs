@@ -200,16 +200,11 @@ impl Operation for Byte {
 impl fmt::Display for Byte {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         assert_eq!(BYTE_WIDTH, 7);
-        write!(f, "{}{}{}{}{}{}{}({})",
-                self.trits[6],
-                self.trits[5],
-                self.trits[4],
-                self.trits[3],
-                self.trits[2],
-                self.trits[1],
-                self.trits[0],
-                i64::from(*self),
-                )
+        let mst = self.highest_mst();
+        for i in (0..=mst).rev() {
+            write!(f, "{}", self.trits[i])?;
+        }
+        Ok(())
     }
 }
 
