@@ -28,9 +28,9 @@ __meta__ = {
 }
 
 [node name="CalculatorGui" parent="HBoxContainer/CenterContainer" instance=ExtResource( 1 )]
-margin_left = 71.0
+margin_left = 37.0
 margin_top = 116.0
-margin_right = 339.0
+margin_right = 373.0
 margin_bottom = 284.0
 
 [node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]

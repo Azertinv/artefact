@@ -11,6 +11,7 @@ enum BUTTON {
 	Sub = 5,
 	Mul = 6,
 	Div = 7,
+	Clear = 8,
 }
 
 export(BUTTON) var action = BUTTON.Zero

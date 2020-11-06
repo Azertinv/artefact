@@ -37,8 +37,9 @@ const ADD: i64 = 4i64;
 const SUB: i64 = 5i64;
 const MUL: i64 = 6i64;
 const DIV: i64 = 7i64;
+const CLEAR: i64 = 8i64;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 enum Operator {
     Add,
     Sub,
@@ -120,20 +121,28 @@ impl Calculator {
             EQUAL if self.rhs.is_some() && self.op.is_some() => {
                 let op = self.op.unwrap();
                 let rhs = self.rhs.unwrap();
-                self.lhs = match op {
-                    Operator::Add => Byte::add(self.lhs, rhs, Byte::zero()).0,
-                    Operator::Sub => Byte::sub(self.lhs, rhs, Byte::zero()).0,
-                    Operator::Mul => Byte::mul(self.lhs, rhs).0,
-                    Operator::Div => Byte::div(self.lhs, rhs).0,
-                };
-                self.op = None;
-                self.rhs = None;
+                if !(op == Operator::Div && rhs == Byte::zero()) {
+                    self.lhs = match op {
+                        Operator::Add => Byte::add(self.lhs, rhs, Byte::zero()).0,
+                        Operator::Sub => Byte::sub(self.lhs, rhs, Byte::zero()).0,
+                        Operator::Mul => Byte::mul(self.lhs, rhs).0,
+                        Operator::Div => Byte::div(self.lhs, rhs).0,
+                    };
+                    self.op = None;
+                    self.rhs = None;
+                }
             },
+            EQUAL => {},
             ADD => { self.op = Some(Operator::Add); },
             SUB => { self.op = Some(Operator::Sub); },
             MUL => { self.op = Some(Operator::Mul); },
             DIV => { self.op = Some(Operator::Div); },
-            _ => {},
+            CLEAR => {
+                self.lhs = Byte::zero();
+                self.op = None;
+                self.rhs = None;
+            },
+            _ => { godot_print!("Unrecognized button: {}", button)},
         }
         // if let Some(rhs) = self.rhs {
         //     godot_print!("{} {:?} {}", self.lhs, self.op.unwrap(), rhs);
