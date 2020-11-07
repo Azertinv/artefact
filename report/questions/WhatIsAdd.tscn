@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://report/questions/Question.gd" type="Script" id=1]
+[ext_resource path="res://report/answers/AnswerBox.tscn" type="PackedScene" id=2]
+
+[node name="WhatIsAdd" type="HBoxContainer"]
+margin_right = 124.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 241.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_top = 12.0
+margin_right = 20.0
+margin_bottom = 26.0
+text = "I is"
+
+[node name="AnswerBox" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 24.0
+margin_right = 241.0
+margin_bottom = 38.0
+possible_answers = [ "ArithmeticOp", "LogicOp" ]
+
+[node name="CheckBox" type="CheckBox" parent="."]
+margin_left = 245.0
+margin_right = 269.0
+margin_bottom = 38.0
+focus_mode = 0
+disabled = true

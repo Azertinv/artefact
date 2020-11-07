@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://report/answers/AnswerBox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://report/answers/Answer.gd" type="Script" id=2]
+
+[node name="LogicOp" type="HBoxContainer"]
+margin_right = 161.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 0, 24 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 5.0
+margin_right = 113.0
+margin_bottom = 19.0
+text = "the logic operator"
+
+[node name="AnswerBox" parent="." instance=ExtResource( 1 )]
+margin_left = 117.0
+margin_right = 167.0
+mouse_filter = 1
+possible_answers = [ "Or", "And", "Not" ]
