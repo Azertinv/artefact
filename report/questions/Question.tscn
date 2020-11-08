@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://report/questions/Question.gd" type="Script" id=1]
+[ext_resource path="res://report/answers/AnswerBox.tscn" type="PackedScene" id=2]
+
+[node name="Question" type="HBoxContainer" groups=[
+"questions",
+]]
+margin_right = 124.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox" type="CheckBox" parent="."]
+margin_right = 24.0
+margin_bottom = 24.0
+focus_mode = 0
+disabled = true
+
+[node name="Answer" type="HBoxContainer" parent="."]
+margin_left = 28.0
+margin_right = 186.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Answer"]
+margin_top = 5.0
+margin_right = 104.0
+margin_bottom = 19.0
+text = "QUESTION HERE"
+
+[node name="AnswerBox" parent="Answer" instance=ExtResource( 2 )]
+margin_left = 108.0
+margin_right = 158.0
+possible_answers = [ "ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton" ]

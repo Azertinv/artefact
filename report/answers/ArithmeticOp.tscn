@@ -22,4 +22,4 @@ text = "the arithmetic operator"
 margin_left = 153.0
 margin_right = 203.0
 mouse_filter = 1
-possible_answers = [ "Add", "Sub", "Mul", "Div" ]
+possible_answers = [ "Add", "Sub", "Mul", "Div", "Mod" ]

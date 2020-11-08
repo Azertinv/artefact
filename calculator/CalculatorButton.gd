@@ -16,5 +16,5 @@ enum BUTTON {
 
 export(BUTTON) var action = BUTTON.Zero
 
-func _on_CalculatorButton_pressed():
+func _on_CalculatorButton_pressed() -> void:
 	emit_signal("button_pressed", action)

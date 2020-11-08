@@ -6,42 +6,41 @@
 [node name="MarginContainer" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/margin_right = 100
-custom_constants/margin_top = 100
-custom_constants/margin_left = 100
-custom_constants/margin_bottom = 100
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 100.0
-margin_top = 100.0
-margin_right = 924.0
-margin_bottom = 500.0
+margin_right = 1024.0
+margin_bottom = 600.0
 
 [node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
-margin_right = 410.0
-margin_bottom = 400.0
+margin_right = 506.0
+margin_bottom = 600.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CalculatorGui" parent="HBoxContainer/CenterContainer" instance=ExtResource( 1 )]
-margin_left = 37.0
-margin_top = 116.0
-margin_right = 373.0
-margin_bottom = 284.0
+margin_left = 85.0
+margin_top = 216.0
+margin_right = 421.0
+margin_bottom = 384.0
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+margin_left = 510.0
+margin_right = 514.0
+margin_bottom = 600.0
 
 [node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]
-margin_left = 414.0
-margin_right = 824.0
-margin_bottom = 400.0
+margin_left = 518.0
+margin_right = 1024.0
+margin_bottom = 600.0
 size_flags_horizontal = 3
 
 [node name="ReportGui" parent="HBoxContainer/CenterContainer2" instance=ExtResource( 2 )]
-margin_left = 55.0
-margin_top = 174.0
-margin_right = 355.0
-margin_bottom = 226.0
+margin_left = 103.0
+margin_top = 116.0
+margin_right = 403.0
+margin_bottom = 483.0

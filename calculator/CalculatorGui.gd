@@ -9,11 +9,11 @@ func _ready():
 		n.connect("button_pressed", self, "_on_CalculatorButton_pressed")
 	update_display()
 
-func update_display():
+func update_display() -> void:
 	Lhs.text = $Calculator.get_lhs()
 	Op.text = $Calculator.get_op()
 	Rhs.text = $Calculator.get_rhs()
 
-func _on_CalculatorButton_pressed(button):
+func _on_CalculatorButton_pressed(button: int) -> void:
 	$Calculator.push_button(button)
 	update_display()

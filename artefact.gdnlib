@@ -7,8 +7,8 @@ reloadable=true
 
 [entry]
 
-Windows.64="res://target/x86_64-pc-windows-gnu/debug/artefact_vm.dll"
-X11.64="res://target/x86_64-unknown-linux-gnu/debug/libartefact_vm.so"
+Windows.64="res://target/x86_64-pc-windows-gnu/release/artefact_vm.dll"
+X11.64="res://target/x86_64-unknown-linux-gnu/release/libartefact_vm.so"
 
 [dependencies]
 
