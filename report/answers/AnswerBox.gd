@@ -13,7 +13,7 @@ func _ready() -> void:
 		possible_answers_scenes.append(load(scene_path))
 
 func prompt_for_new_answer() -> void:
-	print(self.name+" displaying AnswerPrompt")
+#	print(self.name+" displaying AnswerPrompt")
 	var answer_prompt = answer_prompt_scene.instance()
 	answer_prompt.destination = self
 	answer_prompt.possible_answers_scenes = possible_answers_scenes
