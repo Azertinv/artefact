@@ -19,7 +19,7 @@ func _ready() -> void:
 		$CenterContainer/VBoxContainer.add_child(answer)
 
 func _process(_delta) -> void:
-	if Input.is_action_just_pressed("ui_escape"):
+	if Input.is_action_just_pressed("ui_cancel"):
 		queue_free()
 
 func _on_Answer_pressed(answer) -> void:
