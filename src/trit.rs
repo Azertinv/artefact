@@ -102,9 +102,9 @@ impl From<Trit> for i64 {
 impl fmt::Display for Trit {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", match self {
-            Trit::Zero => "+",
-            Trit::One => ">",
-            Trit::Tern => "<",
+            Trit::Zero => "0",
+            Trit::One => "1",
+            Trit::Tern => "T",
         })
     }
 }

@@ -7,10 +7,12 @@ reloadable=true
 
 [entry]
 
+OSX.64="res://target/x86_64-apple-darwin/release/libartefact_vm.dylib"
 Windows.64="res://target/x86_64-pc-windows-gnu/release/artefact_vm.dll"
 X11.64="res://target/x86_64-unknown-linux-gnu/release/libartefact_vm.so"
 
 [dependencies]
 
+OSX.64=[  ]
 Windows.64=[  ]
 X11.64=[  ]

@@ -2,7 +2,9 @@ extends VBoxContainer
 
 func _on_CheckAnswerTimer_timeout() -> void:
 	var good_answers = []
-	for q in get_tree().get_nodes_in_group("questions"):
+	for q in get_children():
+		if not q.is_in_group("questions"):
+			continue
 		if q.get_node("CheckBox").pressed:
 			continue
 		if q.is_good_answer():
