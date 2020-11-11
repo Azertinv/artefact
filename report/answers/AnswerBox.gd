@@ -17,10 +17,10 @@ func prompt_for_new_answer() -> void:
 	var answer_prompt = answer_prompt_scene.instance()
 	answer_prompt.destination = self
 	answer_prompt.possible_answers_scenes = possible_answers_scenes
-	get_tree().get_root().add_child(answer_prompt)
+	add_child(answer_prompt)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.pressed:
+		if event.pressed and event.button_index == BUTTON_LEFT:
 			accept_event()
 			prompt_for_new_answer()

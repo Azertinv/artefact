@@ -11,6 +11,8 @@ func get_answer(answer_box) -> String:
 			result += " " + c.get_number()
 		elif c is HBoxContainer: # not an AnswerBox
 			result += get_answer(c)
+		elif c is CanvasLayer:
+			pass
 		else:
 			result += " " + get_answer(c)
 	return result

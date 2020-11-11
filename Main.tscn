@@ -10,6 +10,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.25098, 0.25098, 0.25098, 1 )
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
@@ -24,9 +29,9 @@ __meta__ = {
 
 [node name="CalculatorGui" parent="HBoxContainer/CenterContainer" instance=ExtResource( 1 )]
 margin_left = 85.0
-margin_top = 200.0
+margin_top = 217.0
 margin_right = 421.0
-margin_bottom = 400.0
+margin_bottom = 383.0
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 margin_left = 510.0
@@ -40,7 +45,7 @@ margin_bottom = 600.0
 size_flags_horizontal = 3
 
 [node name="ReportGui" parent="HBoxContainer/CenterContainer2" instance=ExtResource( 2 )]
-margin_left = 103.0
-margin_top = 116.0
-margin_right = 403.0
-margin_bottom = 483.0
+margin_left = 52.0
+margin_top = 62.0
+margin_right = 452.0
+margin_bottom = 537.0

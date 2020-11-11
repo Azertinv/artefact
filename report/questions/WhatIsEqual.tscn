@@ -11,7 +11,4 @@ text = "="
 
 [node name="Answer" parent="." index="2"]
 margin_left = 42.0
-margin_right = 194.0
-
-[node name="AnswerBox" parent="Answer" index="1"]
-margin_right = 152.0
+margin_right = 157.0

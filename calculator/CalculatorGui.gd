@@ -2,7 +2,7 @@ extends VBoxContainer
 
 onready var Op = $HBoxContainer3/Op
 onready var Rhs = $HBoxContainer3/Rhs
-onready var Lhs = $Lhs
+onready var Lhs = $HBoxContainer3/Lhs
 
 func _ready():
 	for n in get_tree().get_nodes_in_group("calculator_buttons"):

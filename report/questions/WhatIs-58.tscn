@@ -11,7 +11,7 @@ text = "T10TT"
 
 [node name="Answer" parent="." index="2"]
 margin_left = 82.0
-margin_right = 194.0
+margin_right = 147.0
 
 [node name="AnswerBox" parent="Answer" index="1"]
-margin_right = 112.0
+margin_right = 65.0

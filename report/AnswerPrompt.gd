@@ -3,8 +3,10 @@ extends CanvasLayer
 var destination = null
 var possible_answers_scenes = []
 
+onready var answer_list = $CenterContainer/VBoxContainer
+
 func _ready() -> void:
-	var current_focus_control = $CenterContainer.get_focus_owner()
+	var current_focus_control = answer_list.get_focus_owner()
 	if current_focus_control:
 		current_focus_control.release_focus()
 	var first = true
@@ -13,10 +15,10 @@ func _ready() -> void:
 		answer.interactable = false
 		answer.connect("pressed", self, "_on_Answer_pressed")
 		if not first:
-			$CenterContainer/VBoxContainer.add_child(HSeparator.new())
+			answer_list.add_child(HSeparator.new())
 		else:
 			first = false
-		$CenterContainer/VBoxContainer.add_child(answer)
+		answer_list.add_child(answer)
 
 func _process(_delta) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
