@@ -33,7 +33,7 @@ pub struct Calculator {
 #[methods]
 impl Calculator {
     fn new(_owner: &Node) -> Self {
-        Calculator{lhs: Byte::zero(), rhs: None, op: None}
+        Calculator{lhs: Byte::ZERO, rhs: None, op: None}
     }
 
     #[export]
@@ -69,13 +69,13 @@ impl Calculator {
         match button {
             ZERO | ONE | TERN if self.op.is_some() => {
                 let trit = match button {
-                    ZERO => Trit::Zero,
-                    ONE => Trit::One,
-                    TERN => Trit::Tern,
+                    ZERO => Trit::ZERO,
+                    ONE => Trit::ONE,
+                    TERN => Trit::TERN,
                     _ => panic!(),
                 };
                 if self.rhs.is_none() {
-                    self.rhs = Some(Byte::zero())
+                    self.rhs = Some(Byte::ZERO)
                 }
                 if let Some(mut rhs) = self.rhs {
                     rhs = Byte::shift(rhs, 1).0;
@@ -85,9 +85,9 @@ impl Calculator {
             },
             ZERO | ONE | TERN => {
                 let trit = match button {
-                    ZERO => Trit::Zero,
-                    ONE => Trit::One,
-                    TERN => Trit::Tern,
+                    ZERO => Trit::ZERO,
+                    ONE => Trit::ONE,
+                    TERN => Trit::TERN,
                     _ => panic!(),
                 };
                 self.lhs = Byte::shift(self.lhs, 1).0;
@@ -96,10 +96,10 @@ impl Calculator {
             EQUAL if self.rhs.is_some() && self.op.is_some() => {
                 let op = self.op.unwrap();
                 let rhs = self.rhs.unwrap();
-                if !(op == Operator::Div && rhs == Byte::zero()) {
+                if !(op == Operator::Div && rhs == Byte::ZERO) {
                     self.lhs = match op {
-                        Operator::Add => Byte::add(self.lhs, rhs, Byte::zero()).0,
-                        Operator::Sub => Byte::sub(self.lhs, rhs, Byte::zero()).0,
+                        Operator::Add => Byte::add(self.lhs, rhs, Byte::ZERO).0,
+                        Operator::Sub => Byte::sub(self.lhs, rhs, Byte::ZERO).0,
                         Operator::Mul => Byte::mul(self.lhs, rhs).0,
                         Operator::Div => Byte::div(self.lhs, rhs).0,
                     };
@@ -113,7 +113,7 @@ impl Calculator {
             MUL => { self.op = Some(Operator::Mul); },
             DIV => { self.op = Some(Operator::Div); },
             CLEAR => {
-                self.lhs = Byte::zero();
+                self.lhs = Byte::ZERO;
                 self.op = None;
                 self.rhs = None;
             },

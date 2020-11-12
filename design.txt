@@ -31,3 +31,50 @@ balanced ternary computer
                 -00 uadd    |op|regA|regB|
                 -0+ usub    |op|regA|regB|
         2 trit per register, 9 registers
+
+cpu
+    configuration
+    devices
+        touchscreen
+        timer
+    interrupt
+        default interrupt vector
+            divide by zero
+            invalid opcode
+            segv
+        devices can register interrupts
+    instruction set
+        arithmetic
+            add, sub, mul, div, mod
+            add_fz, sub_fz
+        logic
+            https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics
+            and, or, not, xor
+        stack
+            push, pop
+        compare
+            equal, greater, equal_dfz, greater_dfz
+        control flow
+            jump, conditional jump, call, ret
+        devices
+            communication
+            setup
+        interrupts
+            return from interrupt
+            clear interrupt status
+    memory: harvard architecture
+        code space
+            program: positive
+            interrupt handler: negative
+        memory space
+            general use: positive
+            stack: negative
+    registers
+        9 registers: 1 word wide
+            program pointer, advance away from zero
+            stack pointer
+            result register
+            6 general purpose
+    trit: 1 balanced ternary value
+    byte: 7 trits big-endian
+    word: 3 bytes big-endian
