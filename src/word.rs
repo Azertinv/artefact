@@ -91,89 +91,87 @@ impl Operation for Word {
     }
 
     fn mul(lhs: Word, rhs: Word) -> (Word, Word) {
-        unimplemented!();
-    // fn mul(lhs: Byte, rhs: Byte) -> (Byte, Byte) {
-    //     let mut result = Byte::ZERO;
-    //     let mut carry = Byte::ZERO;
-    //     for i in 0..Word::BYTE_COUNT {
-    //         let shift = Byte::shift(lhs, i as isize);
-    //         let results = match rhs.trits[i] {
-    //             // should carry from result to carry into 2nd operation
-    //             Trit::TERN => {
-    //                 let half_mul = Byte::sub(result, shift.0, Byte::ZERO);
-    //                 (half_mul.0, Byte::sub(carry, shift.1, half_mul.1).0)
-    //             },
-    //             Trit::ZERO => (result, carry),
-    //             Trit::ONE  => {
-    //                 let half_mul = Byte::add(result, shift.0, Byte::ZERO);
-    //                 (half_mul.0, Byte::add(carry, shift.1, half_mul.1).0)
-    //             },
-    //         };
-    //         result = results.0;
-    //         carry = results.1;
-    //     }
-    //     (result, carry)
+        let mut result = Word::ZERO;
+        let mut carry = Word::ZERO;
+        for i in 0..Word::WIDTH {
+            let shift = Word::shift(lhs, i as isize);
+            let results = match rhs.bytes[i/Byte::WIDTH].trits[i%Byte::WIDTH] {
+                // should carry from result to carry into 2nd operation
+                Trit::TERN => {
+                    let half_mul = Word::sub(result, shift.0, Word::ZERO);
+                    (half_mul.0, Word::sub(carry, shift.1, half_mul.1).0)
+                },
+                Trit::ZERO => (result, carry),
+                Trit::ONE  => {
+                    let half_mul = Word::add(result, shift.0, Word::ZERO);
+                    (half_mul.0, Word::add(carry, shift.1, half_mul.1).0)
+                },
+                _ => panic!(),
+            };
+            result = results.0;
+            carry = results.1;
+        }
+        (result, carry)
     }
 
     fn div(lhs: Word, rhs: Word) -> (Word, Word) {
-        unimplemented!();
-    // fn div(lhs: Byte, rhs: Byte) -> (Byte, Byte) {
-    //     assert_ne!(rhs, Byte::ZERO);
-    //     // println!("{} / {}", i64::from(lhs), i64::from(rhs));
-    //     let mut quotient = Byte::ZERO;
-    //     let mut remainder = lhs;
-    //     for i in (0..Word::BYTE_COUNT).rev() {
-    //         // println!("quotient: {}, remainder: {}", quotient, remainder);
-    //         for _ in 0..2 {
-    //             let dividend = Byte::shift(remainder, -(i as isize)).0;
-    //             let high = Byte::add(dividend, rhs, Byte::ZERO).0;
-    //             let mid = dividend;
-    //             let low = Byte::sub(dividend, rhs, Byte::ZERO).0;
-    //             // println!("high: {}, mid: {}, low: {}", high, mid, low);
+        // unimplemented!();
+        assert_ne!(rhs, Word::ZERO);
+        // println!("{} / {}", i64::from(lhs), i64::from(rhs));
+        let mut quotient = Word::ZERO;
+        let mut remainder = lhs;
+        for i in (0..Word::BYTE_COUNT).rev() {
+            // println!("quotient: {}, remainder: {}", quotient, remainder);
+            for _ in 0..2 {
+                let dividend = Word::shift(remainder, -(i as isize)).0;
+                let high = Word::add(dividend, rhs, Word::ZERO).0;
+                let mid = dividend;
+                let low = Word::sub(dividend, rhs, Word::ZERO).0;
+                // println!("high: {}, mid: {}, low: {}", high, mid, low);
 
-    //             let mut intermediate = high;
-    //             if Byte::greater_dfz(intermediate, mid) {
-    //                 intermediate = mid;
-    //             }
-    //             if Byte::greater_dfz(intermediate, low) {
-    //                 intermediate = low;
-    //             }
-    //             // println!("intermediate: {}", intermediate);
+                let mut intermediate = high;
+                if Word::greater_dfz(intermediate, mid) {
+                    intermediate = mid;
+                }
+                if Word::greater_dfz(intermediate, low) {
+                    intermediate = low;
+                }
+                // println!("intermediate: {}", intermediate);
 
-    //             if intermediate == high {
-    //                 remainder = Byte::add(remainder, Byte::shift(rhs, i as isize).0, Byte::ZERO).0;
-    //                 quotient = Byte::add(quotient, Byte::shift(Byte::TERN, i as isize).0, Byte::ZERO).0;
-    //             } else if intermediate == low {
-    //                 remainder = Byte::sub(remainder, Byte::shift(rhs, i as isize).0, Byte::ZERO).0;
-    //                 quotient = Byte::sub(quotient, Byte::shift(Byte::TERN, i as isize).0, Byte::ZERO).0;
-    //             } else {
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     // println!("quotient pre result: {}", quotient);
-    //     // println!("remainder pre result: {}\n", remainder);
-    //     if Byte::greater_dfz(Byte::add(remainder, remainder, Byte::ZERO).0, rhs) {
-    //         if remainder.sign() != rhs.sign() {
-    //             quotient = Byte::add(quotient, Byte::TERN, Byte::ZERO).0;
-    //             remainder = Byte::add(remainder, rhs, Byte::ZERO).0;
-    //         } else {
-    //             quotient = Byte::sub(quotient, Byte::TERN, Byte::ZERO).0;
-    //             remainder = Byte::sub(remainder, rhs, Byte::ZERO).0;
-    //         }
-    //     }
-    //     if lhs.sign() == rhs.sign() && !Byte::greater_dfz(rhs, Byte::add(remainder, remainder, Byte::ZERO).0) {
-    //         if remainder.sign() != rhs.sign() {
-    //             quotient = Byte::add(quotient, Byte::TERN, Byte::ZERO).0;
-    //             remainder = Byte::add(remainder, rhs, Byte::ZERO).0;
-    //         } else {
-    //             quotient = Byte::sub(quotient, Byte::TERN, Byte::ZERO).0;
-    //             remainder = Byte::sub(remainder, rhs, Byte::ZERO).0;
-    //         }
-    //     }
-    //     // println!("quotient result: {}", quotient);
-    //     // println!("remainder result: {}\n", remainder);
-    //     (quotient, remainder)
+                if intermediate == high {
+                    remainder = Word::add(remainder, Word::shift(rhs, i as isize).0, Word::ZERO).0;
+                    quotient = Word::add(quotient, Word::shift(Word::TERN, i as isize).0, Word::ZERO).0;
+                } else if intermediate == low {
+                    remainder = Word::sub(remainder, Word::shift(rhs, i as isize).0, Word::ZERO).0;
+                    quotient = Word::sub(quotient, Word::shift(Word::TERN, i as isize).0, Word::ZERO).0;
+                } else {
+                    break;
+                }
+            }
+        }
+        // println!("quotient pre result: {}", quotient);
+        // println!("remainder pre result: {}\n", remainder);
+        if Word::greater_dfz(Word::add(remainder, remainder, Word::ZERO).0, rhs) {
+            if remainder.sign() != rhs.sign() {
+                quotient = Word::add(quotient, Word::TERN, Word::ZERO).0;
+                remainder = Word::add(remainder, rhs, Word::ZERO).0;
+            } else {
+                quotient = Word::sub(quotient, Word::TERN, Word::ZERO).0;
+                remainder = Word::sub(remainder, rhs, Word::ZERO).0;
+            }
+        }
+        if lhs.sign() == rhs.sign() && !Word::greater_dfz(rhs, Word::add(remainder, remainder, Word::ZERO).0) {
+            if remainder.sign() != rhs.sign() {
+                quotient = Word::add(quotient, Word::TERN, Word::ZERO).0;
+                remainder = Word::add(remainder, rhs, Word::ZERO).0;
+            } else {
+                quotient = Word::sub(quotient, Word::TERN, Word::ZERO).0;
+                remainder = Word::sub(remainder, rhs, Word::ZERO).0;
+            }
+        }
+        // println!("quotient result: {}", quotient);
+        // println!("remainder result: {}\n", remainder);
+        (quotient, remainder)
     }
 
     fn shift(a: Word, amount: isize) -> (Word, Word) {
@@ -320,26 +318,23 @@ fn test_shift() {
     }
 }
 
-/*
 #[test]
 fn test_mul() {
-    for i in Byte::MIN..=Byte::MAX {
-        for j in Byte::MIN..=Byte::MAX {
-            let result = Byte::mul(Byte::from(i), Byte::from(j));
-            assert_eq!(i * j, i64::from(result.0) + 2187*i64::from(result.1));
+    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
+        for j in (Word::MIN..=Word::MAX).step_by(10000000000) {
+            let result = Word::mul(Word::from(i), Word::from(j));
+            assert_eq!(i * j, i64::from(result.0) + 10460353203*i64::from(result.1));
         }
     }
 }
 
 #[test]
 fn test_div() {
-    for i in Byte::MIN..=Byte::MAX {
-        for j in Byte::MIN..=Byte::MAX {
+    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
+        for j in (Word::MIN..=Word::MAX).step_by(10000000000) {
             if j == 0 { continue; }
-            let result = Byte::div(Byte::from(i), Byte::from(j)).0;
-            let test = f64::from(i as i32) / f64::from(j as i32);
-            assert_eq!(i64::from(result), test.round() as i64);
+            let result = Word::div(Word::from(i), Word::from(j)).0;
+            assert_eq!(i64::from(result), round_div(i, j));
         }
     }
 }
-*/

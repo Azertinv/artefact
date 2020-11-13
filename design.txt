@@ -1,37 +1,3 @@
-balanced ternary computer
-    use trits to make computation instead of bits
-    a trit is a tristate bit:
-        -1, 0 and 1
-    a byte is a group of seven trit and is the basic unit of information
-        every number is interpreted in a balanced way
-    registers:
-        no status register every instruction as to specify destination
-        9 registers + 1 hidden status register for compare
-    truth table shapes:
-        5 trits wide
-            2 trits for the code 9 different shapes
-                each shape has 3 different color
-            3 trits for colors
-
-        000 012 000 012 012 000 012 012 012
-        011 112 110 011 122 001 111 121 101
-        012 222 210 000 222 012 210 210 210
-    instructions:
-        3 trit per opcode, 27 opcodes
-            0xx general
-                000 jmp     |op|+0|reg|
-                000 jmp     |op|0||
-                00+ cmp     |op|regA|regB|
-                00- cjmp    |op|tts|0|6 trit immediate|
-                00- cjmp    |op|tts|+0000|reg|
-            +xx balanced
-                +00 badd    |op|regA|regB|
-                +0+ bsub    |op|regA|regB|
-            -xx unbalanced
-                -00 uadd    |op|regA|regB|
-                -0+ usub    |op|regA|regB|
-        2 trit per register, 9 registers
-
 cpu
     configuration
     devices
@@ -44,10 +10,12 @@ cpu
             segv
         devices can register interrupts
     instruction set
-        arithmetic
+        registers
+            load, store
+        arithmetic: only use registers, no immediates
             add, sub, mul, div, mod
             add_fz, sub_fz
-        logic
+        logic: only use registers, no immediates
             https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics
             and, or, not, xor
         stack
@@ -65,7 +33,7 @@ cpu
     memory: harvard architecture
         code space
             program: positive
-            interrupt handler: negative
+            interrupt handler and init: negative
         memory space
             general use: positive
             stack: negative
