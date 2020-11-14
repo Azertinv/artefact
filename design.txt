@@ -1,14 +1,17 @@
 cpu
     configuration
     devices
-        touchscreen
-        timer
+        list:
+            touchscreen
+            timer
+        can register interrupts and memory space
     interrupt
         default interrupt vector
             divide by zero
             invalid opcode
-            segv
-        devices can register interrupts
+            space fault: when cpu access unmapped memory
+        devices can't fire interrupts when cpu is in interrupt handler
+        interrupt handler is responsible of PC on interrupt handler exit
     instruction set
         registers
             load, store
@@ -29,14 +32,17 @@ cpu
             setup
         interrupts
             return from interrupt
-            clear interrupt status
-    memory: harvard architecture
-        code space
-            program: positive
-            interrupt handler and init: negative
-        memory space
-            general use: positive
-            stack: negative
+    memory: harvard/neumann architecture mix
+        memory access is made through pointers and doesn't crossover between memspace
+        a pointer is word wide
+        each pointer use it's upper byte to address a specific memory space
+        the 2 lower byte is a 2 bytes offset in this memory space
+        code space: 0000000
+            program: positive offset
+            interrupt handler and init: negative offset
+        general memory space: 0000001
+            general use: positive offset
+            stack: negative offset
     registers
         9 registers: 1 word wide
             program pointer, advance away from zero
@@ -44,5 +50,5 @@ cpu
             result register
             6 general purpose
     trit: 1 balanced ternary value
-    byte: 7 trits big-endian
-    word: 3 bytes big-endian
+    byte: 7 trits little-endian
+    word: 3 bytes little-endian

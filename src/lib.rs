@@ -4,11 +4,16 @@ pub mod word;
 pub mod operation;
 pub mod calculator;
 pub mod artefact;
+pub mod cpu;
+pub mod memory;
+pub mod interrupt;
+pub mod register;
 
 pub use trit::Trit;
 pub use byte::Byte;
 pub use word::Word;
 pub use operation::Operation;
+pub use cpu::Cpu;
 
 pub use calculator::Calculator;
 pub use artefact::Artefact;

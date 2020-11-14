@@ -33,9 +33,3 @@ func _ready() -> void:
 	if answer == "":
 		push_error("Question "+self.name+" has empty answer")
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		if $CheckBox.pressed:
-			return
-		if is_good_answer():
-			mark_question_as_answered()

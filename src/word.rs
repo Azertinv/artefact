@@ -30,6 +30,13 @@ impl Word {
         result
     }
 
+    pub fn from_bytes(slice: &[Byte]) -> Word {
+        assert_eq!(slice.len(), Word::BYTE_COUNT);
+        let mut result = Word::ZERO;
+        result.bytes.copy_from_slice(slice);
+        result
+    }
+
     pub fn sign(&self) -> Trit {
         for i in (0..Word::BYTE_COUNT).rev() {
             let sign = self.bytes[i].sign();

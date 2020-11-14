@@ -45,7 +45,7 @@ margin_bottom = 600.0
 size_flags_horizontal = 3
 
 [node name="ReportGui" parent="HBoxContainer/CenterContainer2" instance=ExtResource( 2 )]
-margin_left = 52.0
+margin_left = 53.0
 margin_top = 62.0
-margin_right = 452.0
+margin_right = 453.0
 margin_bottom = 537.0
