@@ -9,17 +9,17 @@ pub struct Word {
 }
 
 impl Word {
-    pub const BYTE_COUNT: usize = 3;
-    pub const IBYTE_COUNT: isize = 3;
-    pub const WIDTH: usize = Word::BYTE_COUNT * Byte::WIDTH; // 3 * 7 trits
+    pub const BYTE_COUNT: usize = 2;
+    pub const IBYTE_COUNT: isize = 2;
+    pub const WIDTH: usize = Word::BYTE_COUNT * Byte::WIDTH; // 2 * 9 trits
     pub const IWIDTH: isize = Word::IBYTE_COUNT * Byte::IWIDTH;
 
-    pub const MIN: i64 = -5230176601;
-    pub const MAX: i64 = 5230176601;
+    pub const MAX: i64 = 193710244;
+    pub const MIN: i64 = -Word::MAX;
 
-    pub const ZERO: Word = Word{bytes: [Byte::ZERO, Byte::ZERO, Byte::ZERO]};
-    pub const ONE: Word = Word{bytes: [Byte::ONE, Byte::ZERO, Byte::ZERO]};
-    pub const TERN: Word = Word{bytes: [Byte::TERN, Byte::ZERO, Byte::ZERO]};
+    pub const ZERO: Word = Word{bytes: [Byte::ZERO, Byte::ZERO]};
+    pub const ONE: Word = Word{bytes: [Byte::ONE, Byte::ZERO]};
+    pub const TERN: Word = Word{bytes: [Byte::TERN, Byte::ZERO]};
 
     pub fn from_trits(slice: &[Trit]) -> Word {
         assert_eq!(slice.len(), Word::WIDTH);
@@ -94,7 +94,7 @@ impl Operation for Word {
             carry = addition.1;
             result.bytes[i] = addition.0;
         }
-        (result, Word{bytes: [carry, Byte::ZERO, Byte::ZERO]})
+        (result, Word{bytes: [carry, Byte::ZERO]})
     }
 
     fn mul(lhs: Word, rhs: Word) -> (Word, Word) {
@@ -202,7 +202,6 @@ impl Operation for Word {
 
 impl fmt::Display for Word{
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        assert_eq!(Word::BYTE_COUNT, 3);
         let mst = self.highest_mst();
         for i in (0..=mst).rev() {
             write!(f, "{}", self.bytes[i / Byte::WIDTH].trits[i % Byte::WIDTH])?;
@@ -251,8 +250,13 @@ impl From<Word> for i64 {
 }
 
 #[test]
+fn test_max() {
+    assert_eq!(Word::MAX, 3i64.pow(Word::WIDTH as u32) / 2i64);
+}
+
+#[test]
 fn test_size() {
-    assert_eq!(std::mem::size_of::<Word>(), 21);
+    assert_eq!(std::mem::size_of::<Word>(), 18);
 }
 
 #[test]
@@ -264,8 +268,8 @@ fn test_conversion() {
 
 #[test]
 fn test_add() {
-    for i in (Word::MIN..=Word::MAX).step_by(10000000) {
-        for j in (Word::MIN..=Word::MAX).step_by(10000000) {
+    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
+        for j in (Word::MIN..=Word::MAX).step_by(1000000) {
             if i+j < Word::MIN { continue; }
             if i+j > Word::MAX { continue; }
             assert_eq!(i+j, i64::from(Word::add(Word::from(i), Word::from(j), Word::ZERO).0));
@@ -275,8 +279,8 @@ fn test_add() {
 
 #[test]
 fn test_sub() {
-    for i in (Word::MIN..=Word::MAX).step_by(10000000) {
-        for j in (Word::MIN..=Word::MAX).step_by(10000000) {
+    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
+        for j in (Word::MIN..=Word::MAX).step_by(1000000) {
             if i-j < Word::MIN { continue; }
             if i-j > Word::MAX { continue; }
             assert_eq!(i-j, i64::from(Word::sub(Word::from(i), Word::from(j), Word::ZERO).0));
@@ -286,8 +290,8 @@ fn test_sub() {
 
 #[test]
 fn test_greater_dfz() {
-    for i in (Word::MIN..=Word::MAX).step_by(10000000) {
-        for j in (Word::MIN..=Word::MAX).step_by(10000000) {
+    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
+        for j in (Word::MIN..=Word::MAX).step_by(1000000) {
             let result = Word::greater_dfz(Word::from(i), Word::from(j));
             assert_eq!(result, i.abs() > j.abs());
         }
@@ -315,7 +319,7 @@ fn test_shift() {
     for i in (Word::MIN..=Word::MAX).step_by(10000) {
         for j in 0..Word::IWIDTH {
             let (result, carry) = Word::shift(Word::from(i), j);
-            assert_eq!(i64::from(result) + i64::from(carry)*3i64.pow(7*3), i * 3i64.pow((j) as u32));
+            assert_eq!(i64::from(result) + i64::from(carry)*(Word::MAX*2+1), i * 3i64.pow((j) as u32));
         }
         for j in -Word::IWIDTH..0 {
             let (result, _) = Word::shift(Word::from(i), j);
@@ -327,18 +331,18 @@ fn test_shift() {
 
 #[test]
 fn test_mul() {
-    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
-        for j in (Word::MIN..=Word::MAX).step_by(10000000000) {
+    for i in (Word::MIN..=Word::MAX).step_by(100000) {
+        for j in (Word::MIN..=Word::MAX).step_by(1000000000) {
             let result = Word::mul(Word::from(i), Word::from(j));
-            assert_eq!(i * j, i64::from(result.0) + 10460353203*i64::from(result.1));
+            assert_eq!(i * j, i64::from(result.0) + 387420489*i64::from(result.1));
         }
     }
 }
 
 #[test]
 fn test_div() {
-    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
-        for j in (Word::MIN..=Word::MAX).step_by(10000000000) {
+    for i in (Word::MIN..=Word::MAX).step_by(100000) {
+        for j in (Word::MIN..=Word::MAX).step_by(1000000000) {
             if j == 0 { continue; }
             let result = Word::div(Word::from(i), Word::from(j)).0;
             assert_eq!(i64::from(result), round_div(i, j));

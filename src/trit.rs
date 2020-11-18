@@ -99,6 +99,20 @@ impl From<Trit> for i64 {
     }
 }
 
+pub trait FromTrits {
+    fn from_trits(trits: &[Trit]) -> Self;
+}
+
+impl FromTrits for i64 {
+    fn from_trits(item: &[Trit]) -> Self {
+        if item.len() == 0 {
+            0i64
+        } else {
+            i64::from(item[0]) * i64::from_trits(&item[1..])
+        }
+    }
+}
+
 impl fmt::Display for Trit {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", match self.val {

@@ -2,6 +2,26 @@ use std::fmt;
 use super::trit::Trit;
 use super::operation::Operation;
 
+#[macro_export]
+macro_rules! byte_le {
+    ( 0 ) => { crate::trit::Trit::ZERO };
+    ( 1 ) => { crate::trit::Trit::ONE };
+    ( T ) => { crate::trit::Trit::TERN };
+    ( $t0:tt,$t1:tt,$t2:tt,$t3:tt,$t4:tt,$t5:tt,$t6:tt,$t7:tt,$t8:tt ) => {
+        crate::byte::Byte{trits: [
+            byte_le!($t0),
+            byte_le!($t1),
+            byte_le!($t2),
+            byte_le!($t3),
+            byte_le!($t4),
+            byte_le!($t5),
+            byte_le!($t6),
+            byte_le!($t7),
+            byte_le!($t8),
+        ] }
+    };
+    ($i:expr) => {$i};
+}
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Byte {
@@ -9,17 +29,15 @@ pub struct Byte {
 }
 
 impl Byte {
-    pub const ZERO: Byte = Byte{trits: [Trit::ZERO; Byte::WIDTH]};
-    pub const ONE: Byte = Byte{trits: [Trit::ONE, Trit::ZERO, Trit::ZERO, Trit::ZERO,
-                                       Trit::ZERO, Trit::ZERO, Trit::ZERO]};
-    pub const TERN: Byte = Byte{trits: [Trit::TERN, Trit::ZERO, Trit::ZERO, Trit::ZERO,
-                                        Trit::ZERO, Trit::ZERO, Trit::ZERO]};
+    pub const ZERO: Byte = byte_le!(0,0,0,0,0,0,0,0,0);
+    pub const ONE: Byte = byte_le!(1,0,0,0,0,0,0,0,0);
+    pub const TERN: Byte = byte_le!(T,0,0,0,0,0,0,0,0);
 
-    pub const WIDTH: usize = 7;
-    pub const IWIDTH: isize = 7;
+    pub const WIDTH: usize = 9;
+    pub const IWIDTH: isize = 9;
 
-    pub const MIN: i64 = -1093;
-    pub const MAX: i64 = 1093;
+    pub const MAX: i64 = 9841;
+    pub const MIN: i64 = -Byte::MAX;
 
     pub fn from_trits(slice: &[Trit]) -> Byte {
         assert_eq!(slice.len(), Byte::WIDTH);
@@ -86,7 +104,7 @@ impl Operation for Byte {
             carry = addition.1;
             result.trits[i] = addition.0;
         }
-        (result, Byte{trits: [carry, Trit::ZERO, Trit::ZERO, Trit::ZERO, Trit::ZERO, Trit::ZERO, Trit::ZERO]})
+        (result, byte_le!(carry,0,0,0,0,0,0,0,0))
     }
 
     fn mul(lhs: Byte, rhs: Byte) -> (Byte, Byte) {
@@ -191,7 +209,6 @@ impl Operation for Byte {
 
 impl fmt::Display for Byte {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        assert_eq!(Byte::WIDTH, 7);
         let mst = self.highest_mst();
         for i in (0..=mst).rev() {
             write!(f, "{}", self.trits[i])?;
@@ -238,14 +255,19 @@ impl From<Byte> for i64 {
 }
 
 #[test]
+fn test_max() {
+    assert_eq!(Byte::MAX, 3i64.pow(Byte::WIDTH as u32) / 2i64);
+}
+
+#[test]
 fn test_size() {
-    assert_eq!(std::mem::size_of::<Byte>(), 7);
+    assert_eq!(std::mem::size_of::<Byte>(), 9);
 }
 
 #[test]
 fn test_add() {
-    for i in Byte::MIN..=Byte::MAX {
-        for j in Byte::MIN..=Byte::MAX {
+    for i in (Byte::MIN..=Byte::MAX).step_by(10) {
+        for j in (Byte::MIN..=Byte::MAX).step_by(10) {
             if i+j < Byte::MIN { continue; }
             if i+j > Byte::MAX { continue; }
             assert_eq!(i+j, i64::from(Byte::add(Byte::from(i), Byte::from(j), Byte::ZERO).0));
@@ -255,8 +277,8 @@ fn test_add() {
 
 #[test]
 fn test_sub() {
-    for i in Byte::MIN..=Byte::MAX {
-        for j in Byte::MIN..=Byte::MAX {
+    for i in (Byte::MIN..=Byte::MAX).step_by(10) {
+        for j in (Byte::MIN..=Byte::MAX).step_by(10) {
             if i-j < Byte::MIN { continue; }
             if i-j > Byte::MAX { continue; }
             assert_eq!(i-j, i64::from(Byte::sub(Byte::from(i), Byte::from(j), Byte::ZERO).0));
@@ -266,18 +288,18 @@ fn test_sub() {
 
 #[test]
 fn test_mul() {
-    for i in Byte::MIN..=Byte::MAX {
-        for j in Byte::MIN..=Byte::MAX {
+    for i in (Byte::MIN..=Byte::MAX).step_by(10) {
+        for j in (Byte::MIN..=Byte::MAX).step_by(10) {
             let result = Byte::mul(Byte::from(i), Byte::from(j));
-            assert_eq!(i * j, i64::from(result.0) + 2187*i64::from(result.1));
+            assert_eq!(i * j, i64::from(result.0) + (Byte::MAX*2+1)*i64::from(result.1));
         }
     }
 }
 
 #[test]
 fn test_greater_dfz() {
-    for i in Byte::MIN..=Byte::MAX {
-        for j in Byte::MIN..=Byte::MAX {
+    for i in (Byte::MIN..=Byte::MAX).step_by(10) {
+        for j in (Byte::MIN..=Byte::MAX).step_by(10) {
             let result = Byte::greater_dfz(Byte::from(i), Byte::from(j));
             assert_eq!(result, i.abs() > j.abs());
         }
@@ -312,7 +334,7 @@ fn test_shift() {
     for i in Byte::MIN..=Byte::MAX {
         for j in 0..Byte::IWIDTH {
             let (result, carry) = Byte::shift(Byte::from(i), j);
-            assert_eq!(i64::from(result) + i64::from(carry)*3i64.pow(7), i * 3i64.pow(j as u32));
+            assert_eq!(i64::from(result) + i64::from(carry)*3i64.pow(Byte::WIDTH as u32), i * 3i64.pow(j as u32));
         }
         for j in -Byte::IWIDTH..0 {
             let (result, _) = Byte::shift(Byte::from(i), j);
@@ -324,8 +346,8 @@ fn test_shift() {
 
 #[test]
 fn test_div() {
-    for i in Byte::MIN..=Byte::MAX {
-        for j in Byte::MIN..=Byte::MAX {
+    for i in (Byte::MIN..=Byte::MAX).step_by(10) {
+        for j in (Byte::MIN..=Byte::MAX).step_by(10) {
             if j == 0 { continue; }
             let result = Byte::div(Byte::from(i), Byte::from(j)).0;
             assert_eq!(i64::from(result), round_div(i, j));

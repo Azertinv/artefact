@@ -13,25 +13,54 @@ cpu
         devices can't fire interrupts when cpu is in interrupt handler
         interrupt handler is responsible of PC on interrupt handler exit
     instruction set
-        registers
-            load, store
-        arithmetic: only use registers, no immediates
-            add, sub, mul, div, mod
-            add_fz, sub_fz
-        logic: only use registers, no immediates
-            https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics
-            and, or, not, xor
-        stack
-            push, pop
-        compare
-            equal, greater, equal_dfz, greater_dfz
-        control flow
-            jump, conditional jump, call, ret
-        devices
-            communication
+        jumps are always conditionnal
+        x is reg index 1
+        y is reg index 2
+        00000000_: no param
+            0 nop
+            1 ret
+            T intret
+        0000001__: 1 imm.w param
+            call_abs imm.w
+            jump_abs flagbit imm.w
+        000000T__: 1 imm.b param
+            call_rel imm.b
+            jump_rel flagbit imm.b
+        000001_xx: 1 reg param
+            0 not reg
+            T push reg
+            1 pop reg
+        00000T_xx: 1 imm.w/b param, 1 reg param
+            T set.b reg, imm.b
+            1 set.w reg, imm.w
+        00___yyxx: 2 reg param
+            mov reg, reg
+            load.b reg, [reg].b
+            load.w reg, [reg].w
+            store.b [reg].b, reg
+            store.w [reg].w, reg
+            add reg, reg
+            sub reg, reg
+            mul reg, reg
+            div reg, reg
+            mod reg, reg
+            add_fz reg, reg
+            sub_fz reg, reg
+            and reg, reg
+            or reg, reg
+            xor reg, reg
+            test reg, reg
+                does all comparaison and put result in flag reg, each bit correspond to one comp
+                    equal
+                    greater
+                    equal_dfz
+                    greater_dfz
+                    carry
+                    zero
+        not defined yet
+            in imm
+            out imm
             setup
-        interrupts
-            return from interrupt
     memory: harvard/neumann architecture mix
         memory access is made through pointers and doesn't crossover between memspace
         a pointer is word wide
@@ -45,10 +74,11 @@ cpu
             stack: negative offset
     registers
         9 registers: 1 word wide
-            program pointer, advance away from zero
+            program pointer
             stack pointer
             result register
             6 general purpose
     trit: 1 balanced ternary value
-    byte: 7 trits little-endian
-    word: 3 bytes little-endian
+    byte: 9 trits little-endian
+    word: 2 bytes little-endian
+    https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics

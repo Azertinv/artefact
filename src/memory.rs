@@ -19,9 +19,10 @@ macro_rules! box_array {
 }
 
 impl MemorySpace {
-    const SIZE: usize = 4782969; //Word::BYTE_COUNT^(Byte::WIDTH*2)
-    const MAX_ADDR: isize = Self::SIZE as isize/2;
-    const MIN_ADDR: isize = -(Self::SIZE as isize)/2;
+    pub const SIZE: usize = 43046721;
+    pub const MAX_ADDR: isize = Self::SIZE as isize/2;
+    pub const MIN_ADDR: isize = -(Self::SIZE as isize)/2;
+    pub const INDEX_WIDTH: usize = 2;
 
     pub fn new() -> MemorySpace {
         MemorySpace{memory: box_array![Byte::ZERO; MemorySpace::SIZE]}
@@ -67,6 +68,11 @@ impl MemorySpace {
 }
 
 #[test]
+fn test_size() {
+    assert_eq!(MemorySpace::SIZE, 3usize.pow((Word::WIDTH - MemorySpace::INDEX_WIDTH) as u32));
+}
+
+#[test]
 fn test_offset() {
     assert_eq!(MemorySpace::to_offset(MemorySpace::MIN_ADDR), Ok(0));
     assert_eq!(MemorySpace::to_offset(MemorySpace::MAX_ADDR), Ok(MemorySpace::SIZE - 1));
@@ -95,11 +101,10 @@ fn test_getset_byte() {
 fn test_getset_word() {
     let mut memspace = MemorySpace::new();
     assert_eq!(memspace.get_word(MemorySpace::MIN_ADDR-1), Err(Interrupt::BadCode));
-    assert_eq!(memspace.get_word(MemorySpace::MAX_ADDR+1), Err(Interrupt::BadCode));
-    assert_eq!(memspace.get_word(MemorySpace::MAX_ADDR-2), Err(Interrupt::MemoryFault));
-    assert_eq!(memspace.get_word(MemorySpace::MAX_ADDR-1), Err(Interrupt::MemoryFault));
-    assert_eq!(memspace.get_word(MemorySpace::MAX_ADDR), Err(Interrupt::MemoryFault));
     assert_eq!(memspace.set_word(MemorySpace::MIN_ADDR-1, Word::ONE), Err(Interrupt::BadCode));
+    assert_eq!(memspace.get_word(MemorySpace::MAX_ADDR), Err(Interrupt::MemoryFault));
+    assert_eq!(memspace.set_word(MemorySpace::MAX_ADDR, Word::ONE), Err(Interrupt::MemoryFault));
+    assert_eq!(memspace.get_word(MemorySpace::MAX_ADDR+1), Err(Interrupt::BadCode));
     assert_eq!(memspace.set_word(MemorySpace::MAX_ADDR+1, Word::ONE), Err(Interrupt::BadCode));
 
     assert_eq!(memspace.get_word(0), Ok(Word::ZERO));
