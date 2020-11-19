@@ -14,31 +14,33 @@ cpu
         interrupt handler is responsible of PC on interrupt handler exit
     instruction set
         jumps are always conditionnal
-        x is reg index 1
-        y is reg index 2
+        x is index 1
+        y is index 2
+        s is reg slice
+            T reg.b
+            0 reg.t
+            1 reg.w
+        v is inline imm (inimm (size))
         00000000_: no param
             0 nop
-            1 ret
-            T intret
-        0000001__: 1 imm.w param
-            call_abs imm.w
-            jump_abs flagbit imm.w
-        000000T__: 1 imm.b param
-            call_rel imm.b
-            jump_rel flagbit imm.b
-        000001_xx: 1 reg param
+            intret
+        00000001_: 1 imm.b/w
+            callabs imm.w
+            callrel imm.b
+        000001_xx: 1 index
             0 not reg
             T push reg
             1 pop reg
-        00000T_xx: 1 imm.w/b param, 1 reg param
-            T set.b reg, imm.b
-            1 set.w reg, imm.w
-        00___yyxx: 2 reg param
+        00001_vxx: 1 inimm (1), 1 index, 1 imm.b/w
+            jumpabs flagvalue flagindex imm.w
+            jumprel flagvalue flagindex imm.b
+        0000T_sxx: 1 imm.b/w, 1 index, 1 slice
+            0 set reg.t/b/w, imm.b/w
+        00T_syyxx: 2 index, 1 slice
+            load reg.b/t/w, [reg].b/w
+            store [reg].b/w, reg.b/t/w
+        01___yyxx: 2 index
             mov reg, reg
-            load.b reg, [reg].b
-            load.w reg, [reg].w
-            store.b [reg].b, reg
-            store.w [reg].w, reg
             add reg, reg
             sub reg, reg
             mul reg, reg
@@ -46,17 +48,22 @@ cpu
             mod reg, reg
             add_fz reg, reg
             sub_fz reg, reg
+            test reg, reg:
+                does all comparaison and put result in flag reg
             and reg, reg
             or reg, reg
             xor reg, reg
-            test reg, reg
-                does all comparaison and put result in flag reg, each bit correspond to one comp
-                    equal
-                    greater
-                    equal_dfz
-                    greater_dfz
-                    carry
-                    zero
+        ___vvvvxx: 1 index, 1 inimm (4), can't start with 00 or 01
+            add reg, inimm
+            sub reg, inimm
+            mul reg, inimm
+            div reg, inimm
+            mod reg, inimm
+            add_fz reg, inimm
+            sub_fz reg, inimm
+            test reg, inimm
+            test inimm, reg
+                does all comparaison and put result in flag reg
         not defined yet
             in imm
             out imm
@@ -76,8 +83,15 @@ cpu
         9 registers: 1 word wide
             program pointer
             stack pointer
-            result register
+            flag register: each trit correspond to one comp
+                diff, T if lesser, 0 if equal, 1 if greater
+                diff_fz, T if lesser, 0 if equal, 1 if greater
+                carry
+                zero
             6 general purpose
+        reg.t is the most significant byte (top)
+        reg.b is the least significant byte (bottom)
+        reg.w is the whole value (word) <- default
     trit: 1 balanced ternary value
     byte: 9 trits little-endian
     word: 2 bytes little-endian

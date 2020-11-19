@@ -82,6 +82,23 @@ impl Registers {
         reg.bytes[0] = value;
     }
 
+    pub fn set_t(&mut self, index: &[Trit], value: Byte) {
+        assert_eq!(index.len(), 2);
+        let reg = match (index[0], index[1]) {
+            (Trit::TERN, Trit::TERN) => {&mut self.pc},
+            (Trit::TERN, Trit::ZERO) => {&mut self.sp},
+            (Trit::TERN, Trit::ONE)  => {&mut self.flags},
+            (Trit::ZERO, Trit::TERN) => {&mut self.a},
+            (Trit::ZERO, Trit::ZERO) => {&mut self.b},
+            (Trit::ZERO, Trit::ONE)  => {&mut self.c},
+            (Trit::ONE,  Trit::TERN) => {&mut self.d},
+            (Trit::ONE,  Trit::ZERO) => {&mut self.e},
+            (Trit::ONE,  Trit::ONE)  => {&mut self.f},
+            _ => { panic!() },
+        };
+        reg.bytes[1] = value;
+    }
+
     pub fn to_str(&mut self, index: &[Trit]) -> &'static str {
         assert_eq!(index.len(), 2);
         match (index[0], index[1]) {

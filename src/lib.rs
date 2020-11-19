@@ -5,6 +5,7 @@ pub mod operation;
 pub mod calculator;
 pub mod artefact;
 pub mod cpu;
+pub mod cpu_test;
 pub mod memory;
 pub mod interrupt;
 pub mod register;
