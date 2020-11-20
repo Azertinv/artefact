@@ -40,6 +40,18 @@ impl Operation for Trit {
         }
     }
 
+    fn xor(lhs: Trit, rhs: Trit) -> Trit {
+        if lhs != Trit::ZERO && rhs != Trit::ZERO {
+            if lhs != rhs {
+                Trit::ONE
+            } else {
+                Trit::TERN
+            }
+        } else {
+            Trit::ZERO
+        }
+    }
+
     fn shift(a: Trit, amount: isize) -> (Trit, Trit) {
         match amount.abs() {
             0 => (a, Trit::ZERO),
@@ -108,7 +120,7 @@ impl FromTrits for i64 {
         if item.len() == 0 {
             0i64
         } else {
-            i64::from(item[0]) * i64::from_trits(&item[1..])
+            i64::from(item[0]) + 3 * i64::from_trits(&item[1..])
         }
     }
 }

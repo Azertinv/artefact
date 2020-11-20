@@ -81,6 +81,13 @@ impl Operation for Word {
         }
         result
     }
+    fn xor(lhs: Word, rhs: Word) -> Word {
+        let mut result = Word::ZERO;
+        for i in 0..Word::BYTE_COUNT {
+            result.bytes[i] = Byte::xor(lhs.bytes[i], rhs.bytes[i]);
+        }
+        result
+    }
 
     fn greater_dfz(lhs: Word, rhs: Word) -> bool {
         i64::from(lhs).abs() > i64::from(rhs).abs()

@@ -11,9 +11,9 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 4 )
 
-[sub_resource type="StyleBoxEmpty" id=7]
+[sub_resource type="StyleBoxEmpty" id=2]
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.2, 0.2, 0.2, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -25,7 +25,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.0823529, 0.0823529, 0.0823529, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -37,7 +37,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.317647, 0.317647, 0.317647, 1 )
 border_width_left = 3
 border_width_top = 3
@@ -49,13 +49,13 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=6]
 size = 30
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 4 )
 
-[sub_resource type="Theme" id=4]
+[sub_resource type="Theme" id=7]
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -63,10 +63,10 @@ Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = SubResource( 1 )
 Button/styles/disabled = null
-Button/styles/focus = SubResource( 7 )
-Button/styles/hover = SubResource( 5 )
-Button/styles/normal = SubResource( 2 )
-Button/styles/pressed = SubResource( 6 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 5 )
 Label/colors/font_color = Color( 1, 1, 1, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -74,13 +74,13 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 3 )
+Label/fonts/font = SubResource( 6 )
 Label/styles/normal = null
 
 [node name="CalculatorGui" type="VBoxContainer"]
 margin_right = 268.0
 margin_bottom = 168.0
-theme = SubResource( 4 )
+theme = SubResource( 7 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -93,17 +93,15 @@ margin_right = 336.0
 margin_bottom = 30.0
 
 [node name="Lhs" type="Label" parent="HBoxContainer3"]
-margin_right = 120.0
+margin_right = 156.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 text = "0101011"
 
 [node name="Op" type="Label" parent="HBoxContainer3"]
-margin_left = 124.0
-margin_right = 212.0
+margin_left = 160.0
+margin_right = 175.0
 margin_bottom = 30.0
-size_flags_horizontal = 3
 text = "+"
 align = 1
 __meta__ = {
@@ -111,10 +109,9 @@ __meta__ = {
 }
 
 [node name="Rhs" type="Label" parent="HBoxContainer3"]
-margin_left = 216.0
+margin_left = 179.0
 margin_right = 336.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 3
 text = "0010100"
 align = 2

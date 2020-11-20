@@ -21,48 +21,49 @@ cpu
             0 reg.t
             1 reg.w
         v is inline imm (inimm (size))
+        implemented and tested opcodes are marked with an x
         00000000_: no param
-            0 nop
+x           0 nop
             intret
         00000001_: 1 imm.b/w
-            callabs imm.w
-            callrel imm.b
+x           1 callabs imm.w
+x           T callrel imm.b
         000001_xx: 1 index
-            0 not reg
-            T push reg
-            1 pop reg
+x           0 not reg
+x           T push reg
+x           1 pop reg
         00001_vxx: 1 inimm (1), 1 index, 1 imm.b/w
-            jumpabs flagvalue flagindex imm.w
-            jumprel flagvalue flagindex imm.b
+x           1 cjumpabs flagvalue flagindex imm.w
+x           T cjumprel flagvalue flagindex imm.b
         0000T_sxx: 1 imm.b/w, 1 index, 1 slice
-            0 set reg.t/b/w, imm.b/w
+x           0 set reg.t/b/w, imm.b/w
         00T_syyxx: 2 index, 1 slice
-            load reg.b/t/w, [reg].b/w
-            store [reg].b/w, reg.b/t/w
+            T load reg.b/t/w, [reg].b/w
+            1 store [reg].b/w, reg.b/t/w
         01___yyxx: 2 index
-            mov reg, reg
-            add reg, reg
-            sub reg, reg
-            mul reg, reg
-            div reg, reg
-            mod reg, reg
-            add_fz reg, reg
-            sub_fz reg, reg
-            test reg, reg:
+            TTT add reg, reg
+            TT1 sub reg, reg
+            TT0 mul reg, reg
+            T1T div reg, reg
+            T11 mod reg, reg
+            T10 add_fz reg, reg
+            T0T sub_fz reg, reg
+            T01 test reg, reg:
                 does all comparaison and put result in flag reg
-            and reg, reg
-            or reg, reg
-            xor reg, reg
+            1TT and reg, reg
+            1T1 or reg, reg
+            1T0 xor reg, reg
+            100 mov reg, reg
         ___vvvvxx: 1 index, 1 inimm (4), can't start with 00 or 01
-            add reg, inimm
-            sub reg, inimm
-            mul reg, inimm
-            div reg, inimm
-            mod reg, inimm
-            add_fz reg, inimm
-            sub_fz reg, inimm
-            test reg, inimm
-            test inimm, reg
+            TTT add reg, inimm
+            TT1 sub reg, inimm
+            TT0 mul reg, inimm
+            T1T div reg, inimm
+            T11 mod reg, inimm
+            T10 add_fz reg, inimm
+            T0T sub_fz reg, inimm
+            T01 test reg, inimm
+            T00 test inimm, reg
                 does all comparaison and put result in flag reg
         not defined yet
             in imm

@@ -91,6 +91,13 @@ impl Operation for Byte {
         }
         result
     }
+    fn xor(lhs: Byte, rhs: Byte) -> Byte {
+        let mut result = Byte::ZERO;
+        for i in 0..Byte::WIDTH {
+            result.trits[i] = Trit::xor(lhs.trits[i], rhs.trits[i]);
+        }
+        result
+    }
 
     fn greater_dfz(lhs: Byte, rhs: Byte) -> bool {
         i64::from(lhs).abs() > i64::from(rhs).abs()

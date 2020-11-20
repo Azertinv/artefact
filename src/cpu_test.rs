@@ -14,15 +14,7 @@ fn test_init() {
     cpu.init_default();
     let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
     let shellcode = [
-        byte_le!(0,0,0,0,T,0,1,0,0),
-        byte_le!(0,0,T,0,1,T,1,0,1),
-        byte_le!(0,0,T,0,1,T,1,0,1),
         byte_le!(0,0,0,0,0,0,0,0,0),
-        byte_le!(0,0,0,0,T,0,T,0,0),
-        byte_le!(0,0,T,T,T,0,0,0,0),
-        byte_le!(0,0,0,0,0,1,0,0,0),
-        byte_le!(0,0,0,0,0,1,T,0,0),
-        byte_le!(0,0,0,0,0,1,1,0,1),
     ];
     for (i, b) in shellcode.iter().enumerate() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
@@ -31,6 +23,97 @@ fn test_init() {
     cpu.run(6);
     println!("\n{}", cpu);
     panic!();
+}
+
+#[test]
+fn test_cjumprel() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,1,T,T,0,0), // cjumprel
+        byte_le!(0,0,0,T,0,0,0,0,0),
+        byte_le!(0,0,0,0,1,T,0,0,0), // cjumprel
+        byte_le!(0,0,0,1,0,0,0,0,0),
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(2);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 29);
+}
+
+#[test]
+fn test_cjumpabs() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,1,1,T,0,0), // cjump
+        byte_le!(0,0,0,T,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,T,0),
+        byte_le!(0,0,0,0,1,1,0,0,0), // cjump
+        byte_le!(0,0,0,1,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,1,0),
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(2);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 27);
+}
+
+#[test]
+fn test_callrel() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,0,0,0,1,T), // callrel 1T0
+        byte_le!(0,T,1,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,1,1,T,T), // pop pc // ret
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(4);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 3);
+}
+
+#[test]
+fn test_callabs() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,0,0,0,1,1), // callabs 0100000000000001T1
+        byte_le!(1,T,1,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,1,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,1,1,T,T), // pop pc // ret
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(4);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 4);
 }
 
 #[test]

@@ -2,6 +2,7 @@ pub trait Operation: Sized + std::fmt::Display {
     fn not(a: Self) -> Self;
     fn and(lhs: Self, rhs: Self) -> Self;
     fn or(lhs: Self, rhs: Self) -> Self;
+    fn xor(lhs: Self, rhs: Self) -> Self;
     fn shift(a: Self, amount: isize) -> (Self, Self);
 
     // dfz stands for distance from zero
