@@ -1,4 +1,5 @@
 use crate::cpu::Cpu;
+use crate::word::Word;
 use crate::{byte_le};
 
 macro_rules! bt_le {
@@ -22,7 +23,64 @@ fn test_init() {
     println!("{}", cpu);
     cpu.run(6);
     println!("\n{}", cpu);
-    panic!();
+    // panic!();
+}
+
+#[test]
+fn test_load() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,T,0,1,0,0), // set b, 01000000000000001T
+        byte_le!(T,1,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,1,0),
+        byte_le!(0,0,T,T,1,0,0,0,1), // load c, [b]
+        byte_le!(0,0,T,T,T,0,0,1,T), // load d.b, [b]
+        byte_le!(0,0,T,T,0,0,0,1,0), // load e.t, [b]
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(4);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.b), bt_le!(T,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0));
+    assert_eq!(i64::from(cpu.regs.c), bt_le!(0,0,0,0,0,0,0,1,0,0,0,T,T,1,0,0,0,1));
+    assert_eq!(i64::from(cpu.regs.d), bt_le!(0,0,0,0,0,0,0,1,0));
+    assert_eq!(i64::from(cpu.regs.e), bt_le!(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0));
+}
+
+#[test]
+fn test_store() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,T,0,1,0,0), // set b, 010000000000000000
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,1,0),
+        byte_le!(0,0,T,T,1,0,0,0,1), // load c, [b]
+        byte_le!(0,0,T,1,1,0,T,0,0), // store [b], a
+        byte_le!(0,0,T,T,1,0,0,0,1), // load c, [b]
+        byte_le!(0,0,T,T,T,0,0,1,T), // load d.b, [b]
+        byte_le!(0,0,T,T,0,0,0,1,0), // load e.t, [b]
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(2);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.b), bt_le!(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0));
+    assert_eq!(i64::from(cpu.regs.c), bt_le!(0,0,0,0,T,0,1));
+    cpu.regs.a = Word::from(bt_le!(1,0,0,0,0,0,0,0,0,T));
+    cpu.run(4);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.a), bt_le!(1,0,0,0,0,0,0,0,0,T));
+    assert_eq!(i64::from(cpu.regs.c), bt_le!(1,0,0,0,0,0,0,0,0,T));
+    assert_eq!(i64::from(cpu.regs.d), 1);
+    assert_eq!(i64::from(cpu.regs.e), bt_le!(0,0,0,0,0,0,0,0,0,1));
 }
 
 #[test]

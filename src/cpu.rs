@@ -157,7 +157,49 @@ impl Cpu {
                 }
             },
             bt_le_pattern!(0,0,T,_,_,_,_,_,_) => { // 2 index, 1 slice
-                unimplemented!();
+                let lhs_reg: &[Trit] = &b0.trits[7..9];
+                let rhs_reg: &[Trit] = &b0.trits[5..7];
+                let slice: Trit = b0.trits[4];
+                match b0.trits {
+                    bt_le_pattern!(0,0,T,T,_,_,_,_,_) => { // load
+                        let (space, offset) = self.get_space_and_offset(self.regs.get(rhs_reg))?;
+                        if slice == Trit::ONE {
+                            let value: Word = space.get_word(offset)?;
+                            self.regs.set_w(lhs_reg, value);
+                            println!("load {}, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        } else {
+                            let value: Byte = space.get_byte(offset)?;
+                            if slice == Trit::TERN {
+                                self.regs.set_b(lhs_reg, value);
+                                println!("load {}.b, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                            } else {
+                                self.regs.set_t(lhs_reg, value);
+                                println!("load {}.t, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                            }
+                        }
+                    },
+                    bt_le_pattern!(0,0,T,1,_,_,_,_,_) => { // store
+                        if slice == Trit::ONE {
+                            let value: Word = self.regs.get(rhs_reg);
+                            let (space, offset) = self.get_mut_space_and_offset(self.regs.get(lhs_reg))?;
+                            space.set_word(offset, value)?;
+                            println!("store [{}], {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        } else {
+                            if slice == Trit::TERN {
+                                let value: Byte = self.regs.get(rhs_reg).bytes[0];
+                                let (space, offset) = self.get_mut_space_and_offset(self.regs.get(lhs_reg))?;
+                                space.set_byte(offset, value)?;
+                                println!("store [{}], {}.b", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                            } else {
+                                let value: Byte = self.regs.get(rhs_reg).bytes[1];
+                                let (space, offset) = self.get_mut_space_and_offset(self.regs.get(lhs_reg))?;
+                                space.set_byte(offset, value)?;
+                                println!("store [{}], {}.t", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                            }
+                        }
+                    },
+                    _ => { return Err(Interrupt::InvalidOpcode); },
+                }
             },
             bt_le_pattern!(0,1,_,_,_,_,_,_,_) => { // 2 index
                 let lhs_reg: &[Trit] = &b0.trits[7..9];

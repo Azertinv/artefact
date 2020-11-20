@@ -38,8 +38,8 @@ x           T cjumprel flagvalue flagindex imm.b
         0000T_sxx: 1 imm.b/w, 1 index, 1 slice
 x           0 set reg.t/b/w, imm.b/w
         00T_syyxx: 2 index, 1 slice
-            T load reg.b/t/w, [reg].b/w
-            1 store [reg].b/w, reg.b/t/w
+x           T load reg.b/t/w, [reg].b/w
+x           1 store [reg].b/w, reg.b/t/w
         01___yyxx: 2 index
 x           TTT add reg, reg
 x           TT1 sub reg, reg
