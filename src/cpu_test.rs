@@ -26,6 +26,45 @@ fn test_init() {
 }
 
 #[test]
+fn test_addsubmuldivmod_regreg() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,T,0,1,0,0), // set b, 1T000
+        byte_le!(0,0,0,T,1,0,0,0,0),
+        byte_le!(0,0,0,0,0,0,0,0,0),
+        byte_le!(0,0,0,0,T,0,T,0,T), // set a, 10
+        byte_le!(0,1,0,0,0,0,0,0,0),
+        byte_le!(0,1,T,T,T,0,0,0,0), // add b, b
+        byte_le!(0,1,T,T,T,0,0,0,1), // add c, b
+        byte_le!(0,1,T,T,1,0,1,1,T), // sub d, c
+        byte_le!(0,1,T,T,1,0,0,0,1), // sub c, b
+        byte_le!(0,1,T,T,0,0,T,0,0), // mul b, a
+        byte_le!(0,1,T,1,T,0,T,1,T), // div d, a
+        byte_le!(0,0,0,0,T,0,T,0,0), // set b, 101
+        byte_le!(1,0,1,0,0,0,0,0,0),
+        byte_le!(0,1,T,1,1,0,T,0,0), // mod b, a
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(6);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.b), 108);
+    assert_eq!(i64::from(cpu.regs.c), 0);
+    assert_eq!(i64::from(cpu.regs.d), -108);
+    cpu.run(2);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.b), 108*3);
+    assert_eq!(i64::from(cpu.regs.d), -108/3);
+    cpu.run(2);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.b), 1);
+}
+
+#[test]
 fn test_cjumprel() {
     let mut cpu = Cpu::new();
     cpu.init_default();

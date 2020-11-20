@@ -41,11 +41,11 @@ x           0 set reg.t/b/w, imm.b/w
             T load reg.b/t/w, [reg].b/w
             1 store [reg].b/w, reg.b/t/w
         01___yyxx: 2 index
-            TTT add reg, reg
-            TT1 sub reg, reg
-            TT0 mul reg, reg
-            T1T div reg, reg
-            T11 mod reg, reg
+x           TTT add reg, reg
+x           TT1 sub reg, reg
+x           TT0 mul reg, reg
+x           T1T div reg, reg
+x           T11 mod reg, reg
             T10 add_fz reg, reg
             T0T sub_fz reg, reg
             T01 test reg, reg:

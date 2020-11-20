@@ -162,22 +162,28 @@ impl Cpu {
             bt_le_pattern!(0,1,_,_,_,_,_,_,_) => { // 2 index
                 let lhs_reg: &[Trit] = &b0.trits[7..9];
                 let lhs_value: Word = self.regs.get(lhs_reg);
-                let rhs_value: Word = self.regs.get(&b0.trits[5..7]);
+                let rhs_reg: &[Trit] = &b0.trits[5..7];
+                let rhs_value: Word = self.regs.get(rhs_reg);
                 match b0.trits {
                     bt_le_pattern!(0,1,T,T,T,_,_,_,_) => { // add
-                        self.regs.set_w(lhs_reg, Word::add(lhs_value, rhs_value, Word::ZERO).0)
+                        self.regs.set_w(lhs_reg, Word::add(lhs_value, rhs_value, Word::ZERO).0);
+                        println!("add {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,T,T,1,_,_,_,_) => { // sub
-                        self.regs.set_w(lhs_reg, Word::sub(lhs_value, rhs_value, Word::ZERO).0)
+                        self.regs.set_w(lhs_reg, Word::sub(lhs_value, rhs_value, Word::ZERO).0);
+                        println!("sub {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,T,T,0,_,_,_,_) => { // mul
-                        self.regs.set_w(lhs_reg, Word::mul(lhs_value, rhs_value).0)
+                        self.regs.set_w(lhs_reg, Word::mul(lhs_value, rhs_value).0);
+                        println!("mul {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,T,1,T,_,_,_,_) => { // div
-                        self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).0)
+                        self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).0);
+                        println!("div {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,T,1,1,_,_,_,_) => { // mod
-                        self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).1)
+                        self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).1);
+                        println!("mod {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,T,1,0,_,_,_,_) => { // add_fz
                         unimplemented!();
@@ -189,16 +195,20 @@ impl Cpu {
                         unimplemented!();
                     },
                     bt_le_pattern!(0,1,1,T,T,_,_,_,_) => { // and
-                        self.regs.set_w(lhs_reg, Word::and(lhs_value, rhs_value))
+                        self.regs.set_w(lhs_reg, Word::and(lhs_value, rhs_value));
+                        println!("and {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,1,T,1,_,_,_,_) => { // or
-                        self.regs.set_w(lhs_reg, Word::or(lhs_value, rhs_value))
+                        self.regs.set_w(lhs_reg, Word::or(lhs_value, rhs_value));
+                        println!("or {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,1,T,0,_,_,_,_) => { // xor
-                        self.regs.set_w(lhs_reg, Word::xor(lhs_value, rhs_value))
+                        self.regs.set_w(lhs_reg, Word::xor(lhs_value, rhs_value));
+                        println!("xor {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(0,1,1,0,0,_,_,_,_) => { // mov
-                        self.regs.set_w(lhs_reg, rhs_value)
+                        self.regs.set_w(lhs_reg, rhs_value);
+                        println!("mov {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }

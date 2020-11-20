@@ -134,7 +134,7 @@ impl Operation for Word {
         // println!("{} / {}", i64::from(lhs), i64::from(rhs));
         let mut quotient = Word::ZERO;
         let mut remainder = lhs;
-        for i in (0..Word::BYTE_COUNT).rev() {
+        for i in (0..Word::WIDTH).rev() {
             // println!("quotient: {}, remainder: {}", quotient, remainder);
             for _ in 0..2 {
                 let dividend = Word::shift(remainder, -(i as isize)).0;
@@ -338,8 +338,8 @@ fn test_shift() {
 
 #[test]
 fn test_mul() {
-    for i in (Word::MIN..=Word::MAX).step_by(100000) {
-        for j in (Word::MIN..=Word::MAX).step_by(1000000000) {
+    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
+        for j in (Word::MIN..=Word::MAX).step_by(1000000) {
             let result = Word::mul(Word::from(i), Word::from(j));
             assert_eq!(i * j, i64::from(result.0) + 387420489*i64::from(result.1));
         }
@@ -348,8 +348,8 @@ fn test_mul() {
 
 #[test]
 fn test_div() {
-    for i in (Word::MIN..=Word::MAX).step_by(100000) {
-        for j in (Word::MIN..=Word::MAX).step_by(1000000000) {
+    for i in (Word::MIN..=Word::MAX).step_by(1000000) {
+        for j in (Word::MIN..=Word::MAX).step_by(1000000) {
             if j == 0 { continue; }
             let result = Word::div(Word::from(i), Word::from(j)).0;
             assert_eq!(i64::from(result), round_div(i, j));
