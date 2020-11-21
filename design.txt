@@ -50,10 +50,10 @@ x           T11 mod reg, reg
             T0T sub_fz reg, reg
             T01 test reg, reg:
                 does all comparaison and put result in flag reg
-            1TT and reg, reg
-            1T1 or reg, reg
-            1T0 xor reg, reg
-            100 mov reg, reg
+x           1TT and reg, reg
+x           1T1 or reg, reg
+x           1T0 xor reg, reg
+x           100 mov reg, reg
         ___vvvvxx: 1 index, 1 inimm (4), can't start with 00 or 01
             TTT add reg, inimm
             TT1 sub reg, inimm

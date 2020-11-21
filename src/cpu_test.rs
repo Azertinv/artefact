@@ -52,6 +52,35 @@ fn test_load() {
 }
 
 #[test]
+fn test_andorxormov() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    cpu.regs.b = Word::from(bt_le!(0,1,T,0,1,T,0,1,T));
+    cpu.regs.c = Word::from(bt_le!(1,T,0,T,0,1,0,1,T));
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,1,1,0,0,0,1,1,T), // mov d, c
+        byte_le!(0,1,1,T,T,0,0,1,T), // and d, b
+        byte_le!(0,1,1,T,1,0,0,1,T), // or d, b
+        byte_le!(0,1,1,T,0,0,1,0,0), // xor d, b
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(1);
+    assert_eq!(cpu.regs.c, cpu.regs.d);
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.d), bt_le!(0,T,T,T,0,T,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.d), bt_le!(0,1,T,0,1,T,0,1,T));
+    println!("\n{}", cpu);
+    cpu.run(1);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.b), bt_le!(0,1,0,0,0,1,0,T,T));
+}
+
+#[test]
 fn test_store() {
     let mut cpu = Cpu::new();
     cpu.init_default();
