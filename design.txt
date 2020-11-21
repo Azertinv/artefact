@@ -8,6 +8,8 @@ cpu
     interrupt
         default interrupt vector
             divide by zero
+            absolute add from zero
+                you can't add/sub_fz if the lhs_value is 0
             invalid opcode
             space fault: when cpu access unmapped memory
         devices can't fire interrupts when cpu is in interrupt handler
@@ -46,10 +48,9 @@ x           TT1 sub reg, reg
 x           TT0 mul reg, reg
 x           T1T div reg, reg
 x           T11 mod reg, reg
-            T10 add_fz reg, reg
-            T0T sub_fz reg, reg
-            T01 test reg, reg:
-                does all comparaison and put result in flag reg
+x           T01 add_fz reg, reg
+x           T0T sub_fz reg, reg
+            T00 test reg, reg: does all comparaison and put result in flag reg
 x           1TT and reg, reg
 x           1T1 or reg, reg
 x           1T0 xor reg, reg
@@ -60,11 +61,9 @@ x           100 mov reg, reg
             TT0 mul reg, inimm
             T1T div reg, inimm
             T11 mod reg, inimm
-            T10 add_fz reg, inimm
+            T01 add_fz reg, inimm
             T0T sub_fz reg, inimm
-            T01 test reg, inimm
-            T00 test inimm, reg
-                does all comparaison and put result in flag reg
+            T00 test reg, inimm: does all comparaison and put result in flag reg
         not defined yet
             in imm
             out imm

@@ -94,18 +94,18 @@ impl Cpu {
             },
             bt_le_pattern!(0,0,0,0,0,1,_,_,_) => { // 1 reg param
                 let reg: &[Trit] = &b0.trits[7..9];
-                match b0.trits {
-                    bt_le_pattern!(0,0,0,0,0,1,0,_,_) => { // not reg
+                match b0.trits[6] {
+                    bt_le_pattern!(0) => { // not reg
                         let value = self.regs.get(reg);
                         self.regs.set_w(reg, Word::not(value));
                         println!("not {}", self.regs.to_str(reg));
                     },
-                    bt_le_pattern!(0,0,0,0,0,1,T,_,_) => { // push reg
+                    bt_le_pattern!(T) => { // push reg
                         let value = self.regs.get(reg);
                         self.push(value)?;
                         println!("push {}", self.regs.to_str(reg));
                     },
-                    bt_le_pattern!(0,0,0,0,0,1,1,_,_) => { // pop reg
+                    bt_le_pattern!(1) => { // pop reg
                         let value = self.pop()?;
                         self.regs.set_w(reg, value);
                         println!("pop {}", self.regs.to_str(reg));
@@ -136,8 +136,8 @@ impl Cpu {
             bt_le_pattern!(0,0,0,0,1,_,_,_,_) => { // 1 inimm (1), 1 index, 1 imm.b/w
                 let index: usize = (i64::from_trits(&b0.trits[7..9]) + 4) as usize;
                 let value: Trit = b0.trits[6];
-                match b0.trits {
-                    bt_le_pattern!(0,0,0,0,1,1,_,_,_) => { // cjumpabs
+                match b0.trits[5] {
+                    bt_le_pattern!(1) => { // cjumpabs
                         inst_size += Word::BYTE_COUNT;
                         let imm: Word = pc_space.get_word(pc_offset + 1)?;
                         if self.regs.flags.bytes[0].trits[index] == value {
@@ -145,7 +145,7 @@ impl Cpu {
                         }
                         println!("cjumpabs {} {} {}", value, index, imm);
                     },
-                    bt_le_pattern!(0,0,0,0,1,T,_,_,_) => { // cjumprel
+                    bt_le_pattern!(T) => { // cjumprel
                         inst_size += 1;
                         let imm: Byte = pc_space.get_byte(pc_offset + 1)?;
                         if self.regs.flags.bytes[0].trits[index] == value {
@@ -160,8 +160,8 @@ impl Cpu {
                 let lhs_reg: &[Trit] = &b0.trits[7..9];
                 let rhs_reg: &[Trit] = &b0.trits[5..7];
                 let slice: Trit = b0.trits[4];
-                match b0.trits {
-                    bt_le_pattern!(0,0,T,T,_,_,_,_,_) => { // load
+                match b0.trits[3] {
+                    bt_le_pattern!(T) => { // load
                         let (space, offset) = self.get_space_and_offset(self.regs.get(rhs_reg))?;
                         if slice == Trit::ONE {
                             let value: Word = space.get_word(offset)?;
@@ -178,7 +178,7 @@ impl Cpu {
                             }
                         }
                     },
-                    bt_le_pattern!(0,0,T,1,_,_,_,_,_) => { // store
+                    bt_le_pattern!(1) => { // store
                         if slice == Trit::ONE {
                             let value: Word = self.regs.get(rhs_reg);
                             let (space, offset) = self.get_mut_space_and_offset(self.regs.get(lhs_reg))?;
@@ -206,56 +206,77 @@ impl Cpu {
                 let lhs_value: Word = self.regs.get(lhs_reg);
                 let rhs_reg: &[Trit] = &b0.trits[5..7];
                 let rhs_value: Word = self.regs.get(rhs_reg);
-                match b0.trits {
-                    bt_le_pattern!(0,1,T,T,T,_,_,_,_) => { // add
+                match b0.trits[2..5] {
+                    bt_le_pattern!(T,T,T) => { // add
                         self.regs.set_w(lhs_reg, Word::add(lhs_value, rhs_value, Word::ZERO).0);
                         println!("add {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,T,T,1,_,_,_,_) => { // sub
+                    bt_le_pattern!(T,T,1) => { // sub
                         self.regs.set_w(lhs_reg, Word::sub(lhs_value, rhs_value, Word::ZERO).0);
                         println!("sub {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,T,T,0,_,_,_,_) => { // mul
+                    bt_le_pattern!(T,T,0) => { // mul
                         self.regs.set_w(lhs_reg, Word::mul(lhs_value, rhs_value).0);
                         println!("mul {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,T,1,T,_,_,_,_) => { // div
+                    bt_le_pattern!(T,1,T) => { // div
                         self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).0);
                         println!("div {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,T,1,1,_,_,_,_) => { // mod
+                    bt_le_pattern!(T,1,1) => { // mod
                         self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).1);
                         println!("mod {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,T,1,0,_,_,_,_) => { // add_fz
+                    bt_le_pattern!(T,0,1) => { // add_fz
+                        let new_value: Word = match lhs_value.sign() {
+                            Trit::ZERO => { return Err(Interrupt::AbsOpFromZero); }
+                            Trit::ONE => { Word::add(lhs_value, rhs_value, Word::ZERO).0 },
+                            Trit::TERN => { Word::sub(lhs_value, rhs_value, Word::ZERO).0 },
+                            _ => { return Err(Interrupt::BadCode); }
+                        };
+                        self.regs.set_w(lhs_reg, new_value);
+                        println!("addfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                    },
+                    bt_le_pattern!(T,0,T) => { // sub_fz
+                        let new_value: Word = match lhs_value.sign() {
+                            Trit::ZERO => { return Err(Interrupt::AbsOpFromZero); }
+                            Trit::ONE => { Word::sub(lhs_value, rhs_value, Word::ZERO).0 },
+                            Trit::TERN => { Word::add(lhs_value, rhs_value, Word::ZERO).0 },
+                            _ => { return Err(Interrupt::BadCode); }
+                        };
+                        self.regs.set_w(lhs_reg, new_value);
+                        println!("subfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                    },
+                    bt_le_pattern!(T,0,0) => { // test
                         unimplemented!();
                     },
-                    bt_le_pattern!(0,1,T,0,T,_,_,_,_) => { // sub_fz
-                        unimplemented!();
-                    },
-                    bt_le_pattern!(0,1,T,0,1,_,_,_,_) => { // test
-                        unimplemented!();
-                    },
-                    bt_le_pattern!(0,1,1,T,T,_,_,_,_) => { // and
+                    bt_le_pattern!(1,T,T) => { // and
                         self.regs.set_w(lhs_reg, Word::and(lhs_value, rhs_value));
                         println!("and {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,1,T,1,_,_,_,_) => { // or
+                    bt_le_pattern!(1,T,1) => { // or
                         self.regs.set_w(lhs_reg, Word::or(lhs_value, rhs_value));
                         println!("or {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,1,T,0,_,_,_,_) => { // xor
+                    bt_le_pattern!(1,T,0) => { // xor
                         self.regs.set_w(lhs_reg, Word::xor(lhs_value, rhs_value));
                         println!("xor {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(0,1,1,0,0,_,_,_,_) => { // mov
+                    bt_le_pattern!(1,0,0) => { // mov
                         self.regs.set_w(lhs_reg, rhs_value);
                         println!("mov {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }
             },
-            _ => { return Err(Interrupt::InvalidOpcode); },
+            _ => { // 1 index, 1 inimm (4)
+                let lhs_reg: &[Trit] = &b0.trits[7..9];
+                let lhs_value: Word = self.regs.get(lhs_reg);
+                let rhs_value: Word = Word::from(i64::from_trits(&b0.trits[3..7]));
+                match b0.trits[0..3] {
+                    _ => { return Err(Interrupt::InvalidOpcode); },
+                }
+            },
         }
         if saved_pc == self.regs.pc {
             self.regs.pc = Word::add(self.regs.pc, Word::from(inst_size as i64), Word::ZERO).0;

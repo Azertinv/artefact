@@ -1,6 +1,7 @@
 #[derive(Debug, PartialEq)]
 pub enum Interrupt {
     DivideByZero,
+    AbsOpFromZero, // addfz 0, 1 is invalid
     InvalidOpcode,
     SpaceFault, // unmapped space access
     MemoryFault, // word access on space boundary
