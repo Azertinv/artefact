@@ -48,7 +48,7 @@ x           TT1 sub reg, reg
 x           TT0 mul reg, reg
 x           T1T div reg, reg
 x           T11 mod reg, reg
-x           T01 add_fz reg, reg
+x           T10 add_fz reg, reg
 x           T0T sub_fz reg, reg
             T00 test reg, reg: does all comparaison and put result in flag reg
 x           1TT and reg, reg
@@ -56,13 +56,13 @@ x           1T1 or reg, reg
 x           1T0 xor reg, reg
 x           100 mov reg, reg
         ___vvvvxx: 1 index, 1 inimm (4), can't start with 00 or 01
-            TTT add reg, inimm
-            TT1 sub reg, inimm
-            TT0 mul reg, inimm
-            T1T div reg, inimm
-            T11 mod reg, inimm
-            T01 add_fz reg, inimm
-            T0T sub_fz reg, inimm
+x           TTT add reg, inimm
+x           TT1 sub reg, inimm
+x           TT0 mul reg, inimm
+x           T1T div reg, inimm
+x           T11 mod reg, inimm
+x           T10 add_fz reg, inimm
+x           T0T sub_fz reg, inimm
             T00 test reg, inimm: does all comparaison and put result in flag reg
         not defined yet
             in imm

@@ -227,7 +227,7 @@ impl Cpu {
                         self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).1);
                         println!("mod {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(T,0,1) => { // add_fz
+                    bt_le_pattern!(T,1,0) => { // add_fz
                         let new_value: Word = match lhs_value.sign() {
                             Trit::ZERO => { return Err(Interrupt::AbsOpFromZero); }
                             Trit::ONE => { Word::add(lhs_value, rhs_value, Word::ZERO).0 },
@@ -274,6 +274,52 @@ impl Cpu {
                 let lhs_value: Word = self.regs.get(lhs_reg);
                 let rhs_value: Word = Word::from(i64::from_trits(&b0.trits[3..7]));
                 match b0.trits[0..3] {
+                    bt_le_pattern!(T,T,T) => { // add
+                        self.regs.set_w(lhs_reg, Word::add(lhs_value, rhs_value, Word::ZERO).0);
+                        println!("add {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
+                    bt_le_pattern!(T,T,1) => { // sub
+                        self.regs.set_w(lhs_reg, Word::sub(lhs_value, rhs_value, Word::ZERO).0);
+                        println!("sub {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
+                    bt_le_pattern!(T,T,0) => { // mul
+                        self.regs.set_w(lhs_reg, Word::mul(lhs_value, rhs_value).0);
+                        println!("mul {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
+                    bt_le_pattern!(T,1,T) => { // div
+                        self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).0);
+                        println!("div {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
+                    bt_le_pattern!(T,1,1) => { // mod
+                        self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).1);
+                        println!("mod {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
+                    bt_le_pattern!(T,1,0) => { // add_fz
+                        let new_value: Word = match lhs_value.sign() {
+                            Trit::ZERO => { return Err(Interrupt::AbsOpFromZero); }
+                            Trit::ONE => { Word::add(lhs_value, rhs_value, Word::ZERO).0 },
+                            Trit::TERN => { Word::sub(lhs_value, rhs_value, Word::ZERO).0 },
+                            _ => { return Err(Interrupt::BadCode); }
+                        };
+                        self.regs.set_w(lhs_reg, new_value);
+                        println!("addfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
+                    bt_le_pattern!(T,0,T) => { // sub_fz
+                        let new_value: Word = match lhs_value.sign() {
+                            Trit::ZERO => { return Err(Interrupt::AbsOpFromZero); }
+                            Trit::ONE => { Word::sub(lhs_value, rhs_value, Word::ZERO).0 },
+                            Trit::TERN => { Word::add(lhs_value, rhs_value, Word::ZERO).0 },
+                            _ => { return Err(Interrupt::BadCode); }
+                        };
+                        self.regs.set_w(lhs_reg, new_value);
+                        println!("subfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
+                    bt_le_pattern!(T,0,1) => { // test
+                        unimplemented!();
+                    },
+                    bt_le_pattern!(T,0,0) => { // test
+                        unimplemented!();
+                    },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }
             },
