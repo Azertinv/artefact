@@ -3,7 +3,7 @@ use super::operation::Operation;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Trit {
-    val: i8,
+    pub val: i8,
 }
 
 impl Trit {

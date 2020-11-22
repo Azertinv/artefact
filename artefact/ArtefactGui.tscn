@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://artefact/ArtefactGui.gd" type="Script" id=1]
+[ext_resource path="res://artefact/RegisterViewer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://artefact/Artefact.tscn" type="PackedScene" id=3]
+
+[node name="ArtefactGui" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Artefact" parent="." instance=ExtResource( 3 )]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 924.0
+margin_bottom = 500.0
+
+[node name="Memory" type="MarginContainer" parent="HBoxContainer"]
+margin_right = 640.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+
+[node name="RegisterViewer" parent="HBoxContainer" instance=ExtResource( 2 )]
+artefact_path = NodePath("../../Artefact")

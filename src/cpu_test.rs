@@ -1,3 +1,5 @@
+#[cfg(test)]
+mod tests {
 use crate::cpu::Cpu;
 use crate::word::Word;
 use crate::{byte_le};
@@ -379,4 +381,5 @@ fn test_nop() {
     let old_pc = cpu.regs.pc;
     cpu.run(5);
     assert_eq!(i64::from(old_pc) + 5, i64::from(cpu.regs.pc))
+}
 }
