@@ -12,10 +12,15 @@ enum {
 var state = STATE_TRITS
 var value: int = 0 setget set_value, get_value
 
+var cached_trit_edits: Array = []
+func cache_trit_edits() -> void:
+	for i in range(width):
+		cached_trit_edits.append(get_node("TritEdit"+str(i)))
 func get_trit_edit(index) -> Node:
-	return get_node("TritEdit"+str(index))
+	return cached_trit_edits[index]
 
 func _ready() -> void:
+	cache_trit_edits()
 	$NumberEdit.visible = false
 	for i in range(width):
 		get_trit_edit(i).connect("gui_value_changed", self, "_on_TritEdit_gui_value_changed")

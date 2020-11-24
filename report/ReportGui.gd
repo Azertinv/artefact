@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 func _on_CheckAnswerTimer_timeout() -> void:
-	var good_answers = []
+	var good_answers: Array = []
 	for q in get_children():
 		if not q.is_in_group("questions"):
 			continue

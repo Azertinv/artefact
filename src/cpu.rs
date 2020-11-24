@@ -133,7 +133,7 @@ impl Cpu {
                     }
                 }
             },
-            bt_le_pattern!(0,0,0,0,1,_,_,_,_) => { // 1 inimm (1), 1 index, 1 imm.b/w
+            bt_le_pattern!(0,0,0,1,_,_,_,_,_) => { // 1 inimm (1), 1 index, 1 imm.b/w
                 let index: usize = (i64::from_trits(&b0.trits[7..9]) + 4) as usize;
                 let value: Trit = b0.trits[6];
                 match b0.trits[5] {

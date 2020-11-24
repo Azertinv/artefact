@@ -27,23 +27,24 @@ margin_right = 924.0
 margin_bottom = 500.0
 
 [node name="Memory" type="MarginContainer" parent="HBoxContainer"]
-margin_right = 582.0
+margin_right = 568.0
 margin_bottom = 400.0
 size_flags_horizontal = 3
 
 [node name="MemoryViewer" parent="HBoxContainer/Memory" instance=ExtResource( 5 )]
+margin_right = 568.0
 artefact_path = NodePath("../../../Artefact")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 586.0
+margin_left = 572.0
 margin_right = 824.0
 margin_bottom = 400.0
 
 [node name="RegisterViewer" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
-margin_right = 238.0
+margin_right = 252.0
 margin_bottom = 248.0
 artefact_path = NodePath("../../../Artefact")
 
 [node name="Tooltips" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 4 )]
-margin_right = 238.0
+margin_right = 252.0

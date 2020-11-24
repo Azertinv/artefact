@@ -34,11 +34,14 @@ x           T callrel imm.b
 x           0 not reg
 x           T push reg
 x           1 pop reg
-        00001_vxx: 1 inimm (1), 1 index, 1 imm.b/w
-x           1 cjumpabs flagvalue flagindex imm.w
-x           T cjumprel flagvalue flagindex imm.b
         0000T_sxx: 1 imm.b/w, 1 index, 1 slice
 x           0 set reg.t/b/w, imm.b/w
+        00011_vxx: 1 inimm (1), 1 index, 1 imm.b/w // jump if same value
+            1 cjumpabs flagvalue flagindex imm.w
+            T cjumprel flagvalue flagindex imm.b
+        0001T_vxx: 1 inimm (1), 1 index, 1 imm.b/w // jump if not same value
+            1 cjumpabs flagvalue flagindex imm.w
+            T cjumprel flagvalue flagindex imm.b
         00T_syyxx: 2 index, 1 slice
 x           T load reg.b/t/w, [reg].b/w
 x           1 store [reg].b/w, reg.b/t/w
@@ -87,7 +90,7 @@ x           T0T sub_fz reg, inimm
                 diff, T if lesser, 0 if equal, 1 if greater
                 diff_fz, T if lesser, 0 if equal, 1 if greater
                 carry
-                zero
+                sign
             6 general purpose
         reg.t is the most significant byte (top)
         reg.b is the least significant byte (bottom)

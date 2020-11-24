@@ -14,14 +14,6 @@ pub struct Artefact {
 type GodotTrits = Int32Array;
 type GodotBytes = Int32Array;
 
-// fn byte_to_godot_trits(value: Byte) -> GodotTrits {
-//     let mut result = GodotTrits::new();
-//     for i in 0..Byte::WIDTH {
-//         result.push(value.trits[i].val.into());
-//     }
-//     result
-// }
-
 fn word_to_godot_trits(value: Word) -> GodotTrits {
     let mut result = GodotTrits::new();
     for i in 0..Word::WIDTH {
@@ -57,12 +49,12 @@ impl Artefact {
     }
 
     #[export]
-    fn get_mem_chunk(&self, _owner: &Node, addr_value: i64) -> GodotBytes {
+    fn get_mem_chunk(&self, _owner: &Node, addr_value: i64, size: i64) -> GodotBytes {
         let mut result = GodotBytes::new();
         let addr: Word = Word::from(addr_value);
         if let Ok((space, offset)) = self.cpu.get_space_and_offset(addr) {
-            for i in 0..10 {
-                if let Ok(byte) = space.get_byte(offset + i) {
+            for i in 0..size {
+                if let Ok(byte) = space.get_byte(offset + i as isize) {
                     result.push(i64::from(byte) as i32);
                 } else {
                     break;
@@ -85,7 +77,7 @@ impl Artefact {
             7 => { self.cpu.regs.e },
             8 => { self.cpu.regs.f },
             _ => {
-                godot_print!("Bad register index in get_reg_trits");
+                godot_error!("Bad register index in get_reg_trits");
                 Word::ZERO
             },
         };
@@ -105,7 +97,7 @@ impl Artefact {
             7 => { self.cpu.regs.e },
             8 => { self.cpu.regs.f },
             _ => {
-                godot_print!("Bad register index in get_reg_trits");
+                godot_error!("Bad register index in get_reg_value");
                 Word::ZERO
             },
         };
@@ -125,7 +117,7 @@ impl Artefact {
             7 => { &mut self.cpu.regs.e },
             8 => { &mut self.cpu.regs.f },
             _ => {
-                godot_print!("Bad register index in set_reg_trits");
+                godot_error!("Bad register index in set_reg_trits");
                 return ;
             },
         };
