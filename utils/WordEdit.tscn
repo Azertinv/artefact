@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://utils/TritEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://utils/TritsEdit.gd" type="Script" id=2]
+[ext_resource path="res://utils/NumberEdit.tscn" type="PackedScene" id=3]
 
 [node name="WordEdit" type="HBoxContainer"]
 margin_right = 40.0
@@ -119,3 +120,13 @@ margin_left = 170.0
 margin_top = 8.0
 margin_right = 180.0
 margin_bottom = 32.0
+
+[node name="NumberEdit" parent="." instance=ExtResource( 3 )]
+margin_left = 180.0
+margin_right = 238.0
+margin_bottom = 40.0
+mouse_filter = 1
+size_flags_horizontal = 3
+text = "123"
+context_menu_enabled = false
+[connection signal="gui_value_changed" from="NumberEdit" to="." method="_on_NumberEdit_gui_value_changed"]

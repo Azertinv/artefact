@@ -261,6 +261,9 @@ impl From<Byte> for i64 {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
 #[test]
 fn test_max() {
     assert_eq!(Byte::MAX, 3i64.pow(Byte::WIDTH as u32) / 2i64);
@@ -360,4 +363,5 @@ fn test_div() {
             assert_eq!(i64::from(result), round_div(i, j));
         }
     }
+}
 }

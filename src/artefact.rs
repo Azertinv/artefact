@@ -11,16 +11,19 @@ pub struct Artefact {
     cpu: Cpu,
 }
 
-fn byte_to_godot_trits(value: Byte) -> Int32Array {
-    let mut result = Int32Array::new();
-    for i in 0..Byte::WIDTH {
-        result.push(value.trits[i].val.into());
-    }
-    result
-}
+type GodotTrits = Int32Array;
+type GodotBytes = Int32Array;
 
-fn word_to_godot_trits(value: Word) -> Int32Array {
-    let mut result = Int32Array::new();
+// fn byte_to_godot_trits(value: Byte) -> GodotTrits {
+//     let mut result = GodotTrits::new();
+//     for i in 0..Byte::WIDTH {
+//         result.push(value.trits[i].val.into());
+//     }
+//     result
+// }
+
+fn word_to_godot_trits(value: Word) -> GodotTrits {
+    let mut result = GodotTrits::new();
     for i in 0..Word::WIDTH {
         result.push(value.bytes[i/Byte::WIDTH].trits[i%Byte::WIDTH].val.into());
     }
@@ -49,7 +52,28 @@ impl Artefact {
     }
 
     #[export]
-    fn get_reg_trits(&self, _owner: &Node, index: i64) -> Int32Array {
+    fn run(&mut self, _owner: &Node, i: usize) {
+        self.cpu.run(i);
+    }
+
+    #[export]
+    fn get_mem_chunk(&self, _owner: &Node, addr_value: i64) -> GodotBytes {
+        let mut result = GodotBytes::new();
+        let addr: Word = Word::from(addr_value);
+        if let Ok((space, offset)) = self.cpu.get_space_and_offset(addr) {
+            for i in 0..10 {
+                if let Ok(byte) = space.get_byte(offset + i) {
+                    result.push(i64::from(byte) as i32);
+                } else {
+                    break;
+                }
+            }
+        }
+        result
+    }
+
+    #[export]
+    fn get_reg_trits(&self, _owner: &Node, index: i64) -> GodotTrits {
         let value: Word = match index {
             0 => { self.cpu.regs.pc },
             1 => { self.cpu.regs.sp },
@@ -69,12 +93,27 @@ impl Artefact {
     }
 
     #[export]
-    fn run_one(&mut self, _owner: &Node) {
-        self.cpu.run(1);
+    fn get_reg_value(&self, _owner: &Node, index: i64) -> i64 {
+        let value: Word = match index {
+            0 => { self.cpu.regs.pc },
+            1 => { self.cpu.regs.sp },
+            2 => { self.cpu.regs.flags },
+            3 => { self.cpu.regs.a },
+            4 => { self.cpu.regs.b },
+            5 => { self.cpu.regs.c },
+            6 => { self.cpu.regs.d },
+            7 => { self.cpu.regs.e },
+            8 => { self.cpu.regs.f },
+            _ => {
+                godot_print!("Bad register index in get_reg_trits");
+                Word::ZERO
+            },
+        };
+        i64::from(value)
     }
 
     #[export]
-    fn set_reg_trits(&mut self, _owner: &Node, index: i64, trits: Int32Array) {
+    fn set_reg_trits(&mut self, _owner: &Node, index: i64, trits: GodotTrits) {
         let value: &mut Word = match index {
             0 => { &mut self.cpu.regs.pc },
             1 => { &mut self.cpu.regs.sp },

@@ -32,7 +32,7 @@ impl MemorySpace {
         if addr < Self::MIN_ADDR || addr > Self::MAX_ADDR {
             Err(Interrupt::BadCode)
         } else {
-            Ok((addr + Self::MAX_ADDR) as usize)
+            Ok((addr + Self::MAX_ADDR) as usize % Self::SIZE)
         }
     }
 

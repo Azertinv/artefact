@@ -1,8 +1,9 @@
 extends Label
 
-signal value_changed(new_value)
+signal gui_value_changed(new_value)
 
 export(bool) var editable = true
+
 var value: int = 0 setget set_value
 
 func set_value(new_value: int):
@@ -19,7 +20,7 @@ func can_drop_data(_pos, _data) -> bool:
 func _ready():
 	set_process(false)
 
-func update_text(emit: bool = true) -> void:
+func update_text(emit: bool) -> void:
 	if value == 0:
 		text = "0"
 	if value == 1:
@@ -27,7 +28,7 @@ func update_text(emit: bool = true) -> void:
 	if value == -1:
 		text = "T"
 	if emit:
-		emit_signal("value_changed", value)
+		emit_signal("gui_value_changed", value)
 
 func update_just_value() -> void:
 	if not editable:
@@ -40,7 +41,7 @@ func update_just_value() -> void:
 	if Input.is_action_just_pressed("trit_tern"):
 		value = -1
 	if old_value != value:
-		update_text()
+		update_text(true)
 
 func update_value() -> void:
 	if not editable:
@@ -53,7 +54,7 @@ func update_value() -> void:
 	if Input.is_action_pressed("trit_tern"):
 		value = -1
 	if old_value != value:
-		update_text()
+		update_text(true)
 
 func _on_TritEdit_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
@@ -66,5 +67,8 @@ func _on_TritEdit_mouse_exited() -> void:
 	set_process(false)
 
 func _process(_delta):
+	# mouse exited signal is not fired if the node is made invisible while hovering
+	if visible == false:
+		return
 	if !Input.is_mouse_button_pressed(BUTTON_LEFT):
 		update_just_value()

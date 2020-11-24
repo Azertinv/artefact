@@ -8,8 +8,6 @@ use crate::interrupt::{Interrupt, Result};
 
 use crate::{byte_le};
 
-use std::collections::HashMap;
-
 macro_rules! bt_le_pattern {
     ( _ ) => { _ };
     ( 0 ) => { Trit::ZERO };
@@ -21,41 +19,43 @@ macro_rules! bt_le_pattern {
 
 pub struct Cpu {
     pub regs: Registers,
-    pub mem: HashMap<i64, MemorySpace>,
+    pub mem: [Option<MemorySpace>; 9],
 }
 
 impl Cpu {
     pub fn new() -> Cpu {
-        Cpu{regs: Registers::new(), mem: HashMap::new()}
+        Cpu{regs: Registers::new(), mem: [None, None, None, None, None, None, None, None, None]}
     }
 
     pub fn init_default(&mut self) {
-        self.mem.insert(0, MemorySpace::new()); // general purpose space
-        self.mem.insert(1, MemorySpace::new()); // code space
+        self.mem[4] = Some(MemorySpace::new()); // general purpose space
+        self.mem[5] = Some(MemorySpace::new()); // code space
         self.regs.pc = Word{bytes: [Byte::ZERO, byte_le!(0,0,0,0,0,0,0,1,0)]}; // start in code space
         self.regs.sp = Word{bytes: [Byte::TERN, Byte::ZERO]}; // start in code space
     }
 
-    fn get_space_index(addr: Word) -> i64 {
-        i64::from_trits(&addr.bytes[1].trits[9-MemorySpace::INDEX_WIDTH..9])
+    fn get_space_index(addr: Word) -> usize {
+        (i64::from_trits(&addr.bytes[1].trits[9-MemorySpace::INDEX_WIDTH..9]) + 4) as usize
     }
 
     pub fn get_space_and_offset(&self, addr: Word) -> Result<(&MemorySpace, isize)> {
-        let space_index: i64 = Cpu::get_space_index(addr);
-        let space: &MemorySpace = self.mem.get(&space_index).ok_or(Interrupt::SpaceFault)?;
-        let offset: i64 = i64::from(addr.bytes[0]) + 2187 * i64::from(addr.bytes[1]);
+        let space_index: usize = Cpu::get_space_index(addr);
+        let space: &MemorySpace = self.mem[space_index].as_ref().ok_or(Interrupt::SpaceFault)?;
+        let offset: i64 = i64::from(addr.bytes[0])
+            + 19683 * i64::from_trits(&addr.bytes[1].trits[0..9-MemorySpace::INDEX_WIDTH]);
         Ok((space, offset as isize))
     }
 
     pub fn get_mut_space_and_offset(&mut self, addr: Word) -> Result<(&mut MemorySpace, isize)> {
-        let space_index: i64 = Cpu::get_space_index(addr);
-        let space: &mut MemorySpace = self.mem.get_mut(&space_index).ok_or(Interrupt::SpaceFault)?;
-        let offset: i64 = i64::from(addr.bytes[0]) + 2187 * i64::from(addr.bytes[1]);
+        let space_index: usize = Cpu::get_space_index(addr);
+        let space: &mut MemorySpace = self.mem[space_index].as_mut().ok_or(Interrupt::SpaceFault)?;
+        let offset: i64 = i64::from(addr.bytes[0])
+            + 19683 * i64::from_trits(&addr.bytes[1].trits[0..9-MemorySpace::INDEX_WIDTH]);
         Ok((space, offset as isize))
     }
 
     fn push(&mut self, value: Word) -> Result<()> {
-        self.regs.sp = Word::sub(self.regs.sp, Word::from(2), Word::ZERO).0;
+        self.regs.sp = Word::sub(self.regs.sp, Word::TWO, Word::ZERO).0;
         let (s_space, s_offset) = self.get_mut_space_and_offset(self.regs.sp)?;
         s_space.set_word(s_offset, value)?;
         Ok(())
@@ -64,33 +64,33 @@ impl Cpu {
     fn pop(&mut self) -> Result<Word> {
         let (s_space, s_offset) = self.get_mut_space_and_offset(self.regs.sp)?;
         let value = s_space.get_word(s_offset)?;
-        self.regs.sp = Word::add(self.regs.sp, Word::from(2), Word::ZERO).0;
+        self.regs.sp = Word::add(self.regs.sp, Word::TWO, Word::ZERO).0;
         Ok(value)
     }
 
     pub fn fetch_decode_execute_one(&mut self) -> Result<()> {
         let (pc_space, pc_offset) = self.get_space_and_offset(self.regs.pc)?;
         let b0: Byte = pc_space.get_byte(pc_offset)?;
-        print!("{}: ", self.regs.pc);
+        //print!("{}: ", self.regs.pc);
         let saved_pc = self.regs.pc;
         let mut inst_size: usize = 1;
         match b0.trits {
             bt_le_pattern!(0,0,0,0,0,0,0,0,0) => {
-                println!("nop");
+                // println!("nop");
             },
             bt_le_pattern!(0,0,0,0,0,0,0,1,1) => { // callabs
                 inst_size += Word::BYTE_COUNT;
                 let imm: Word = pc_space.get_word(pc_offset + 1)?;
                 self.push(Word::add(self.regs.pc, Word::from(inst_size as i64), Word::ZERO).0)?;
                 self.regs.pc = imm;
-                println!("callabs {}", imm);
+                // println!("callabs {}", imm);
             },
             bt_le_pattern!(0,0,0,0,0,0,0,1,T) => { // callrel
                 inst_size += 1;
                 let imm: Byte = pc_space.get_byte(pc_offset + 1)?;
                 self.push(Word::add(self.regs.pc, Word::from(inst_size as i64), Word::ZERO).0)?;
                 self.regs.pc = Word::add(self.regs.pc, Word{bytes: [imm, Byte::ZERO]}, Word::ZERO).0;
-                println!("callrel {}", imm);
+                // println!("callrel {}", imm);
             },
             bt_le_pattern!(0,0,0,0,0,1,_,_,_) => { // 1 reg param
                 let reg: &[Trit] = &b0.trits[7..9];
@@ -98,17 +98,17 @@ impl Cpu {
                     bt_le_pattern!(0) => { // not reg
                         let value = self.regs.get(reg);
                         self.regs.set_w(reg, Word::not(value));
-                        println!("not {}", self.regs.to_str(reg));
+                        // println!("not {}", self.regs.to_str(reg));
                     },
                     bt_le_pattern!(T) => { // push reg
                         let value = self.regs.get(reg);
                         self.push(value)?;
-                        println!("push {}", self.regs.to_str(reg));
+                        // println!("push {}", self.regs.to_str(reg));
                     },
                     bt_le_pattern!(1) => { // pop reg
                         let value = self.pop()?;
                         self.regs.set_w(reg, value);
-                        println!("pop {}", self.regs.to_str(reg));
+                        // println!("pop {}", self.regs.to_str(reg));
                     },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }
@@ -120,16 +120,16 @@ impl Cpu {
                     inst_size += Word::BYTE_COUNT;
                     let rhs_imm: Word = pc_space.get_word(pc_offset + 1)?;
                     self.regs.set_w(lhs_reg, rhs_imm);
-                    println!("set.w {}, {}", self.regs.to_str(lhs_reg), rhs_imm);
+                    // println!("set.w {}, {}", self.regs.to_str(lhs_reg), rhs_imm);
                 } else {
                     inst_size += 1;
                     let rhs_imm: Byte = pc_space.get_byte(pc_offset + 1)?;
                     if slice == Trit::TERN {
                         self.regs.set_b(lhs_reg, rhs_imm);
-                        println!("set.b {}, {}", self.regs.to_str(lhs_reg), rhs_imm);
+                        // println!("set.b {}, {}", self.regs.to_str(lhs_reg), rhs_imm);
                     } else {
                         self.regs.set_t(lhs_reg, rhs_imm);
-                        println!("set.t {}, {}", self.regs.to_str(lhs_reg), rhs_imm);
+                        // println!("set.t {}, {}", self.regs.to_str(lhs_reg), rhs_imm);
                     }
                 }
             },
@@ -143,7 +143,7 @@ impl Cpu {
                         if self.regs.flags.bytes[0].trits[index] == value {
                             self.regs.pc = imm;
                         }
-                        println!("cjumpabs {} {} {}", value, index, imm);
+                        // println!("cjumpabs {} {} {}", value, index, imm);
                     },
                     bt_le_pattern!(T) => { // cjumprel
                         inst_size += 1;
@@ -151,7 +151,7 @@ impl Cpu {
                         if self.regs.flags.bytes[0].trits[index] == value {
                             self.regs.pc = Word::add(self.regs.pc, Word{bytes: [imm, Byte::ZERO]}, Word::ZERO).0;
                         }
-                        println!("cjumprel {} {} {}", value, index, imm);
+                        // println!("cjumprel {} {} {}", value, index, imm);
                     },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }
@@ -166,15 +166,15 @@ impl Cpu {
                         if slice == Trit::ONE {
                             let value: Word = space.get_word(offset)?;
                             self.regs.set_w(lhs_reg, value);
-                            println!("load {}, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                            // println!("load {}, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                         } else {
                             let value: Byte = space.get_byte(offset)?;
                             if slice == Trit::TERN {
                                 self.regs.set_b(lhs_reg, value);
-                                println!("load {}.b, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                                // println!("load {}.b, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                             } else {
                                 self.regs.set_t(lhs_reg, value);
-                                println!("load {}.t, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                                // println!("load {}.t, [{}]", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                             }
                         }
                     },
@@ -183,18 +183,18 @@ impl Cpu {
                             let value: Word = self.regs.get(rhs_reg);
                             let (space, offset) = self.get_mut_space_and_offset(self.regs.get(lhs_reg))?;
                             space.set_word(offset, value)?;
-                            println!("store [{}], {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                            // println!("store [{}], {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                         } else {
                             if slice == Trit::TERN {
                                 let value: Byte = self.regs.get(rhs_reg).bytes[0];
                                 let (space, offset) = self.get_mut_space_and_offset(self.regs.get(lhs_reg))?;
                                 space.set_byte(offset, value)?;
-                                println!("store [{}], {}.b", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                                // println!("store [{}], {}.b", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                             } else {
                                 let value: Byte = self.regs.get(rhs_reg).bytes[1];
                                 let (space, offset) = self.get_mut_space_and_offset(self.regs.get(lhs_reg))?;
                                 space.set_byte(offset, value)?;
-                                println!("store [{}], {}.t", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                                // println!("store [{}], {}.t", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                             }
                         }
                     },
@@ -209,23 +209,23 @@ impl Cpu {
                 match b0.trits[2..5] {
                     bt_le_pattern!(T,T,T) => { // add
                         self.regs.set_w(lhs_reg, Word::add(lhs_value, rhs_value, Word::ZERO).0);
-                        println!("add {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("add {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,T,1) => { // sub
                         self.regs.set_w(lhs_reg, Word::sub(lhs_value, rhs_value, Word::ZERO).0);
-                        println!("sub {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("sub {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,T,0) => { // mul
                         self.regs.set_w(lhs_reg, Word::mul(lhs_value, rhs_value).0);
-                        println!("mul {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("mul {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,1,T) => { // div
                         self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).0);
-                        println!("div {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("div {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,1,1) => { // mod
                         self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).1);
-                        println!("mod {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("mod {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,1,0) => { // add_fz
                         let new_value: Word = match lhs_value.sign() {
@@ -235,7 +235,7 @@ impl Cpu {
                             _ => { return Err(Interrupt::BadCode); }
                         };
                         self.regs.set_w(lhs_reg, new_value);
-                        println!("addfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("addfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,0,T) => { // sub_fz
                         let new_value: Word = match lhs_value.sign() {
@@ -245,26 +245,26 @@ impl Cpu {
                             _ => { return Err(Interrupt::BadCode); }
                         };
                         self.regs.set_w(lhs_reg, new_value);
-                        println!("subfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("subfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,0,0) => { // test
                         unimplemented!();
                     },
                     bt_le_pattern!(1,T,T) => { // and
                         self.regs.set_w(lhs_reg, Word::and(lhs_value, rhs_value));
-                        println!("and {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("and {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(1,T,1) => { // or
                         self.regs.set_w(lhs_reg, Word::or(lhs_value, rhs_value));
-                        println!("or {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("or {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(1,T,0) => { // xor
                         self.regs.set_w(lhs_reg, Word::xor(lhs_value, rhs_value));
-                        println!("xor {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("xor {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(1,0,0) => { // mov
                         self.regs.set_w(lhs_reg, rhs_value);
-                        println!("mov {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                        // println!("mov {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }
@@ -272,27 +272,27 @@ impl Cpu {
             _ => { // 1 index, 1 inimm (4)
                 let lhs_reg: &[Trit] = &b0.trits[7..9];
                 let lhs_value: Word = self.regs.get(lhs_reg);
-                let rhs_value: Word = Word::from(i64::from_trits(&b0.trits[3..7]));
+                let rhs_value: Word = Word::from_trits(&b0.trits[3..7]);
                 match b0.trits[0..3] {
                     bt_le_pattern!(T,T,T) => { // add
                         self.regs.set_w(lhs_reg, Word::add(lhs_value, rhs_value, Word::ZERO).0);
-                        println!("add {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                        // println!("add {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,T,1) => { // sub
                         self.regs.set_w(lhs_reg, Word::sub(lhs_value, rhs_value, Word::ZERO).0);
-                        println!("sub {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                        // println!("sub {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,T,0) => { // mul
                         self.regs.set_w(lhs_reg, Word::mul(lhs_value, rhs_value).0);
-                        println!("mul {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                        // println!("mul {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,1,T) => { // div
                         self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).0);
-                        println!("div {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                        // println!("div {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,1,1) => { // mod
                         self.regs.set_w(lhs_reg, Word::div(lhs_value, rhs_value).1);
-                        println!("mod {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                        // println!("mod {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,1,0) => { // add_fz
                         let new_value: Word = match lhs_value.sign() {
@@ -302,7 +302,7 @@ impl Cpu {
                             _ => { return Err(Interrupt::BadCode); }
                         };
                         self.regs.set_w(lhs_reg, new_value);
-                        println!("addfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                        // println!("addfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,0,T) => { // sub_fz
                         let new_value: Word = match lhs_value.sign() {
@@ -312,7 +312,7 @@ impl Cpu {
                             _ => { return Err(Interrupt::BadCode); }
                         };
                         self.regs.set_w(lhs_reg, new_value);
-                        println!("subfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                        // println!("subfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,0,1) => { // test
                         unimplemented!();

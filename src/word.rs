@@ -1,7 +1,8 @@
 use std::fmt;
-use super::trit::Trit;
-use super::byte::Byte;
-use super::operation::Operation;
+use crate::trit::Trit;
+use crate::byte::Byte;
+use crate::operation::Operation;
+use crate::byte_le;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Word {
@@ -21,11 +22,19 @@ impl Word {
     pub const ONE: Word = Word{bytes: [Byte::ONE, Byte::ZERO]};
     pub const TERN: Word = Word{bytes: [Byte::TERN, Byte::ZERO]};
 
+    pub const TWO: Word = Word{bytes: [byte_le!(T,1,0,0,0,0,0,0,0), Byte::ZERO]};
+    pub const THREE: Word = Word{bytes: [byte_le!(0,1,0,0,0,0,0,0,0), Byte::ZERO]};
+    pub const FOOR: Word = Word{bytes: [byte_le!(1,1,0,0,0,0,0,0,0), Byte::ZERO]};
+
     pub fn from_trits(slice: &[Trit]) -> Word {
-        assert_eq!(slice.len(), Word::WIDTH);
+        let trits_len: usize = slice.len();
         let mut result = Word::ZERO;
         for i in 0..Word::BYTE_COUNT {
-            result.bytes[i].trits.copy_from_slice(&slice[Byte::WIDTH*i..Byte::WIDTH*(i+1)]);
+            if Byte::WIDTH*i < trits_len {
+                result.bytes[i]
+                    .trits[0..usize::min(Byte::WIDTH, trits_len - Byte::WIDTH*i)]
+                    .copy_from_slice(&slice[Byte::WIDTH*i..usize::min(Byte::WIDTH*(i+1), trits_len)]);
+            }
         }
         result
     }
@@ -256,6 +265,9 @@ impl From<Word> for i64 {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
 #[test]
 fn test_max() {
     assert_eq!(Word::MAX, 3i64.pow(Word::WIDTH as u32) / 2i64);
@@ -355,4 +367,5 @@ fn test_div() {
             assert_eq!(i64::from(result), round_div(i, j));
         }
     }
+}
 }

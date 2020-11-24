@@ -28,12 +28,30 @@ pub struct Calculator {
     lhs: Byte,
     rhs: Option<Byte>,
     op: Option<Operator>,
+    last_lhs: Option<Byte>,
+    last_rhs: Option<Byte>,
+    last_op: Option<Operator>,
 }
 
 #[methods]
 impl Calculator {
     fn new(_owner: &Node) -> Self {
-        Calculator{lhs: Byte::ZERO, rhs: None, op: None}
+        Calculator{
+            lhs: Byte::ZERO,
+            rhs: None,
+            op: None,
+            last_lhs: None,
+            last_rhs: None,
+            last_op: None,
+        }
+    }
+
+    fn get_value_helper(opt_value: &Option<Byte>) -> GodotString {
+        if let Some(value) = opt_value {
+            GodotString::from_str(format!("{}", value))
+        } else {
+            GodotString::from_str("")
+        }
     }
 
     #[export]
@@ -42,17 +60,22 @@ impl Calculator {
     }
 
     #[export]
-    fn get_rhs(&self, _owner: &Node) -> GodotString {
-        if let Some(rhs) = self.rhs {
-            GodotString::from_str(format!("{}", rhs))
-        } else {
-            GodotString::from_str("")
-        }
+    fn get_last_lhs(&self, _owner: &Node) -> GodotString {
+        Self::get_value_helper(&self.last_lhs)
     }
 
     #[export]
-    fn get_op(&self, _owner: &Node) -> GodotString {
-        if let Some(op) = self.op {
+    fn get_rhs(&self, _owner: &Node) -> GodotString {
+        Self::get_value_helper(&self.rhs)
+    }
+
+    #[export]
+    fn get_last_rhs(&self, _owner: &Node) -> GodotString {
+        Self::get_value_helper(&self.last_rhs)
+    }
+
+    fn get_op_helper(opt_op: &Option<Operator>) -> GodotString {
+        if let Some(op) = opt_op {
             GodotString::from_str(match op {
                 Operator::Add => "+",
                 Operator::Sub => "-",
@@ -62,6 +85,22 @@ impl Calculator {
         } else {
             GodotString::from_str("")
         }
+    }
+
+    #[export]
+    fn get_op(&self, _owner: &Node) -> GodotString {
+        Self::get_op_helper(&self.op)
+    }
+
+    #[export]
+    fn get_last_op(&self, _owner: &Node) -> GodotString {
+        Self::get_op_helper(&self.last_op)
+    }
+
+    fn push_to_last(&mut self) {
+        self.last_lhs = Some(self.lhs);
+        self.last_rhs = self.rhs;
+        self.last_op = self.op;
     }
 
     #[export]
@@ -97,12 +136,14 @@ impl Calculator {
                 let op = self.op.unwrap();
                 let rhs = self.rhs.unwrap();
                 if !(op == Operator::Div && rhs == Byte::ZERO) {
-                    self.lhs = match op {
+                    let lhs = match op {
                         Operator::Add => Byte::add(self.lhs, rhs, Byte::ZERO).0,
                         Operator::Sub => Byte::sub(self.lhs, rhs, Byte::ZERO).0,
                         Operator::Mul => Byte::mul(self.lhs, rhs).0,
                         Operator::Div => Byte::div(self.lhs, rhs).0,
                     };
+                    self.push_to_last();
+                    self.lhs = lhs;
                     self.op = None;
                     self.rhs = None;
                 }
@@ -113,18 +154,12 @@ impl Calculator {
             MUL => { self.op = Some(Operator::Mul); },
             DIV => { self.op = Some(Operator::Div); },
             CLEAR => {
+                self.push_to_last();
                 self.lhs = Byte::ZERO;
                 self.op = None;
                 self.rhs = None;
             },
             _ => { godot_print!("Unrecognized button: {}", button)},
         }
-        // if let Some(rhs) = self.rhs {
-        //     godot_print!("{} {:?} {}", self.lhs, self.op.unwrap(), rhs);
-        // } else if let Some(op) = self.op {
-        //     godot_print!("{} {:?}", self.lhs, op);
-        // } else {
-        //     godot_print!("{}", self.lhs);
-        // }
     }
 }

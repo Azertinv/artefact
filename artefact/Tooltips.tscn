@@ -1,0 +1,91 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://artefact/Tooltips.gd" type="Script" id=1]
+[ext_resource path="res://assets/font/alien.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="Tooltips" type="PanelContainer"]
+margin_top = 252.0
+margin_right = 180.0
+margin_bottom = 400.0
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 434.0
+margin_bottom = 141.0
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 20.0
+margin_right = 427.0
+margin_bottom = 37.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 1.0
+margin_right = 155.0
+margin_bottom = 15.0
+text = "Press A to set a value to"
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 159.0
+margin_right = 167.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 1 )
+text = "T"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 41.0
+margin_right = 427.0
+margin_bottom = 58.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_top = 1.0
+margin_right = 154.0
+margin_bottom = 15.0
+text = "Press Z to set a value to"
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 158.0
+margin_right = 166.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 1 )
+text = "0"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 62.0
+margin_right = 427.0
+margin_bottom = 79.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+margin_top = 1.0
+margin_right = 153.0
+margin_bottom = 15.0
+text = "Press E to set a value to"
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 157.0
+margin_right = 165.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 1 )
+text = "1"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 83.0
+margin_right = 427.0
+margin_bottom = 114.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
+margin_right = 213.0
+margin_bottom = 31.0
+text = "You can click and drag the mouse
+over a value to set multiple trits."

@@ -16,28 +16,15 @@ impl Trit {
 
 impl Operation for Trit {
     fn not(a: Trit) -> Trit {
-        assert!(a.val >= Trit::MIN_VALUE && a.val <= Trit::MAX_VALUE);
         Trit{val: -a.val}
     }
 
     fn and(lhs: Trit, rhs: Trit) -> Trit {
-        if lhs == Trit::TERN || rhs == Trit::TERN {
-            Trit::TERN
-        } else if lhs == Trit::ZERO || rhs == Trit::ZERO {
-            Trit::ZERO
-        } else {
-            Trit::ONE
-        }
+        Trit{val: i8::min(lhs.val, rhs.val)}
     }
 
     fn or(lhs: Trit, rhs: Trit) -> Trit {
-        if lhs == Trit::ONE || rhs == Trit::ONE {
-            Trit::ONE
-        } else if lhs == Trit::ZERO || rhs == Trit::ZERO {
-            Trit::ZERO
-        } else {
-            Trit::TERN
-        }
+        Trit{val: i8::max(lhs.val, rhs.val)}
     }
 
     fn xor(lhs: Trit, rhs: Trit) -> Trit {
@@ -61,13 +48,7 @@ impl Operation for Trit {
     }
 
     fn greater_dfz(lhs: Trit, rhs: Trit) -> bool {
-        if lhs == Trit::ZERO {
-            false
-        } else if rhs == Trit::ZERO {
-            true
-        } else {
-            false
-        }
+        lhs.val.abs() > rhs.val.abs()
     }
 
     fn half_add(lhs: Trit, rhs: Trit) -> (Trit, Trit) {
