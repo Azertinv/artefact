@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://artefact/ArtefactGui.gd" type="Script" id=1]
 [ext_resource path="res://artefact/RegisterViewer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://artefact/Artefact.tscn" type="PackedScene" id=3]
 [ext_resource path="res://artefact/Tooltips.tscn" type="PackedScene" id=4]
 [ext_resource path="res://artefact/MemoryViewer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://artefact/ExecutionController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://artefact/WriterIndicator.tscn" type="PackedScene" id=7]
 
 [node name="ArtefactGui" type="MarginContainer"]
 anchor_right = 1.0
@@ -48,3 +50,17 @@ artefact_path = NodePath("../../../Artefact")
 
 [node name="Tooltips" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 4 )]
 margin_right = 252.0
+margin_bottom = 364.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 368.0
+margin_right = 252.0
+margin_bottom = 400.0
+
+[node name="ExecutionController" parent="HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 6 )]
+margin_top = 0.0
+margin_right = 80.0
+margin_bottom = 32.0
+artefact_path = NodePath("../../../../Artefact")
+
+[node name="WriterIndicator" parent="HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 7 )]
