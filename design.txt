@@ -37,8 +37,8 @@ x           1 pop reg
         0000T_sxx: 1 imm.b/w, 1 index, 1 slice
 x           0 set reg.t/b/w, imm.b/w
         00011_vxx: 1 inimm (1), 1 index, 1 imm.b/w // jump if same value
-            1 cjumpabs flagvalue flagindex imm.w
-            T cjumprel flagvalue flagindex imm.b
+x           1 cjumpabs flagvalue flagindex imm.w
+x           T cjumprel flagvalue flagindex imm.b
         0001T_vxx: 1 inimm (1), 1 index, 1 imm.b/w // jump if not same value
             1 cjumpabs flagvalue flagindex imm.w
             T cjumprel flagvalue flagindex imm.b
@@ -99,3 +99,11 @@ x           T0T sub_fz reg, inimm
     byte: 9 trits little-endian
     word: 2 bytes little-endian
     https://en.wikipedia.org/wiki/Three-valued_logic#Kleene_and_Priest_logics
+
+bt behaviour:
+    the equivalent xor operation for cryptographic purposes is widly different
+    first thing is there is 3 different operations that can be used:
+         01T  01T  01T
+        00T1 010T 0T10
+        1T10 10T1 110T
+        T10T TT10 T0T1
