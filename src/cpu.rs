@@ -68,6 +68,12 @@ impl Cpu {
         Ok(value)
     }
 
+    fn test(&mut self, lhs: Word, rhs: Word) {
+        unimplemented!();
+        // let diff: (Word, Word) = Word::sub(lhs, rhs, Word::ZERO);
+        // let diff_fz: (Word, Word) = Word::sub_fz(lhs, rhs, Word::ZERO);
+    }
+
     pub fn fetch_decode_execute_one(&mut self) -> Result<()> {
         let (pc_space, pc_offset) = self.get_space_and_offset(self.regs.pc)?;
         let b0: Byte = pc_space.get_byte(pc_offset)?;
@@ -133,7 +139,7 @@ impl Cpu {
                     }
                 }
             },
-            bt_le_pattern!(0,0,0,1,_,_,_,_,_) => { // 1 inimm (1), 1 index, 1 imm.b/w
+            bt_le_pattern!(0,0,0,0,1,_,_,_,_) => { // 1 inimm (1), 1 index, 1 imm.b/w
                 let index: usize = (i64::from_trits(&b0.trits[7..9]) + 4) as usize;
                 let value: Trit = b0.trits[6];
                 match b0.trits[5] {
@@ -249,6 +255,7 @@ impl Cpu {
                     },
                     bt_le_pattern!(T,0,0) => { // test
                         unimplemented!();
+                        // println!("test {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(1,T,T) => { // and
                         self.regs.set_w(lhs_reg, Word::and(lhs_value, rhs_value));
@@ -314,11 +321,9 @@ impl Cpu {
                         self.regs.set_w(lhs_reg, new_value);
                         // println!("subfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
-                    bt_le_pattern!(T,0,1) => { // test
-                        unimplemented!();
-                    },
                     bt_le_pattern!(T,0,0) => { // test
                         unimplemented!();
+                        // println!("test {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }

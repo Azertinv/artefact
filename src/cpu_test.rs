@@ -207,9 +207,9 @@ fn test_cjumprel() {
     cpu.init_default();
     let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
     let shellcode = [
-        byte_le!(0,0,0,1,1,T,T,0,0), // cjumprel if flags.diff == T
+        byte_le!(0,0,0,0,1,T,T,0,0), // cjumprel if flags.diff == T
         byte_le!(0,0,0,T,0,0,0,0,0),
-        byte_le!(0,0,0,1,1,T,0,0,0), // cjumprel if flags.diff == 0
+        byte_le!(0,0,0,0,1,T,0,0,0), // cjumprel if flags.diff == 0
         byte_le!(0,0,0,1,0,0,0,0,0),
     ];
     for (i, b) in shellcode.iter().enumerate() {
@@ -227,10 +227,10 @@ fn test_cjumpabs() {
     cpu.init_default();
     let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
     let shellcode = [
-        byte_le!(0,0,0,1,1,1,T,0,0), // cjumpabs if flags.diff == T
+        byte_le!(0,0,0,0,1,1,T,0,0), // cjumpabs if flags.diff == T
         byte_le!(0,0,0,T,0,0,0,0,0),
         byte_le!(0,0,0,0,0,0,0,T,0),
-        byte_le!(0,0,0,1,1,1,0,0,0), // cjumpabs if flags.diff == 0
+        byte_le!(0,0,0,0,1,1,0,0,0), // cjumpabs if flags.diff == 0
         byte_le!(0,0,0,1,0,0,0,0,0),
         byte_le!(0,0,0,0,0,0,0,1,0),
     ];

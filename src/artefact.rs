@@ -49,7 +49,7 @@ impl Artefact {
     }
 
     #[export]
-    fn get_mem_chunk(&self, _owner: &Node, addr_value: i64, size: i64) -> GodotBytes {
+    fn mem_read(&self, _owner: &Node, addr_value: i64, size: i64) -> GodotBytes {
         let mut result = GodotBytes::new();
         let addr: Word = Word::from(addr_value);
         if let Ok((space, offset)) = self.cpu.get_space_and_offset(addr) {

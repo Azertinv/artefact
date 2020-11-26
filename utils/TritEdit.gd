@@ -7,8 +7,9 @@ export(bool) var editable: bool = true
 var value: int = 0 setget set_value
 
 func set_value(new_value: int) -> void:
-	value = new_value
-	update_text(false)
+	if value != new_value:
+		value = new_value
+		update_text(false)
 
 func get_drag_data(_position) -> bool:
 	return true

@@ -3,7 +3,7 @@ extends HBoxContainer
 export(NodePath) var artefact_path: NodePath
 onready var artefact: Node = get_node(artefact_path)
 
-var max_i: int = 1000
+export(bool) var max_speed: bool = true
 
 enum {
 	STATE_RUNNING,
@@ -11,10 +11,16 @@ enum {
 }
 
 var state = STATE_PAUSED
+var inst_per_frame: int = 1000
 
-func _process(_delta):
+func _process(delta):
 	if state == STATE_RUNNING:
-		artefact.run(max_i)
+		if max_speed:
+			if delta > 1.0 / 60.0 * 1.01:
+				inst_per_frame -= 1 + inst_per_frame/100
+			else:
+				inst_per_frame += 1 + inst_per_frame/100
+		artefact.run(inst_per_frame)
 
 func _on_RunPause_toggled(button_pressed):
 	if button_pressed:

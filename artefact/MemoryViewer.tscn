@@ -1,186 +1,115 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://artefact/MemoryViewer.gd" type="Script" id=1]
-[ext_resource path="res://utils/ByteEdit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://artefact/MemoryLine.tscn" type="PackedScene" id=4]
 
 [node name="MemoryViewer" type="HBoxContainer"]
-margin_right = 582.0
-margin_bottom = 400.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Memory" type="VBoxContainer" parent="."]
-margin_right = 452.0
-margin_bottom = 400.0
+margin_right = 534.0
+margin_bottom = 600.0
+custom_constants/separation = 0
 
-[node name="Line0" type="HBoxContainer" parent="Memory"]
-margin_right = 452.0
-margin_bottom = 24.0
+[node name="Line0" parent="Memory" instance=ExtResource( 4 )]
+margin_right = 534.0
 
-[node name="ByteEdit0" parent="Memory/Line0" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
+[node name="Line1" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 24.0
+margin_right = 534.0
+margin_bottom = 48.0
 
-[node name="ByteEdit1" parent="Memory/Line0" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
+[node name="Line2" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 48.0
+margin_right = 534.0
+margin_bottom = 72.0
 
-[node name="ByteEdit2" parent="Memory/Line0" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
+[node name="Line3" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 72.0
+margin_right = 534.0
+margin_bottom = 96.0
 
-[node name="Line1" type="HBoxContainer" parent="Memory"]
-margin_top = 28.0
-margin_right = 452.0
-margin_bottom = 52.0
+[node name="Line4" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 96.0
+margin_right = 534.0
+margin_bottom = 120.0
 
-[node name="ByteEdit0" parent="Memory/Line1" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
+[node name="Line5" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 120.0
+margin_right = 534.0
+margin_bottom = 144.0
 
-[node name="ByteEdit1" parent="Memory/Line1" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
+[node name="Line6" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 144.0
+margin_right = 534.0
+margin_bottom = 168.0
 
-[node name="ByteEdit2" parent="Memory/Line1" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
-
-[node name="Line2" type="HBoxContainer" parent="Memory"]
-margin_top = 56.0
-margin_right = 452.0
-margin_bottom = 80.0
-
-[node name="ByteEdit0" parent="Memory/Line2" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
-
-[node name="ByteEdit1" parent="Memory/Line2" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
-
-[node name="ByteEdit2" parent="Memory/Line2" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
-
-[node name="Line3" type="HBoxContainer" parent="Memory"]
-margin_top = 84.0
-margin_right = 452.0
-margin_bottom = 108.0
-
-[node name="ByteEdit0" parent="Memory/Line3" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
-
-[node name="ByteEdit1" parent="Memory/Line3" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
-
-[node name="ByteEdit2" parent="Memory/Line3" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
-
-[node name="Line4" type="HBoxContainer" parent="Memory"]
-margin_top = 112.0
-margin_right = 452.0
-margin_bottom = 136.0
-
-[node name="ByteEdit0" parent="Memory/Line4" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
-
-[node name="ByteEdit1" parent="Memory/Line4" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
-
-[node name="ByteEdit2" parent="Memory/Line4" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
-
-[node name="Line5" type="HBoxContainer" parent="Memory"]
-margin_top = 140.0
-margin_right = 452.0
-margin_bottom = 164.0
-
-[node name="ByteEdit0" parent="Memory/Line5" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
-
-[node name="ByteEdit1" parent="Memory/Line5" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
-
-[node name="ByteEdit2" parent="Memory/Line5" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
-
-[node name="Line6" type="HBoxContainer" parent="Memory"]
+[node name="Line7" parent="Memory" instance=ExtResource( 4 )]
 margin_top = 168.0
-margin_right = 452.0
+margin_right = 534.0
 margin_bottom = 192.0
 
-[node name="ByteEdit0" parent="Memory/Line6" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
+[node name="Line8" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 192.0
+margin_right = 534.0
+margin_bottom = 216.0
 
-[node name="ByteEdit1" parent="Memory/Line6" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
+[node name="Line9" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 216.0
+margin_right = 534.0
+margin_bottom = 240.0
 
-[node name="ByteEdit2" parent="Memory/Line6" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
+[node name="Line10" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 240.0
+margin_right = 534.0
+margin_bottom = 264.0
 
-[node name="Line7" type="HBoxContainer" parent="Memory"]
-margin_top = 196.0
-margin_right = 452.0
-margin_bottom = 220.0
+[node name="Line11" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 264.0
+margin_right = 534.0
+margin_bottom = 288.0
 
-[node name="ByteEdit0" parent="Memory/Line7" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
+[node name="Line12" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 288.0
+margin_right = 534.0
+margin_bottom = 312.0
 
-[node name="ByteEdit1" parent="Memory/Line7" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
+[node name="Line13" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 312.0
+margin_right = 534.0
+margin_bottom = 336.0
 
-[node name="ByteEdit2" parent="Memory/Line7" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
+[node name="Line14" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 336.0
+margin_right = 534.0
+margin_bottom = 360.0
 
-[node name="Line8" type="HBoxContainer" parent="Memory"]
-margin_top = 224.0
-margin_right = 452.0
-margin_bottom = 248.0
+[node name="Line15" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 360.0
+margin_right = 534.0
+margin_bottom = 384.0
 
-[node name="ByteEdit0" parent="Memory/Line8" instance=ExtResource( 2 )]
-margin_right = 148.0
-margin_bottom = 24.0
+[node name="Line16" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 384.0
+margin_right = 534.0
+margin_bottom = 408.0
 
-[node name="ByteEdit1" parent="Memory/Line8" instance=ExtResource( 2 )]
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 24.0
+[node name="Line17" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 408.0
+margin_right = 534.0
+margin_bottom = 432.0
 
-[node name="ByteEdit2" parent="Memory/Line8" instance=ExtResource( 2 )]
-margin_left = 304.0
-margin_right = 452.0
-margin_bottom = 24.0
+[node name="Line18" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 432.0
+margin_right = 534.0
+margin_bottom = 456.0
+
+[node name="Line19" parent="Memory" instance=ExtResource( 4 )]
+margin_top = 456.0
+margin_right = 534.0
+margin_bottom = 480.0

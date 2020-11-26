@@ -10,7 +10,7 @@ enum {
 }
 
 var state = STATE_TRITS
-var value: int = 0 setget set_value, get_value
+var value: int = 0 setget set_value
 
 var cached_trit_edits: Array = []
 func cache_trit_edits() -> void:
@@ -22,6 +22,7 @@ func get_trit_edit(index) -> Node:
 func _ready() -> void:
 	cache_trit_edits()
 	$NumberEdit.visible = false
+	rect_min_size.x = get_trit_edit(0).rect_size.x * width
 	for i in range(width):
 		get_trit_edit(i).connect("gui_value_changed", self, "_on_TritEdit_gui_value_changed")
 
@@ -76,16 +77,18 @@ func _on_TritEdit_gui_value_changed(_new_value: int) -> void:
 	emit_signal("gui_value_changed", value, get_trits())
 
 func set_value(new_value: int) -> void:
-	value = new_value
-	update_trits()
-
-func get_value() -> int:
-	return value
+	if value != new_value:
+		value = new_value
+		update_trits()
 
 func set_trits(new_trits: Array) -> void:
+	var updated = false
 	for i in range(width):
-		get_trit_edit(i).value = new_trits[i]
-	update_value()
+		if get_trit_edit(i).value != new_trits[i]:
+			get_trit_edit(i).value = new_trits[i]
+			updated = true
+	if updated:
+		update_value()
 
 func get_trits() -> Array:
 	var result = []

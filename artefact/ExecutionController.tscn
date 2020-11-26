@@ -39,6 +39,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+max_speed = false
 
 [node name="RunPause" type="Button" parent="."]
 margin_right = 36.0
