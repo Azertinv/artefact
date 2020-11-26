@@ -65,6 +65,18 @@ impl Artefact {
     }
 
     #[export]
+    fn mem_write(&mut self, _owner: &Node, addr_value: i64, data: GodotBytes) {
+        let addr: Word = Word::from(addr_value);
+        if let Ok((space, offset)) = self.cpu.get_mut_space_and_offset(addr) {
+            for i in 0..data.len() {
+                if space.set_byte(offset + i as isize, Byte::from(data.get(i) as i64)).is_err() {
+                    break;
+                }
+            }
+        }
+    }
+
+    #[export]
     fn get_reg_trits(&self, _owner: &Node, index: i64) -> GodotTrits {
         let value: Word = match index {
             0 => { self.cpu.regs.pc },

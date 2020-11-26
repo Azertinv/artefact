@@ -31,8 +31,15 @@ func _ready() -> void:
 	if artefact == null:
 		push_error("MemoryViewer not connected to Artefact")
 		return
+	for i in range(BYTE_PER_LINE * LINE_COUNT):
+		get_byte(i).connect("gui_value_changed", self, "_on_ByteEdit_gui_value_changed", [i])
 	addr = artefact.get_reg_value(0)
 	last_addr = 0
+
+func _on_ByteEdit_gui_value_changed(new_value, _new_trits, index):
+	artefact.mem_write(addr + index, PoolIntArray([new_value]))
+	print(new_value)
+	print(index)
 
 func _input(event):
 	if event is InputEventMouseButton:
