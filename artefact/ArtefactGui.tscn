@@ -26,44 +26,48 @@ __meta__ = {
 margin_left = 50.0
 margin_top = 50.0
 margin_right = 974.0
-margin_bottom = 550.0
+margin_bottom = 630.0
+
+[node name="LeftPanel" type="VBoxContainer" parent="HBoxContainer"]
+margin_bottom = 580.0
 
 [node name="Memory" type="MarginContainer" parent="HBoxContainer"]
-margin_right = 668.0
-margin_bottom = 500.0
+margin_left = 4.0
+margin_right = 739.0
+margin_bottom = 580.0
 size_flags_horizontal = 3
 
 [node name="MemoryViewer" parent="HBoxContainer/Memory" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 668.0
-margin_bottom = 500.0
+margin_right = 735.0
+margin_bottom = 580.0
 artefact_path = NodePath("../../../Artefact")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 672.0
+[node name="RightPanel" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 743.0
 margin_right = 924.0
-margin_bottom = 500.0
+margin_bottom = 580.0
 
-[node name="RegisterViewer" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 2 )]
+[node name="RegisterViewer" parent="HBoxContainer/RightPanel" instance=ExtResource( 2 )]
 margin_left = 0.0
-margin_right = 252.0
+margin_right = 181.0
 margin_bottom = 248.0
 artefact_path = NodePath("../../../Artefact")
+memory_viewer_path = NodePath("../../Memory/MemoryViewer")
 
-[node name="Tooltips" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 4 )]
-margin_right = 252.0
-margin_bottom = 464.0
+[node name="Tooltips" parent="HBoxContainer/RightPanel" instance=ExtResource( 4 )]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
-margin_top = 468.0
-margin_right = 252.0
-margin_bottom = 500.0
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/RightPanel"]
+margin_top = 364.0
+margin_right = 181.0
+margin_bottom = 396.0
 
-[node name="ExecutionController" parent="HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 6 )]
+[node name="ExecutionController" parent="HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 6 )]
 margin_top = 0.0
 margin_right = 80.0
 margin_bottom = 32.0
 artefact_path = NodePath("../../../../Artefact")
 
-[node name="WriterIndicator" parent="HBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 7 )]
+[node name="WriterIndicator" parent="HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 7 )]
+margin_right = 181.0

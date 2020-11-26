@@ -62,7 +62,6 @@ visible = false
 margin_left = 90.0
 margin_right = 148.0
 mouse_filter = 1
-size_flags_horizontal = 3
 text = "123"
 context_menu_enabled = false
 [connection signal="gui_value_changed" from="NumberEdit" to="." method="_on_NumberEdit_gui_value_changed"]

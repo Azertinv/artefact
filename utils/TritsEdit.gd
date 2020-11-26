@@ -1,6 +1,7 @@
 extends HBoxContainer
 
 signal gui_value_changed(new_value, new_trits)
+signal gui_double_click()
 
 export(int) var width = 9
 
@@ -22,13 +23,16 @@ func get_trit_edit(index) -> Node:
 func _ready() -> void:
 	cache_trit_edits()
 	$NumberEdit.visible = false
-	rect_min_size.x = get_trit_edit(0).rect_size.x * width
+	$NumberEdit.rect_min_size.x = get_trit_edit(0).rect_size.x * width
 	for i in range(width):
 		get_trit_edit(i).connect("gui_value_changed", self, "_on_TritEdit_gui_value_changed")
 
-func _gui_input(event):
+var last_left_click = 0
+func _gui_input(event) -> void:
 	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == BUTTON_RIGHT:
+		if not event.pressed:
+			return
+		if event.button_index == BUTTON_RIGHT:
 			if state == STATE_TRITS:
 				state = STATE_DECIMAL
 				update_decimal_display()
@@ -40,6 +44,11 @@ func _gui_input(event):
 				for i in range(width):
 					get_trit_edit(i).visible = true
 				$NumberEdit.visible = false
+		elif event.button_index == BUTTON_LEFT:
+			var left_click = OS.get_ticks_msec()
+			if left_click - last_left_click < 200:
+				emit_signal("gui_double_click")
+			last_left_click = left_click
 
 func update_decimal_display() -> void:
 	if state != STATE_DECIMAL:

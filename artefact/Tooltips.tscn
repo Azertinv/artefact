@@ -10,9 +10,8 @@ font_data = ExtResource( 2 )
 
 [node name="Tooltips" type="PanelContainer"]
 margin_top = 252.0
-margin_right = 180.0
-margin_bottom = 400.0
-size_flags_vertical = 3
+margin_right = 181.0
+margin_bottom = 360.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -21,14 +20,13 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 245.0
-margin_bottom = 141.0
+margin_right = 174.0
+margin_bottom = 101.0
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 20.0
-margin_right = 238.0
-margin_bottom = 37.0
+margin_right = 167.0
+margin_bottom = 17.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 margin_top = 1.0
@@ -44,9 +42,9 @@ custom_fonts/font = SubResource( 1 )
 text = "T"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 41.0
-margin_right = 238.0
-margin_bottom = 58.0
+margin_top = 21.0
+margin_right = 167.0
+margin_bottom = 38.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
 margin_top = 1.0
@@ -62,9 +60,9 @@ custom_fonts/font = SubResource( 1 )
 text = "0"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 62.0
-margin_right = 238.0
-margin_bottom = 79.0
+margin_top = 42.0
+margin_right = 167.0
+margin_bottom = 59.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
 margin_top = 1.0
@@ -80,8 +78,8 @@ custom_fonts/font = SubResource( 1 )
 text = "1"
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-margin_top = 83.0
-margin_right = 238.0
-margin_bottom = 114.0
-text = "You can left click and drag the mouse
-over a value to set multiple trits."
+margin_top = 63.0
+margin_right = 167.0
+margin_bottom = 94.0
+text = "Left click and drag
+to set multiple trits."

@@ -31,20 +31,26 @@ func update_text(emit: bool) -> void:
 	if emit:
 		emit_signal("gui_value_changed", value)
 
-func update_value() -> void:
+# return true if an action was processed
+func update_value() -> bool:
 	if not editable:
-		return
+		return false
+	var processed = false
 	var old_value = value
 	if Input.is_action_pressed("trit_zero"):
 		value = 0
+		processed = true
 	if Input.is_action_pressed("trit_one"):
 		value = 1
+		processed = true
 	if Input.is_action_pressed("trit_tern"):
 		value = -1
+		processed = true
 	if old_value != value:
 		update_text(true)
+	return processed
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		accept_event()
-		update_value()
+		if update_value():
+			accept_event()
