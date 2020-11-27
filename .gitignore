@@ -18,3 +18,4 @@ lib/
 # Krita
 *.kra
 *~
+test.asm

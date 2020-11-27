@@ -26,28 +26,28 @@ __meta__ = {
 margin_left = 50.0
 margin_top = 50.0
 margin_right = 974.0
-margin_bottom = 630.0
+margin_bottom = 550.0
 
 [node name="LeftPanel" type="VBoxContainer" parent="HBoxContainer"]
-margin_bottom = 580.0
+margin_bottom = 500.0
 
 [node name="Memory" type="MarginContainer" parent="HBoxContainer"]
 margin_left = 4.0
 margin_right = 739.0
-margin_bottom = 580.0
+margin_bottom = 500.0
 size_flags_horizontal = 3
 
 [node name="MemoryViewer" parent="HBoxContainer/Memory" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 735.0
-margin_bottom = 580.0
+margin_bottom = 500.0
 artefact_path = NodePath("../../../Artefact")
 
 [node name="RightPanel" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 743.0
 margin_right = 924.0
-margin_bottom = 580.0
+margin_bottom = 500.0
 
 [node name="RegisterViewer" parent="HBoxContainer/RightPanel" instance=ExtResource( 2 )]
 margin_left = 0.0

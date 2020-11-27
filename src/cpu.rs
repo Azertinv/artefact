@@ -6,7 +6,7 @@ use crate::operation::Operation;
 use crate::register::Registers;
 use crate::interrupt::{Interrupt, Result};
 
-use crate::{byte_le};
+use crate::byte_le;
 
 macro_rules! bt_le_pattern {
     ( _ ) => { _ };
@@ -68,7 +68,7 @@ impl Cpu {
         Ok(value)
     }
 
-    fn test(&mut self, lhs: Word, rhs: Word) {
+    fn test(&mut self, lhs: Word, rhs: Word) -> Word {
         unimplemented!();
         // let diff: (Word, Word) = Word::sub(lhs, rhs, Word::ZERO);
         // let diff_fz: (Word, Word) = Word::sub_fz(lhs, rhs, Word::ZERO);

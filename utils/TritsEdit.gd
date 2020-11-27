@@ -29,9 +29,7 @@ func _ready() -> void:
 
 var last_left_click = 0
 func _gui_input(event) -> void:
-	if event is InputEventMouseButton:
-		if not event.pressed:
-			return
+	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == BUTTON_RIGHT:
 			if state == STATE_TRITS:
 				state = STATE_DECIMAL

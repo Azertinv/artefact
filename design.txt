@@ -108,3 +108,12 @@ bt behaviour:
         00T1 010T 0T10
         1T10 10T1 110T
         T10T TT10 T0T1
+    or addition and substraction over a galois field 3
+         01T  01T
+        001T 00T1
+        11T0 110T
+        TT01 TT10
+
+achievement:
+    Halt and catch fire:
+        find a buggy opcode and crash the cpu

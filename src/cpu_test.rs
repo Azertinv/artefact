@@ -17,9 +17,8 @@ fn test_init() {
     let mut cpu = Cpu::new();
     cpu.init_default();
     let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
-    let shellcode = [
-        byte_le!(0,0,0,0,0,0,0,0,0),
-    ];
+    let shellcode = [];
+
     for (i, b) in shellcode.iter().enumerate() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }

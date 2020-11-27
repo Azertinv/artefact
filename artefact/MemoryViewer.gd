@@ -39,7 +39,7 @@ func _ready() -> void:
 func _on_ByteEdit_gui_value_changed(new_value, _new_trits, index):
 	artefact.mem_write(addr + index, PoolIntArray([new_value]))
 
-func _input(event):
+func _input(event: InputEvent):
 	if event is InputEventMouseButton:
 		if event.is_action_pressed("dbg_mem_down"):
 			addr += BYTE_PER_LINE
@@ -49,7 +49,7 @@ func _input(event):
 func goto(new_addr: int) -> void:
 	addr = new_addr
 
-func _process(_delta) -> void:
+func _process(_delta: float) -> void:
 	var bytes: PoolIntArray = artefact.mem_read(addr, BYTE_PER_LINE * LINE_COUNT)
 	for i in range(BYTE_PER_LINE * LINE_COUNT):
 		if i < bytes.size():
