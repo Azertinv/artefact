@@ -72,6 +72,17 @@ opcodes = {
         "imod":     Op("T11vvvvxx", 1, 2),
         "iaddfz":   Op("T10vvvvxx", 1, 2),
         "isubfz":   Op("T0Tvvvvxx", 1, 2),
+        # 2 reg memory op
+        "loadw":    Op("00TT1yyxx", 1, 2),
+        "loadt":    Op("00TT0yyxx", 1, 2),
+        "loadb":    Op("00TTTyyxx", 1, 2),
+        "storew":   Op("00T11yyxx", 1, 2),
+        "storet":   Op("00T10yyxx", 1, 2),
+        "storeb":   Op("00T1Tyyxx", 1, 2),
+        # 1 reg 1 imm utils
+        "setw":     Op("0000T01xx", 3, 2),
+        "sett":     Op("0000T00xx", 2, 2),
+        "setb":     Op("0000T0Txx", 2, 2),
         }
 
 def parse_inst(head, tail, line):
@@ -111,6 +122,8 @@ regs = {"pc": "TT", "sp": "T0", "fl": "T1",
         "d":  "1T", "e":  "10", "f":  "11",}
 def get_reg(opcode):
     reg = opcode.args.pop(0)
+    if reg[0] == '[' and reg[-1] == ']':
+        reg = reg[1:-1]
     if reg not in regs:
         raise CompileError(opcode.line,
                 "Invalid register \"{}\" given at line {}"
@@ -128,7 +141,7 @@ def dec_to_bt(dec):
     result = result.ljust(18, '0')
     return result
 
-def get_inimm(opcode):
+def get_imm(opcode):
     imm = opcode.args.pop(0)
     if imm[0] == "D": # decimal value
         try:
@@ -138,7 +151,7 @@ def get_inimm(opcode):
             raise CompileError(opcode.line,
                     "Invalid immediate decimal value \"{}\" given at line {}"
                     .format(imm, opcode.line))
-    return imm[:4].ljust(4, '0')
+    return imm.ljust(18, '0')
 
 def compile_final(parsed_code, labels):
     result = []
@@ -149,8 +162,13 @@ def compile_final(parsed_code, labels):
         if "yy" in encoding:
             encoding = encoding.replace("yy", get_reg(op))
         if "vvvv" in encoding:
-            encoding = encoding.replace("vvvv", get_inimm(op))
+            encoding = encoding.replace("vvvv", get_imm(op)[:4])
         result.append(encoding)
+        if op.size > 1:
+            imm = get_imm(op)
+            result.append(imm[0:9])
+            if op.size == 3:
+                result.append(imm[9:18])
     return result
 
 def compile(code):
@@ -170,7 +188,12 @@ def test():
             '011T10100','011T00100','011000100',
             'TTT01T00T','TT11T0000','TT01T1000',
             'T1T1T1T00','T11100000','T10100000',
-            'T0T100000']
+            'T0T100000','0000T0100','000001111',
+            'TTTT11111','0000T0000','00000TTTT',
+            '0000T0T00','000001111',
+            '00TT10001','00TT00001','00TTT0001', # load
+            '00T110001','00T100001','00T1T0001', # store
+            ]
     test_code = """
     main:
         nop
@@ -197,11 +220,19 @@ def test():
         imod b 1
         iaddfz b 1
         isubfz b 1
+        setw b 000001111TTTT11111
+        sett b 00000TTTT
+        setb b 000001111
+        loadw c [b]
+        loadt c [b]
+        loadb c [b]
+        storew [c] b
+        storet [c] b
+        storeb [c] b
     """
     compiled_code = compile(test_code)
     if compiled_code != expected_compiled_code:
         print(compiled_code)
-        print(expected_compiled_code)
         print("Test failed: compiled code differ from expected compiled code")
         embed()
         # raise Exception("Test failed: compiled code differ from expected compiled code")
