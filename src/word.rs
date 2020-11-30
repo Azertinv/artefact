@@ -233,6 +233,9 @@ impl From<i64> for Word {
         let mut bytes = [Byte::ZERO; Word::BYTE_COUNT];
         for i in 0..Word::BYTE_COUNT {
             for j in 0..Byte::WIDTH {
+                if item == 0 {
+                    return Word{bytes: bytes};
+                }
                 let mut trit = item % 3;
                 if trit < 0 {
                     trit += 3;

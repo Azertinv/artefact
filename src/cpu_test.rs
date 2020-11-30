@@ -87,7 +87,7 @@ fn test_inimm_insts() {
         byte_le!(T,T,1,1,T,0,0,0,0), // sub b, T1
         byte_le!(T,T,0,1,T,1,0,0,0), // mul b, 1T1
         byte_le!(T,1,T,1,T,1,T,0,0), // div b, T1T1
-        byte_le!(T,1,1,0,1,0,0,0,0), // mod b, 1
+        byte_le!(T,1,1,0,1,0,0,0,0), // mod b, 10
         byte_le!(T,1,0,1,0,0,0,0,0), // addfz b, 1
         byte_le!(T,0,T,1,0,0,0,0,0), // subfz b, 1
     ];
@@ -323,15 +323,15 @@ fn test_push_pop() {
         byte_le!(0,0,0,0,T,0,1,0,0),
         byte_le!(0,0,T,0,1,T,1,0,1),
         byte_le!(0,0,T,0,1,T,1,0,1),
-        byte_le!(0,0,0,0,0,1,T,0,0),
-        byte_le!(0,0,0,0,0,1,1,0,1),
-        byte_le!(0,0,0,0,0,1,T,0,1),
-        byte_le!(0,0,0,0,0,1,1,1,T),
-        byte_le!(0,0,0,0,0,1,T,1,T),
-        byte_le!(0,0,0,0,0,1,1,1,0),
-        byte_le!(0,0,0,0,0,1,T,1,T),
-        byte_le!(0,0,0,0,0,1,T,1,T),
-        byte_le!(0,0,0,0,0,1,T,1,T),
+        byte_le!(0,0,0,0,0,1,T,0,0), // push b
+        byte_le!(0,0,0,0,0,1,1,0,1), // pop c
+        byte_le!(0,0,0,0,0,1,T,0,1), // push c
+        byte_le!(0,0,0,0,0,1,1,1,T), // pop d
+        byte_le!(0,0,0,0,0,1,T,1,T), // push d
+        byte_le!(0,0,0,0,0,1,1,1,0), // pop e
+        byte_le!(0,0,0,0,0,1,T,1,T), // push d
+        byte_le!(0,0,0,0,0,1,T,1,T), // push d
+        byte_le!(0,0,0,0,0,1,T,1,T), // push d
     ];
     for (i, b) in shellcode.iter().enumerate() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();

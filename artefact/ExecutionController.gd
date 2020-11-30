@@ -20,6 +20,7 @@ func _process(delta):
 				inst_per_frame -= 1 + inst_per_frame/100
 			else:
 				inst_per_frame += 1 + inst_per_frame/100
+			print(inst_per_frame * 60)
 		artefact.run(inst_per_frame)
 
 func _on_RunPause_toggled(button_pressed):

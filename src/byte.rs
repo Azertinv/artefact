@@ -230,6 +230,9 @@ impl From<i64> for Byte {
         assert!(item >= Byte::MIN);
         let mut trits = [Trit::ZERO; Byte::WIDTH];
         for i in 0..Byte::WIDTH {
+            if item == 0 {
+                break;
+            }
             let mut trit = item % 3;
             if trit < 0 {
                 trit += 3;
