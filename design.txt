@@ -84,14 +84,15 @@ x           T0T sub_fz reg, inimm
             program pointer
             stack pointer
             flag register: each trit correspond to one comp
-                diff, T if lesser, 0 if equal, 1 if greater
-                greater_or_equal_diff, T if lesser, 1 if greater or equal
-                lesser_or_equal_diff, T if greater, 1 if lesser or equal
-                diff_fz, T if lesser, 0 if equal, 1 if greater
-                greater_or_equal_diff_fz, T if lesser, 1 if greater or equal
-                lesser_or_equal_diff_fz, T if greater, 1 if lesser or equal
-                carry, T if no carry, 1 if carry
-                sign
+                TT diff, T if lesser, 0 if equal, 1 if greater
+                0T greater_or_equal_diff, T if lesser, 1 if greater or equal
+                1T lesser_or_equal_diff, T if greater, 1 if lesser or equal
+                T0 diff_fz, T if lesser, 0 if equal, 1 if greater
+                00 greater_or_equal_diff_fz, T if lesser, 1 if greater or equal
+                10 lesser_or_equal_diff_fz, T if greater, 1 if lesser or equal
+                T1 carry, T if no carry, 1 if carry
+                01 sign
+                11
             6 general purpose
         reg.t is the most significant byte (top)
         reg.b is the least significant byte (bottom)
@@ -117,3 +118,29 @@ bt behaviour:
 achievement:
     Halt and catch fire:
         find a buggy opcode and crash the cpu
+    Stack overflow (no not the website):
+        Memory fault on a push that overflow the stack pointer
+
+timeline:
+    Phase tutorial:
+        Arithmetic calculator
+        No playground
+        Simple programs:
+            read only
+            registers manipulation
+            calculator like operations
+    Phase 1:
+        Arithmetic + logic calculator
+        locked playground:
+            only discovered opcodes
+        programs:
+            read only
+            logic operations
+            memory operations
+        break out of the locked playground by executing arbitrary opcodes, transition to phase 2
+    Phase 2:
+        unlocked playground
+        programs:
+            some read only, some read write
+            control flow
+            conditions

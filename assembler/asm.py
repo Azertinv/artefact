@@ -73,25 +73,29 @@ opcodes = {
         "iaddfz":   Op("T10vvvvxx", 1, 2),
         "isubfz":   Op("T0Tvvvvxx", 1, 2),
         # 2 reg memory op
-        "loadw":    Op("00TT1yyxx", 1, 2),
-        "loadt":    Op("00TT0yyxx", 1, 2),
-        "loadb":    Op("00TTTyyxx", 1, 2),
-        "storew":   Op("00T11yyxx", 1, 2),
-        "storet":   Op("00T10yyxx", 1, 2),
-        "storeb":   Op("00T1Tyyxx", 1, 2),
+        "loadw":    Op("00TT1mmxx", 1, 2),
+        "loadt":    Op("00TT0mmxx", 1, 2),
+        "loadb":    Op("00TTTmmxx", 1, 2),
+        "storew":   Op("00T11yymm", 1, 2),
+        "storet":   Op("00T10yymm", 1, 2),
+        "storeb":   Op("00T1Tyymm", 1, 2),
         # 1 reg 1 imm utils
         "setw":     Op("0000T01xx", 3, 2),
         "sett":     Op("0000T00xx", 2, 2),
         "setb":     Op("0000T0Txx", 2, 2),
+        # 1 imm control flow
+        "callabs":  Op("000000011", 3, 1),
+        "callrel":  Op("00000001T", 2, 1),
         }
 
-def parse_inst(head, tail, line):
+def parse_inst(head, tail, line, offset):
     if head not in opcodes:
         raise ParsingError(line,
                 "Invalid opcode \"{}\" at line {}"
                 .format(head, line))
     opcode = deepcopy(opcodes[head])
     opcode.line = line
+    opcode.offset = offset
     for _ in range(opcode.args_num):
         opcode.args.append(tail.pop(0))
     return opcode
@@ -113,7 +117,7 @@ def parse(lexed_code):
         elif token == "\n":
             line += 1
         else:
-            result.append(parse_inst(token, lexed_code, line))
+            result.append(parse_inst(token, lexed_code, line, offset))
             offset += result[-1].size
     return (result, labels)
 
@@ -122,13 +126,23 @@ regs = {"pc": "TT", "sp": "T0", "fl": "T1",
         "d":  "1T", "e":  "10", "f":  "11",}
 def get_reg(opcode):
     reg = opcode.args.pop(0)
-    if reg[0] == '[' and reg[-1] == ']':
-        reg = reg[1:-1]
     if reg not in regs:
         raise CompileError(opcode.line,
                 "Invalid register \"{}\" given at line {}"
                 .format(reg, opcode.line))
     return regs[reg]
+
+def get_mem_reg(opcode):
+    reg = opcode.args.pop(0)
+    if reg[0] != '[' or reg[-1] != ']':
+        raise CompileError(opcode.line,
+                "Missing brackets at \"{}\" at line {}"
+                .format(reg, opcode.line))
+    if reg[1:-1] not in regs:
+        raise CompileError(opcode.line,
+                "Invalid register \"{}\" given at line {}"
+                .format(reg[1:-1], opcode.line))
+    return regs[reg[1:-1]]
 
 def dec_to_bt_helper(dec):
     if dec == 0: return ""
@@ -141,7 +155,7 @@ def dec_to_bt(dec):
     result = result.ljust(18, '0')
     return result
 
-def get_imm(opcode):
+def get_imm(opcode, labels):
     imm = opcode.args.pop(0)
     if imm[0] == "D": # decimal value
         try:
@@ -151,6 +165,23 @@ def get_imm(opcode):
             raise CompileError(opcode.line,
                     "Invalid immediate decimal value \"{}\" given at line {}"
                     .format(imm, opcode.line))
+    if imm[0] == ":": # relative label offset
+        if imm[1:] not in labels:
+            raise CompileError(opcode.line,
+                    "Label not found \"{}\" at line {}"
+                    .format(imm, opcode.line))
+        value = labels[imm[1:]].offset- opcode.offset
+        if value < -3**9/2 or value > 3**9/2:
+            raise CompileError(opcode.line,
+                    "Relative label too far \"{}\" at line {}"
+                    .format(imm, opcode.line))
+        imm = dec_to_bt(value)
+    if imm[0] == "@": # absolute label offset
+        if imm[1:] not in labels:
+            raise CompileError(opcode.line,
+                    "Label not found \"{}\" at line {}"
+                    .format(imm, opcode.line))
+        imm = dec_to_bt(labels[imm[1:]].offset)
     return imm.ljust(18, '0')
 
 def compile_final(parsed_code, labels):
@@ -159,13 +190,15 @@ def compile_final(parsed_code, labels):
         encoding = op.encoding
         if "xx" in encoding:
             encoding = encoding.replace("xx", get_reg(op))
+        if "mm" in encoding:
+            encoding = encoding.replace("mm", get_mem_reg(op))
         if "yy" in encoding:
             encoding = encoding.replace("yy", get_reg(op))
         if "vvvv" in encoding:
-            encoding = encoding.replace("vvvv", get_imm(op)[:4])
+            encoding = encoding.replace("vvvv", get_imm(op, labels)[:4])
         result.append(encoding)
         if op.size > 1:
-            imm = get_imm(op)
+            imm = get_imm(op, labels)
             result.append(imm[0:9])
             if op.size == 3:
                 result.append(imm[9:18])
@@ -174,8 +207,6 @@ def compile_final(parsed_code, labels):
 def compile(code):
     lexed_code = lexer(code)
     parsed_code, labels = parse(lexed_code)
-    print(labels)
-    print(parsed_code)
     compiled_code = compile_final(parsed_code, labels)
     return compiled_code
 
@@ -193,6 +224,8 @@ def test():
             '0000T0T00','000001111',
             '00TT10001','00TT00001','00TTT0001', # load
             '00T110001','00T100001','00T1T0001', # store
+            '000000011','110000000','000000000', # callabs
+            '00000001T','110T00000', # callrel
             ]
     test_code = """
     main:
@@ -200,7 +233,7 @@ def test():
         not b
         push a
         pop a
-    wazzaaaaa:
+    wazzaa:
         radd b c
         rsub b c
         rmul b c
@@ -229,6 +262,8 @@ def test():
         storew [c] b
         storet [c] b
         storeb [c] b
+        callabs @wazzaa
+        callrel :label
     """
     compiled_code = compile(test_code)
     if compiled_code != expected_compiled_code:
@@ -236,6 +271,8 @@ def test():
         print("Test failed: compiled code differ from expected compiled code")
         embed()
         # raise Exception("Test failed: compiled code differ from expected compiled code")
+    else:
+        print("test passed")
 
 def main():
     with open("test.asm", 'r') as f:
