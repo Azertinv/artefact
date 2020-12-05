@@ -115,6 +115,7 @@ bt behaviour:
         11T0 110T
         TT01 TT10
 
+
 achievement:
     Halt and catch fire:
         find a buggy opcode and crash the cpu
@@ -124,6 +125,7 @@ achievement:
 timeline:
     Phase tutorial:
         Arithmetic calculator
+            What is =,C,0,+,-,*,/,1,T,TT1,T0111,TT01T
         No playground
         Simple programs:
             read only

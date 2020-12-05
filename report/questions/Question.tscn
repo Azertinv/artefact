@@ -1,15 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://report/questions/Question.gd" type="Script" id=1]
 [ext_resource path="res://report/answers/AnswerBox.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/font/ttf/alien.ttf" type="DynamicFontData" id=3]
-
-
-[sub_resource type="DynamicFont" id=1]
-size = 20
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 3 )
+[ext_resource path="res://assets/font/alien_normal_size/Normal.tres" type="DynamicFont" id=4]
 
 [node name="Question" type="HBoxContainer" groups=[
 "questions",
@@ -29,15 +22,15 @@ disabled = true
 
 [node name="SymbolLabel" type="Label" parent="."]
 margin_left = 28.0
-margin_top = 2.0
-margin_right = 125.0
-margin_bottom = 22.0
-custom_fonts/font = SubResource( 1 )
+margin_top = 3.0
+margin_right = 106.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 4 )
 text = "0T1=-+*/C"
 
 [node name="Answer" type="HBoxContainer" parent="."]
-margin_left = 129.0
-margin_right = 244.0
+margin_left = 110.0
+margin_right = 225.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
