@@ -216,8 +216,7 @@ impl Operation for Byte {
 
 impl fmt::Display for Byte {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mst = self.highest_mst();
-        for i in (0..=mst).rev() {
+        for i in 0..=self.highest_mst() {
             write!(f, "{}", self.trits[i])?;
         }
         Ok(())

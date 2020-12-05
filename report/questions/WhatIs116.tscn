@@ -6,12 +6,9 @@
 answer = "is a value equal to 116"
 
 [node name="SymbolLabel" parent="." index="1"]
-margin_right = 78.0
-text = "1110T"
+margin_right = 68.0
+text = "T0111"
 
 [node name="Answer" parent="." index="2"]
-margin_left = 82.0
-margin_right = 194.0
-
-[node name="AnswerBox" parent="Answer" index="1"]
-margin_right = 112.0
+margin_left = 72.0
+margin_right = 187.0
