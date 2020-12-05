@@ -2,7 +2,8 @@
 
 [ext_resource path="res://report/questions/Question.gd" type="Script" id=1]
 [ext_resource path="res://report/answers/AnswerBox.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/font/alien.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/font/ttf/alien.ttf" type="DynamicFontData" id=3]
+
 
 [sub_resource type="DynamicFont" id=1]
 size = 20

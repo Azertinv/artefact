@@ -29,7 +29,13 @@ gdscript/warnings/unsafe_call_argument=true
 
 [display]
 
+window/size/width=1920
+window/size/height=1080
 window/size/resizable=false
+
+[editor_plugins]
+
+enabled=PoolStringArray( "EXP-System-Dialog" )
 
 [importer_defaults]
 
