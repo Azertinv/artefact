@@ -6,6 +6,7 @@ var regex = RegEx.new()
 
 func _ready():
 	regex.compile("^\\-?[0-9]*$")
+	caret_position = 0
 
 var old_text: String = ""
 

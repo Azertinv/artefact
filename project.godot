@@ -19,6 +19,12 @@ config/name="alien_re_game"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Helper="*res://scripts/Helper.gd"
+Config="*res://scripts/Config.gd"
+Save="*res://scripts/Save.gd"
+
 [debug]
 
 gdscript/warnings/unused_class_variable=true

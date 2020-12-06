@@ -1,6 +1,7 @@
 extends HBoxContainer
 
 export(String, MULTILINE) var answer = ""
+export(String) var save_section = "CHANGEME"
 
 func get_answer(answer_box) -> String:
 	var result = ""
@@ -32,4 +33,26 @@ func mark_question_as_answered() -> void:
 func _ready() -> void:
 	if answer == "":
 		push_error("Question "+self.name+" has empty answer")
+		breakpoint
+	Save.register_node(save_section, name, self)
+	if Save.has_section_key(save_section, name):
+		var save_data = Save.get_value(save_section, name)
+		if save_data["answered"]:
+			mark_question_as_answered()
+		elif save_data["response"]:
+			# already setup variable from _ready will saved with the node
+			$Answer/AnswerBox.add_child(Helper.unpack_node_tree(save_data["response"]))
+	else:
+		_exit_tree()
 
+func _exit_tree():
+	var save_data = {}
+	if $CheckBox.pressed:
+		save_data["answered"] = true
+	else:
+		save_data["answered"] = false
+		if $Answer/AnswerBox.get_child_count() > 0:
+			save_data["response"] = Helper.pack_node_tree($Answer/AnswerBox.get_child(0))
+		else:
+			save_data["response"] = null
+	Save.set_value(save_section, name, save_data)

@@ -34,42 +34,39 @@ margin_bottom = 980.0
 
 [node name="MiddlePanel" type="TabContainer" parent="HBoxContainer"]
 margin_left = 4.0
-margin_right = 1636.0
+margin_right = 1635.0
 margin_bottom = 980.0
 size_flags_horizontal = 3
 tab_align = 0
 
 [node name="MemoryViewer" parent="HBoxContainer/MiddlePanel" instance=ExtResource( 5 )]
 margin_left = 4.0
-margin_top = 24.0
+margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 artefact_path = NodePath("../../../Artefact")
 
 [node name="CodeViewer" parent="HBoxContainer/MiddlePanel" instance=ExtResource( 8 )]
 visible = false
-margin_top = 24.0
 
 [node name="RightPanel" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 1640.0
+margin_left = 1639.0
 margin_right = 1820.0
 margin_bottom = 980.0
 
 [node name="RegisterViewer" parent="HBoxContainer/RightPanel" instance=ExtResource( 2 )]
 margin_left = 0.0
-margin_right = 180.0
+margin_right = 181.0
 margin_bottom = 248.0
 artefact_path = NodePath("../../../Artefact")
 memory_viewer_path = NodePath("../../MiddlePanel/MemoryViewer")
 
 [node name="Tooltips" parent="HBoxContainer/RightPanel" instance=ExtResource( 4 )]
-margin_right = 180.0
-margin_bottom = 351.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/RightPanel"]
-margin_top = 355.0
-margin_right = 180.0
-margin_bottom = 387.0
+margin_top = 364.0
+margin_right = 181.0
+margin_bottom = 396.0
 
 [node name="ExecutionController" parent="HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 6 )]
 margin_top = 0.0
@@ -78,4 +75,4 @@ margin_bottom = 32.0
 artefact_path = NodePath("../../../../Artefact")
 
 [node name="WriterIndicator" parent="HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 7 )]
-margin_right = 180.0
+margin_right = 181.0

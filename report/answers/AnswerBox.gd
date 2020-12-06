@@ -8,16 +8,19 @@ var answer_prompt_scene = preload("res://report/AnswerPrompt.tscn")
 func _ready() -> void:
 	if possible_answers.size() == 0:
 		push_error("AnswerBox: possible answers cannot be empty")
-	for a in possible_answers:
-		var scene_path = "res://report/answers/"+a+".tscn"
-		possible_answers_scenes.append(load(scene_path))
+		breakpoint
+	# possible answers scene get saved so we need to check it's not already set
+	if possible_answers_scenes.size() == 0:
+		for a in possible_answers:
+			var scene_path = "res://report/answers/"+a+".tscn"
+			possible_answers_scenes.append(load(scene_path))
 
 func prompt_for_new_answer() -> void:
 #	print(self.name+" displaying AnswerPrompt")
 	var answer_prompt = answer_prompt_scene.instance()
 	answer_prompt.destination = self
 	answer_prompt.possible_answers_scenes = possible_answers_scenes
-	add_child(answer_prompt)
+	get_tree().get_root().add_child(answer_prompt)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
