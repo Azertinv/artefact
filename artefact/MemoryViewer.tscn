@@ -13,7 +13,7 @@ __meta__ = {
 
 [node name="Memory" type="VBoxContainer" parent="."]
 margin_right = 534.0
-margin_bottom = 600.0
+margin_bottom = 1080.0
 custom_constants/separation = 0
 
 [node name="Line0" parent="Memory" instance=ExtResource( 4 )]

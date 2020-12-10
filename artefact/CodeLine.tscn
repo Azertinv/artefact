@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://artefact/CodeLine.gd" type="Script" id=1]
+[ext_resource path="res://utils/ByteEdit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://utils/WordEdit.tscn" type="PackedScene" id=3]
+[ext_resource path="res://utils/CommentEdit.tscn" type="PackedScene" id=4]
+
+[node name="CodeLine" type="HBoxContainer"]
+margin_right = 1912.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Address" parent="." instance=ExtResource( 3 )]
+margin_right = 180.0
+margin_bottom = 24.0
+
+[node name="VSeparator" type="VSeparator" parent="."]
+margin_left = 184.0
+margin_right = 188.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="."]
+margin_left = 192.0
+margin_top = 5.0
+margin_right = 292.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 0 )
+text = "Labelaaaa"
+align = 2
+
+[node name="VSeparator2" type="VSeparator" parent="."]
+margin_left = 296.0
+margin_right = 300.0
+margin_bottom = 24.0
+
+[node name="Data" type="HBoxContainer" parent="."]
+margin_left = 304.0
+margin_right = 582.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 278, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Data0" parent="Data" instance=ExtResource( 2 )]
+margin_right = 90.0
+
+[node name="Data1" parent="Data" instance=ExtResource( 2 )]
+margin_left = 94.0
+margin_right = 184.0
+
+[node name="Data2" parent="Data" instance=ExtResource( 2 )]
+margin_left = 188.0
+margin_right = 278.0
+
+[node name="VSeparator3" type="VSeparator" parent="."]
+margin_left = 586.0
+margin_right = 590.0
+margin_bottom = 24.0
+
+[node name="Instruction" type="RichTextLabel" parent="."]
+margin_left = 594.0
+margin_top = 4.0
+margin_right = 694.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_vertical = 4
+bbcode_enabled = true
+bbcode_text = "radd b, b"
+text = "radd b, b"
+fit_content_height = true
+
+[node name="VSeparator4" type="VSeparator" parent="."]
+margin_left = 698.0
+margin_right = 702.0
+margin_bottom = 24.0
+
+[node name="Comment" parent="." instance=ExtResource( 4 )]
+margin_left = 706.0
+margin_right = 1106.0
+margin_bottom = 24.0

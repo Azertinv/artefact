@@ -30,7 +30,7 @@ func _ready() -> void:
 	cache_addrs()
 	if artefact == null:
 		push_error("MemoryViewer not connected to Artefact")
-		return
+		breakpoint
 	for i in range(BYTE_PER_LINE * LINE_COUNT):
 		get_byte(i).connect("gui_value_changed", self, "_on_ByteEdit_gui_value_changed", [i])
 	addr = artefact.get_reg_value(0)
@@ -40,13 +40,17 @@ func _on_ByteEdit_gui_value_changed(new_value, _new_trits, index):
 	artefact.mem_write(addr + index, PoolIntArray([new_value]))
 
 func _input(event: InputEvent):
+	if not visible:
+		return
 	if event is InputEventMouseButton:
-		if event.is_action_pressed("dbg_mem_down"):
+		if event.is_action_pressed("dbg_scroll_down"):
 			addr += BYTE_PER_LINE
-		if event.is_action_pressed("dbg_mem_up"):
+		if event.is_action_pressed("dbg_scroll_up"):
 			addr -= BYTE_PER_LINE
 
 func goto(new_addr: int) -> void:
+	if not visible:
+		return
 	addr = new_addr
 
 func _process(_delta: float) -> void:

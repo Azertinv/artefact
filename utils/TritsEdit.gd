@@ -13,6 +13,8 @@ enum {
 var state = STATE_TRITS
 var value: int = 0 setget set_value
 
+onready var number_edit = $NumberEdit
+
 var cached_trit_edits: Array = []
 func cache_trit_edits() -> void:
 	for i in range(width):
@@ -22,8 +24,8 @@ func get_trit_edit(index) -> Node:
 
 func _ready() -> void:
 	cache_trit_edits()
-	$NumberEdit.visible = false
-	$NumberEdit.rect_min_size.x = get_trit_edit(0).rect_size.x * width
+	number_edit.visible = false
+	number_edit.rect_min_size.x = get_trit_edit(0).rect_size.x * width
 	for i in range(width):
 		get_trit_edit(i).connect("gui_value_changed", self, "_on_TritEdit_gui_value_changed")
 
@@ -36,12 +38,12 @@ func _gui_input(event) -> void:
 				update_decimal_display()
 				for i in range(width):
 					get_trit_edit(i).visible = false
-				$NumberEdit.visible = true
+				number_edit.visible = true
 			elif state == STATE_DECIMAL:
 				state = STATE_TRITS
 				for i in range(width):
 					get_trit_edit(i).visible = true
-				$NumberEdit.visible = false
+				number_edit.visible = false
 		elif event.button_index == BUTTON_LEFT:
 			var left_click = OS.get_ticks_msec()
 			if left_click - last_left_click < 200:
@@ -51,8 +53,8 @@ func _gui_input(event) -> void:
 func update_decimal_display() -> void:
 	if state != STATE_DECIMAL:
 		return
-	if str(value) != $NumberEdit.text:
-		$NumberEdit.set_text(str(value))
+	if str(value) != number_edit.text:
+		number_edit.set_text(str(value))
 
 #update value based on trit's value
 func update_value() -> void:

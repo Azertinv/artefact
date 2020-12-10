@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://artefact/CodeViewer.gd" type="Script" id=1]
+[ext_resource path="res://artefact/CodeLine.tscn" type="PackedScene" id=2]
+
+[node name="CodeViewer" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Disassembly" type="VBoxContainer" parent="."]
+margin_right = 1912.0
+margin_bottom = 1044.0
+
+[node name="CodeLine0" parent="Disassembly" instance=ExtResource( 2 )]
+
+[node name="CodeLine1" parent="Disassembly" instance=ExtResource( 2 )]
+margin_top = 28.0
+margin_bottom = 52.0
+
+[node name="CodeLine2" parent="Disassembly" instance=ExtResource( 2 )]
+margin_top = 56.0
+margin_bottom = 80.0
+
+[node name="CodeLine3" parent="Disassembly" instance=ExtResource( 2 )]
+margin_top = 84.0
+margin_bottom = 108.0
+
+[node name="CodeLine4" parent="Disassembly" instance=ExtResource( 2 )]
+margin_top = 112.0
+margin_bottom = 136.0

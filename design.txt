@@ -64,6 +64,7 @@ x           T11 mod reg, inimm
 x           T10 add_fz reg, inimm
 x           T0T sub_fz reg, inimm
             T00 test reg, inimm: does all comparaison and put result in flag reg
+            1T0 shift reg, inimm
         not defined yet
             in imm
             out imm

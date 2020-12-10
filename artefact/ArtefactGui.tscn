@@ -48,6 +48,7 @@ artefact_path = NodePath("../../../Artefact")
 
 [node name="CodeViewer" parent="HBoxContainer/MiddlePanel" instance=ExtResource( 8 )]
 visible = false
+artefact_path = NodePath("../../../Artefact")
 
 [node name="RightPanel" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 1639.0
