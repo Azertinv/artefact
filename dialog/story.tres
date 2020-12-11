@@ -16,7 +16,7 @@ story = {
 "name": "Test",
 "nodes": {
 1: {
-"graph_offset": Vector2( -120, 40 ),
+"graph_offset": Vector2( -240, 40 ),
 "links": {
 0: 2
 },
@@ -26,15 +26,14 @@ story = {
 "type": "line"
 },
 2: {
-"graph_offset": Vector2( 280, 240 ),
+"graph_offset": Vector2( 240, 80 ),
 "links": {
 0: 4
 },
-"rect_size": Vector2( 324, 137 ),
+"rect_size": Vector2( 456, 197 ),
 "slot_amount": 1,
-"text": "<left_speaker>Left Speaker 1</left_speaker>
-<right_speaker>Right Speaker 1</right_speaker>
-<dialog>Dialog 1</dialog>",
+"text": "<speaker>Speaker</speaker>
+<dialog>Dialog</dialog>",
 "type": "line"
 },
 3: {
@@ -48,14 +47,13 @@ story = {
 "type": "line"
 },
 4: {
-"graph_offset": Vector2( 740, 200 ),
+"graph_offset": Vector2( 700, 160 ),
 "links": {
 0: 3
 },
 "rect_size": Vector2( 324, 137 ),
 "slot_amount": 1,
-"text": "<left_speaker>Left Speaker 2</left_speaker>
-<right_speaker>Right Speaker 2</right_speaker>
+"text": "<speaker>Speaker 2</speaker>
 <dialog>Dialog 2</dialog>",
 "type": "line"
 }

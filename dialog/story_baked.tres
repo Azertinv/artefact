@@ -18,9 +18,8 @@ story = {
 "links": {
 0: 4
 },
-"text": "<left_speaker>Left Speaker 1</left_speaker>
-<right_speaker>Right Speaker 1</right_speaker>
-<dialog>Dialog 1</dialog>"
+"text": "<speaker>Speaker</speaker>
+<dialog>Dialog</dialog>"
 },
 3: {
 "links": {
@@ -32,8 +31,7 @@ story = {
 "links": {
 0: 3
 },
-"text": "<left_speaker>Left Speaker 2</left_speaker>
-<right_speaker>Right Speaker 2</right_speaker>
+"text": "<speaker>Speaker 2</speaker>
 <dialog>Dialog 2</dialog>"
 }
 }

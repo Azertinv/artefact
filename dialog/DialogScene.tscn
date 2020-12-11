@@ -2,14 +2,14 @@
 
 [ext_resource path="res://dialog/DialogScene.gd" type="Script" id=1]
 [ext_resource path="res://assets/theme/menu_section_9patch.png" type="Texture" id=2]
-[ext_resource path="res://assets/font/hack_15/Italics.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/font/hack_15/Bold.tres" type="DynamicFont" id=4]
-[ext_resource path="res://assets/font/hack_20/Normal.tres" type="DynamicFont" id=5]
-[ext_resource path="res://assets/font/hack_20/Italics.tres" type="DynamicFont" id=6]
-[ext_resource path="res://assets/font/hack_15/Normal.tres" type="DynamicFont" id=7]
-[ext_resource path="res://assets/font/hack_20/BoldItalics.tres" type="DynamicFont" id=8]
-[ext_resource path="res://assets/font/hack_15/BoldItalics.tres" type="DynamicFont" id=9]
-[ext_resource path="res://assets/font/hack_20/Bold.tres" type="DynamicFont" id=10]
+[ext_resource path="res://assets/font/hack_normal/Italics.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/font/hack_normal/Bold.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/font/hack_big/Normal.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/font/hack_big/Italics.tres" type="DynamicFont" id=6]
+[ext_resource path="res://assets/font/hack_normal/Normal.tres" type="DynamicFont" id=7]
+[ext_resource path="res://assets/font/hack_big/BoldItalics.tres" type="DynamicFont" id=8]
+[ext_resource path="res://assets/font/hack_normal/BoldItalics.tres" type="DynamicFont" id=9]
+[ext_resource path="res://assets/font/hack_big/Bold.tres" type="DynamicFont" id=10]
 [ext_resource path="res://assets/portraits/woman2.png" type="Texture" id=11]
 [ext_resource path="res://assets/portraits/man1.png" type="Texture" id=12]
 [ext_resource path="res://assets/portraits/woman1.png" type="Texture" id=13]
@@ -35,19 +35,23 @@ margin_right = 1670.0
 margin_bottom = 980.0
 alignment = 2
 
-[node name="man1" type="Sprite" parent="DialogScene/VBoxContainer"]
-position = Vector2( 1132.04, 379.035 )
+[node name="Portrait" type="Control" parent="DialogScene/VBoxContainer"]
+margin_top = 666.0
+margin_right = 1420.0
+margin_bottom = 666.0
+
+[node name="man1" type="Sprite" parent="DialogScene/VBoxContainer/Portrait"]
+position = Vector2( 380.525, -262.938 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 12 )
 
-[node name="woman2" type="Sprite" parent="DialogScene/VBoxContainer"]
-visible = false
-position = Vector2( 268.096, 381.283 )
+[node name="woman2" type="Sprite" parent="DialogScene/VBoxContainer/Portrait"]
+position = Vector2( 341.512, -280.712 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 11 )
 
-[node name="woman1" type="Sprite" parent="DialogScene/VBoxContainer"]
-position = Vector2( 295.089, 379.344 )
+[node name="woman1" type="Sprite" parent="DialogScene/VBoxContainer/Portrait"]
+position = Vector2( 368.505, -282.651 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 13 )
 
@@ -95,11 +99,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LeftSpeaker" type="NinePatchRect" parent="DialogScene/VBoxContainer/NinePatchRect"]
+[node name="Speaker" type="NinePatchRect" parent="DialogScene/VBoxContainer/NinePatchRect"]
 margin_left = 170.0
 margin_top = -30.0
-margin_right = 388.0
-margin_bottom = 10.0
+margin_right = 562.0
+margin_bottom = 20.0
 texture = ExtResource( 2 )
 patch_margin_left = 3
 patch_margin_top = 3
@@ -109,39 +113,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect/LeftSpeaker"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 7.0
-rect_min_size = Vector2( 0, 30 )
-size_flags_horizontal = 3
-custom_fonts/mono_font = ExtResource( 5 )
-custom_fonts/bold_italics_font = ExtResource( 8 )
-custom_fonts/italics_font = ExtResource( 6 )
-custom_fonts/bold_font = ExtResource( 10 )
-custom_fonts/normal_font = ExtResource( 5 )
-bbcode_enabled = true
-bbcode_text = "[center]Speaker"
-text = "Speaker"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RightSpeaker" type="NinePatchRect" parent="DialogScene/VBoxContainer/NinePatchRect"]
-margin_left = 1070.0
-margin_top = -30.0
-margin_right = 1288.0
-margin_bottom = 10.0
-texture = ExtResource( 2 )
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect/RightSpeaker"]
+[node name="Label" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect/Speaker"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 7.0

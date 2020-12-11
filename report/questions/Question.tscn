@@ -2,7 +2,8 @@
 
 [ext_resource path="res://report/questions/Question.gd" type="Script" id=1]
 [ext_resource path="res://report/answers/AnswerBox.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/font/alien_normal_size/Normal.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/font/alien_normal/Normal.tres" type="DynamicFont" id=4]
+
 
 [node name="Question" type="HBoxContainer" groups=[
 "questions",
