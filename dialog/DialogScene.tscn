@@ -40,17 +40,21 @@ margin_top = 666.0
 margin_right = 1420.0
 margin_bottom = 666.0
 
-[node name="man1" type="Sprite" parent="DialogScene/VBoxContainer/Portrait"]
+[node name="Node2D" type="Node2D" parent="DialogScene/VBoxContainer/Portrait"]
+
+[node name="man1" type="Sprite" parent="DialogScene/VBoxContainer/Portrait/Node2D"]
 position = Vector2( 380.525, -262.938 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 12 )
 
-[node name="woman2" type="Sprite" parent="DialogScene/VBoxContainer/Portrait"]
+[node name="woman2" type="Sprite" parent="DialogScene/VBoxContainer/Portrait/Node2D"]
+visible = false
 position = Vector2( 341.512, -280.712 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 11 )
 
-[node name="woman1" type="Sprite" parent="DialogScene/VBoxContainer/Portrait"]
+[node name="woman1" type="Sprite" parent="DialogScene/VBoxContainer/Portrait/Node2D"]
+visible = false
 position = Vector2( 368.505, -282.651 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 13 )

@@ -16,7 +16,7 @@ story = {
 "name": "Test",
 "nodes": {
 1: {
-"graph_offset": Vector2( -240, 40 ),
+"graph_offset": Vector2( -340, 40 ),
 "links": {
 0: 2
 },
@@ -26,13 +26,14 @@ story = {
 "type": "line"
 },
 2: {
-"graph_offset": Vector2( 240, 80 ),
+"graph_offset": Vector2( 180, 100 ),
 "links": {
 0: 4
 },
 "rect_size": Vector2( 456, 197 ),
 "slot_amount": 1,
-"text": "<speaker>Speaker</speaker>
+"text": "<speaker></speaker>
+<portrait></portrait>
 <dialog>Dialog</dialog>",
 "type": "line"
 },
@@ -47,13 +48,26 @@ story = {
 "type": "line"
 },
 4: {
-"graph_offset": Vector2( 700, 160 ),
+"graph_offset": Vector2( 660, 100 ),
+"links": {
+0: 5
+},
+"rect_size": Vector2( 442, 159 ),
+"slot_amount": 1,
+"text": "<speaker>Man 1</speaker>
+<portrait>man1</portrait>
+<dialog>Dialog 1</dialog>",
+"type": "line"
+},
+5: {
+"graph_offset": Vector2( 700, 320 ),
 "links": {
 0: 3
 },
 "rect_size": Vector2( 324, 137 ),
 "slot_amount": 1,
-"text": "<speaker>Speaker 2</speaker>
+"text": "<speaker>Woman 1</speaker>
+<portrait>woman1</portrait>
 <dialog>Dialog 2</dialog>",
 "type": "line"
 }

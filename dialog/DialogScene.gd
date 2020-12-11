@@ -6,8 +6,10 @@ var did: int = 0
 var nid: int = 0
 var story_reader
 
+onready var speaker_box = $DialogScene/VBoxContainer/NinePatchRect/Speaker
 onready var speaker_label = $DialogScene/VBoxContainer/NinePatchRect/Speaker/Label
 onready var dialog_label = $DialogScene/VBoxContainer/NinePatchRect/Dialog
+onready var portraits = $DialogScene/VBoxContainer/Portrait/Node2D
 
 func _ready() -> void:
 	$DialogScene.visible = false
@@ -46,6 +48,16 @@ func get_tagged_text(tag : String, text : String) -> String:
 func play_node() -> void:
 	var text: String = story_reader.get_text(did, nid)
 	var speaker: String = get_tagged_text("speaker", text)
+	var portrait: String = get_tagged_text("portrait", text)
 	var dialog: String = get_tagged_text("dialog", text)
-	speaker_label.bbcode_text = "[center]" + speaker
+	if speaker == "":
+		speaker_box.visible = false
+	else:
+		speaker_box.visible = true
+		speaker_label.bbcode_text = "[center]" + speaker
 	dialog_label.bbcode_text = dialog
+	for c in portraits.get_children():
+		if c.name == portrait:
+			c.visible = true
+		else:
+			c.visible = false
