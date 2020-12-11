@@ -30,7 +30,7 @@ story = {
 },
 4: {
 "links": {
-0: 5
+0: 6
 },
 "text": "<speaker>Man 1</speaker>
 <portrait>man1</portrait>
@@ -43,6 +43,14 @@ story = {
 "text": "<speaker>Woman 1</speaker>
 <portrait>woman1</portrait>
 <dialog>Dialog 2</dialog>"
+},
+6: {
+"links": {
+0: 5
+},
+"text": "<speaker>Man 1</speaker>
+<portrait>man1</portrait>
+<dialog>Dialog 1 2</dialog>"
 }
 }
 }

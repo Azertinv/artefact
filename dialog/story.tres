@@ -50,7 +50,7 @@ story = {
 4: {
 "graph_offset": Vector2( 660, 100 ),
 "links": {
-0: 5
+0: 6
 },
 "rect_size": Vector2( 442, 159 ),
 "slot_amount": 1,
@@ -60,7 +60,7 @@ story = {
 "type": "line"
 },
 5: {
-"graph_offset": Vector2( 700, 320 ),
+"graph_offset": Vector2( 700, 340 ),
 "links": {
 0: 3
 },
@@ -69,6 +69,18 @@ story = {
 "text": "<speaker>Woman 1</speaker>
 <portrait>woman1</portrait>
 <dialog>Dialog 2</dialog>",
+"type": "line"
+},
+6: {
+"graph_offset": Vector2( 1140, 100 ),
+"links": {
+0: 5
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Man 1</speaker>
+<portrait>man1</portrait>
+<dialog>Dialog 1 2</dialog>",
 "type": "line"
 }
 }

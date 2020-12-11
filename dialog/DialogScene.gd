@@ -9,7 +9,8 @@ var story_reader
 onready var speaker_box = $DialogScene/VBoxContainer/NinePatchRect/Speaker
 onready var speaker_label = $DialogScene/VBoxContainer/NinePatchRect/Speaker/Label
 onready var dialog_label = $DialogScene/VBoxContainer/NinePatchRect/Dialog
-onready var portraits = $DialogScene/VBoxContainer/Portrait/Node2D
+onready var portraits = $DialogScene/VBoxContainer/PortraitAnchor/Portraits
+onready var portrait_animation = $DialogScene/VBoxContainer/PortraitAnchor/AnimationPlayer
 
 func _ready() -> void:
 	$DialogScene.visible = false
@@ -58,6 +59,9 @@ func play_node() -> void:
 	dialog_label.bbcode_text = dialog
 	for c in portraits.get_children():
 		if c.name == portrait:
+			if not c.visible:
+				portrait_animation.stop()
+				portrait_animation.play("slide_in_portrait")
 			c.visible = true
 		else:
 			c.visible = false
