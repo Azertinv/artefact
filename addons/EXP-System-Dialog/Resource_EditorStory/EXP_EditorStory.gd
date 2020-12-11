@@ -7,3 +7,4 @@ export(Dictionary) var names : Dictionary
 export(Dictionary) var story : Dictionary
 export(Array) var available_dids : Array
 export(Array) var groups : Array
+export(String) var bake_filename : String = ""

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://dialog/DialogScene.gd" type="Script" id=1]
 [ext_resource path="res://assets/theme/menu_section_9patch.png" type="Texture" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://assets/font/hack_20/BoldItalics.tres" type="DynamicFont" id=8]
 [ext_resource path="res://assets/font/hack_15/BoldItalics.tres" type="DynamicFont" id=9]
 [ext_resource path="res://assets/font/hack_20/Bold.tres" type="DynamicFont" id=10]
+[ext_resource path="res://assets/portraits/woman2.png" type="Texture" id=11]
+[ext_resource path="res://assets/portraits/man1.png" type="Texture" id=12]
+[ext_resource path="res://assets/portraits/woman1.png" type="Texture" id=13]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -32,6 +35,22 @@ margin_right = 1670.0
 margin_bottom = 980.0
 alignment = 2
 
+[node name="man1" type="Sprite" parent="DialogScene/VBoxContainer"]
+position = Vector2( 1132.04, 379.035 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 12 )
+
+[node name="woman2" type="Sprite" parent="DialogScene/VBoxContainer"]
+visible = false
+position = Vector2( 268.096, 381.283 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 11 )
+
+[node name="woman1" type="Sprite" parent="DialogScene/VBoxContainer"]
+position = Vector2( 295.089, 379.344 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 13 )
+
 [node name="NinePatchRect" type="NinePatchRect" parent="DialogScene/VBoxContainer"]
 margin_top = 670.0
 margin_right = 1420.0
@@ -47,41 +66,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="DialogScene/VBoxContainer/NinePatchRect"]
+[node name="Dialog" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/margin_right = 30
-custom_constants/margin_top = 30
-custom_constants/margin_left = 30
-custom_constants/margin_bottom = 30
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DialogScene/VBoxContainer/NinePatchRect/MarginContainer"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 1390.0
-margin_bottom = 270.0
-
-[node name="Speaker" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer"]
-margin_right = 1360.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 0, 30 )
-size_flags_horizontal = 3
-custom_fonts/mono_font = ExtResource( 5 )
-custom_fonts/bold_italics_font = ExtResource( 8 )
-custom_fonts/italics_font = ExtResource( 6 )
-custom_fonts/bold_font = ExtResource( 10 )
-custom_fonts/normal_font = ExtResource( 5 )
-bbcode_enabled = true
-bbcode_text = "Speaker"
-text = "Speaker"
-
-[node name="Dialog" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer"]
-margin_top = 34.0
-margin_right = 1360.0
-margin_bottom = 240.0
+margin_left = 100.0
+margin_top = 50.0
+margin_right = -100.0
+margin_bottom = -50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/mono_font = ExtResource( 7 )
@@ -100,3 +91,70 @@ text = "Dialog AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 a
 a"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftSpeaker" type="NinePatchRect" parent="DialogScene/VBoxContainer/NinePatchRect"]
+margin_left = 170.0
+margin_top = -30.0
+margin_right = 388.0
+margin_bottom = 10.0
+texture = ExtResource( 2 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect/LeftSpeaker"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 7.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+custom_fonts/mono_font = ExtResource( 5 )
+custom_fonts/bold_italics_font = ExtResource( 8 )
+custom_fonts/italics_font = ExtResource( 6 )
+custom_fonts/bold_font = ExtResource( 10 )
+custom_fonts/normal_font = ExtResource( 5 )
+bbcode_enabled = true
+bbcode_text = "[center]Speaker"
+text = "Speaker"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightSpeaker" type="NinePatchRect" parent="DialogScene/VBoxContainer/NinePatchRect"]
+margin_left = 1070.0
+margin_top = -30.0
+margin_right = 1288.0
+margin_bottom = 10.0
+texture = ExtResource( 2 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="DialogScene/VBoxContainer/NinePatchRect/RightSpeaker"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 7.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+custom_fonts/mono_font = ExtResource( 5 )
+custom_fonts/bold_italics_font = ExtResource( 8 )
+custom_fonts/italics_font = ExtResource( 6 )
+custom_fonts/bold_font = ExtResource( 10 )
+custom_fonts/normal_font = ExtResource( 5 )
+bbcode_enabled = true
+bbcode_text = "[center]Speaker"
+text = "Speaker"
+__meta__ = {
+"_edit_use_anchors_": false
+}

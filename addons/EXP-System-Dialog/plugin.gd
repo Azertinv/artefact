@@ -15,7 +15,7 @@ func _enter_tree():
 	self._Story_Editor_Instance.connect("close_pressed", self, "_on_StoryFile_Editor_close_pressed")
 	self._Story_Editor_BTN = self.add_control_to_bottom_panel(self._Story_Editor_Instance, "EXP StoryFile Editor")
 	self._Story_Editor_Instance.visible = false
-	self._Story_Editor_BTN.visible = false
+	self._Story_Editor_BTN.visible = true
 	self.add_tool_menu_item("EXP StoryFile Editor", self, "_on_StoryFile_Editor_opened")
 	
 	self._Dialog_Editor_Instance = self._Dialog_Editor.instance()

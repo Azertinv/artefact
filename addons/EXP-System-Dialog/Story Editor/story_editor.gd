@@ -33,6 +33,8 @@ var _Record_Rename_Box
 var _Save_CSV_As : EditorFileDialog
 var _Save_Story_As : EditorFileDialog
 var _story : Dictionary
+var _bake_filename : String = ""
+var _save_filename : String = ""
 
 #Virtual Methods
 
@@ -87,6 +89,17 @@ func _on_Check_All_BTN_pressed():
 func _on_Close_BTN_pressed():
 	self.emit_signal("close_pressed")
 
+func _on_Save_BTN_pressed():
+	if self._save_filename != "":
+		self._save_data_to(self._save_filename)
+	else:
+		push_error("Can't save right now please provide filename with Save as")
+
+func _on_Bake_BTN_pressed():
+	if self._bake_filename != "":
+		self._bake_data_to(self._bake_filename)
+	else:
+		push_error("Can't bake right now please provide filename with Bake as")
 
 func _on_Create_Dialog_BTN_pressed():
 	self._create_dialog_record()
@@ -189,6 +202,7 @@ func _on_Load_Story_file_selected(filename : String):
 	
 	self._clear_story()
 	self._load_data_from(file_data)
+	self._save_filename  = filename
 	self._Filename_LBL.text = filename.get_file()
 	
 	for group in self._groups:
@@ -428,18 +442,11 @@ func _bake_data() :
 
 
 func _bake_data_to(filename):
-	var file_data
-	if self._Dir.file_exists(filename):
-		file_data = load(filename)
-		if file_data.TYPE == "EXP_Baked_Story":
-			file_data.story = self._bake_data()
-			file_data.names = self._record_names.duplicate(true)
-			ResourceSaver.save(filename, file_data)
-	else:
-		file_data = _EXP_Baked_Story.new()
-		file_data.story = self._bake_data()
-		file_data.names = self._record_names.duplicate(true)
-		ResourceSaver.save(filename, file_data)
+	var file_data = _EXP_Baked_Story.new()
+	file_data.story = self._bake_data()
+	file_data.names = self._record_names.duplicate(true)
+	ResourceSaver.save(filename, file_data)
+	self._bake_filename = filename
 
 
 func _clear_group_manager():
@@ -545,8 +552,7 @@ func _load_data_from(new_story):
 	self._available_dids = new_story.available_dids.duplicate(true)
 	self._groups = new_story.groups.duplicate(true)
 	self._record_names = new_story.names.duplicate(true)
-	
-
+	self._bake_filename = new_story.bake_filename
 
 func _make_did_available(did : int):
 	self._available_dids.push_front(did)
@@ -624,22 +630,14 @@ func _remove_record(dialog_record):
 
 
 func _save_data_to(filename):
-	var file_data
-	if self._Dir.file_exists(filename):
-		file_data = load(filename)
-		if file_data.TYPE == "EXP_Story_editor":
-			file_data.names = self._record_names.duplicate(true)
-			file_data.story = self._story.duplicate(true)
-			file_data.available_dids = self._available_dids.duplicate(true)
-			file_data.groups = self._groups.duplicate(true)
-			ResourceSaver.save(filename, file_data)
-	else:
-		file_data = _EXP_Story.new()
-		file_data.names = self._record_names.duplicate(true)
-		file_data.story = self._story.duplicate(true)
-		file_data.available_dids = self._available_dids.duplicate(true)
-		file_data.groups = self._groups.duplicate(true)
-		ResourceSaver.save(filename, file_data)
+	var file_data = _EXP_Story.new()
+	file_data.names = self._record_names.duplicate(true)
+	file_data.story = self._story.duplicate(true)
+	file_data.available_dids = self._available_dids.duplicate(true)
+	file_data.groups = self._groups.duplicate(true)
+	file_data.bake_filename = self._bake_filename
+	ResourceSaver.save(filename, file_data)
+	self._save_filename = filename
 
 
 func _setup_dialogs():

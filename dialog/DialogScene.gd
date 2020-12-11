@@ -6,8 +6,9 @@ var did: int = 0
 var nid: int = 0
 var story_reader
 
-onready var speaker_label = $DialogScene/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer/Speaker
-onready var dialog_label = $DialogScene/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer/Dialog
+onready var left_speaker_label = $DialogScene/VBoxContainer/NinePatchRect/LeftSpeaker/Label
+onready var right_speaker_label = $DialogScene/VBoxContainer/NinePatchRect/RightSpeaker/Label
+onready var dialog_label = $DialogScene/VBoxContainer/NinePatchRect/Dialog
 
 func _ready() -> void:
 	$DialogScene.visible = false
@@ -44,8 +45,10 @@ func get_tagged_text(tag : String, text : String) -> String:
 	return text.substr(start_index, text.find(end_tag) - start_index)
 
 func play_node() -> void:
-	var text = story_reader.get_text(did, nid)
-	var speaker = get_tagged_text("speaker", text)
-	var dialog = get_tagged_text("dialog", text)
-	speaker_label.bbcode_text = speaker
+	var text: String = story_reader.get_text(did, nid)
+	var left_speaker: String = get_tagged_text("left_speaker", text)
+	var right_speaker: String = get_tagged_text("right_speaker", text)
+	var dialog: String = get_tagged_text("dialog", text)
+	left_speaker_label.bbcode_text = "[center]" + left_speaker
+	right_speaker_label.bbcode_text = "[center]" + right_speaker
 	dialog_label.bbcode_text = dialog
