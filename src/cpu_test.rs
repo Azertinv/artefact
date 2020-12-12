@@ -77,6 +77,58 @@ fn test_addsub_fz() {
 }
 
 #[test]
+fn test_test() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    cpu.regs.b = Word::from(bt_le!(T));
+    cpu.regs.c = Word::from(bt_le!(0));
+    cpu.regs.d = Word::from(bt_le!(1));
+    cpu.regs.e = Word::from(bt_le!(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1));
+    cpu.regs.f = Word::from(bt_le!(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,T));
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,1,T,0,0,0,0,0,0), // test b b
+        byte_le!(0,1,T,0,0,0,1,0,0), // test b c
+        byte_le!(0,1,T,0,0,1,T,0,0), // test b d
+        byte_le!(0,1,T,0,0,0,1,0,1), // test c c
+        byte_le!(0,1,T,0,0,1,T,0,1), // test c d
+        byte_le!(0,1,T,0,0,1,T,1,T), // test c d
+        byte_le!(0,1,T,0,0,1,1,1,0), // test e f
+        byte_le!(0,1,T,0,0,1,0,1,1), // test f e
+        byte_le!(0,1,T,0,0,1,0,1,0), // test e e
+        byte_le!(0,1,T,0,0,1,1,1,1), // test f f
+        byte_le!(T,0,0,1,0,0,0,0,0), // test b D1
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,1,1,1));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,0,0));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,0,0,0));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(1,1,1,1,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,T,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,0,1,T));
+    println!("\n{}", cpu);
+}
+
+#[test]
 fn test_shift() {
     let mut cpu = Cpu::new();
     cpu.init_default();

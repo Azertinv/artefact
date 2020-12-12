@@ -87,12 +87,12 @@ x           1T0 shift reg, inimm
             flag register: each trit correspond to one comp
                 TT diff, T if lesser, 0 if equal, 1 if greater
                 0T greater_or_equal_diff, T if lesser, 1 if greater or equal
-                1T lesser_or_equal_diff, T if greater, 1 if lesser or equal
-                T0 diff_fz, T if lesser, 0 if equal, 1 if greater
-                00 greater_or_equal_diff_fz, T if lesser, 1 if greater or equal
-                10 lesser_or_equal_diff_fz, T if greater, 1 if lesser or equal
-                T1 carry, T if no carry, 1 if carry
-                01 sign
+                1T lesser_or_equal_diff, T if lesser or equal, 1 if greater
+                T0 diff_carry_sign
+                00 diff_fz, T if lesser, 0 if equal, 1 if greater
+                10 greater_or_equal_diff_fz, T if lesser, 1 if greater or equal
+                T1 lesser_or_equal_diff_fz, T if lesser or equal, 1 if greater
+                01
                 11
             6 general purpose
         reg.t is the most significant byte (top)
@@ -115,7 +115,7 @@ bt behaviour:
         001T 00T1
         11T0 110T
         TT01 TT10
-
+    diff_fz_carry is always 0
 
 achievement:
     Halt and catch fire:

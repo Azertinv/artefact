@@ -68,10 +68,38 @@ impl Cpu {
         Ok(value)
     }
 
-    fn test(&mut self, lhs: Word, rhs: Word) -> Word {
-        unimplemented!();
-        // let diff: (Word, Word) = Word::sub(lhs, rhs, Word::ZERO);
-        // let diff_fz: (Word, Word) = Word::sub_fz(lhs, rhs, Word::ZERO);
+    pub fn test(&mut self, lhs: Word, rhs: Word) -> Word {
+        let mut result: Word = Word::ZERO;
+        let tmp: (Word, Word) = Word::sub(lhs, rhs, Word::ZERO);
+        let mut diff: Trit = tmp.1.sign();
+        if diff == Trit::ZERO {
+            diff = tmp.0.sign();
+        }
+        result.bytes[0].trits[0] = diff;
+        result.bytes[0].trits[1] = if diff == Trit::ZERO { Trit::ONE } else { diff };
+        result.bytes[0].trits[2] = if diff == Trit::ZERO { Trit::TERN } else { diff };
+        result.bytes[0].trits[3] = tmp.1.sign();
+        if lhs.sign() != Trit::ZERO {
+            if rhs.sign() == Trit::ZERO {
+                result.bytes[0].trits[4] = Trit::ONE;
+                result.bytes[0].trits[5] = Trit::ONE;
+                result.bytes[0].trits[6] = Trit::ONE;
+            } else {
+                let tmp_fz: (Word, Word) = if lhs.sign() == rhs.sign() {
+                    Word::sub(lhs, rhs, Word::ZERO)
+                } else {
+                    Word::add(lhs, rhs, Word::ZERO)
+                };
+                let mut diff_fz: Trit = tmp_fz.1.sign();
+                if diff_fz == Trit::ZERO {
+                    diff_fz = tmp_fz.0.sign();
+                }
+                result.bytes[0].trits[4] = diff_fz;
+                result.bytes[0].trits[5] = if diff_fz == Trit::ZERO { Trit::ONE } else { diff_fz };
+                result.bytes[0].trits[6] = if diff_fz == Trit::ZERO { Trit::TERN } else { diff_fz };
+            }
+        }
+        result
     }
 
     pub fn fetch_decode_execute_one(&mut self) -> Result<()> {
@@ -254,7 +282,7 @@ impl Cpu {
                         // println!("subfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(T,0,0) => { // test
-                        unimplemented!();
+                        self.regs.flags = self.test(lhs_value, rhs_value);
                         // println!("test {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(1,T,T) => { // and
@@ -322,7 +350,7 @@ impl Cpu {
                         // println!("subfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(T,0,0) => { // test
-                        unimplemented!();
+                        self.regs.flags = self.test(lhs_value, rhs_value);
                         // println!("test {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(1,T,0) => { // shift
