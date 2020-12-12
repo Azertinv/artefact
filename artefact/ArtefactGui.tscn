@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://artefact/ArtefactGui.gd" type="Script" id=1]
 [ext_resource path="res://artefact/RegisterViewer.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://artefact/ExecutionController.tscn" type="PackedScene" id=6]
 [ext_resource path="res://artefact/WriterIndicator.tscn" type="PackedScene" id=7]
 [ext_resource path="res://artefact/CodeViewer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://gui/Indicator.tscn" type="PackedScene" id=9]
 
 [node name="ArtefactGui" type="MarginContainer"]
 anchor_right = 1.0
@@ -77,3 +78,5 @@ artefact_path = NodePath("../../../../Artefact")
 
 [node name="WriterIndicator" parent="HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 7 )]
 margin_right = 181.0
+
+[node name="Indicator" parent="." instance=ExtResource( 9 )]

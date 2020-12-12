@@ -19,15 +19,16 @@
 [node name="CalculatorReport" type="VBoxContainer"]
 margin_right = 62.0
 margin_bottom = 24.0
-rect_min_size = Vector2( 400, 0 )
+rect_min_size = Vector2( 600, 0 )
 theme = ExtResource( 14 )
+custom_constants/separation = 10
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="."]
-margin_right = 400.0
+margin_right = 600.0
 margin_bottom = 75.0
 custom_fonts/font = ExtResource( 16 )
 text = "Report
@@ -39,74 +40,74 @@ wait_time = 0.2
 autostart = true
 
 [node name="WhatIsEqual" parent="." instance=ExtResource( 10 )]
-margin_top = 79.0
-margin_right = 400.0
-margin_bottom = 112.0
+margin_top = 85.0
+margin_right = 600.0
+margin_bottom = 118.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsClear" parent="." instance=ExtResource( 9 )]
-margin_top = 116.0
-margin_right = 400.0
-margin_bottom = 149.0
+margin_top = 128.0
+margin_right = 600.0
+margin_bottom = 161.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsZero" parent="." instance=ExtResource( 7 )]
-margin_top = 153.0
-margin_right = 400.0
-margin_bottom = 186.0
+margin_top = 171.0
+margin_right = 600.0
+margin_bottom = 204.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsAdd" parent="." instance=ExtResource( 1 )]
-margin_top = 190.0
-margin_right = 400.0
-margin_bottom = 223.0
+margin_top = 214.0
+margin_right = 600.0
+margin_bottom = 247.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsSub" parent="." instance=ExtResource( 3 )]
-margin_top = 227.0
-margin_right = 400.0
-margin_bottom = 260.0
+margin_top = 257.0
+margin_right = 600.0
+margin_bottom = 290.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsMul" parent="." instance=ExtResource( 5 )]
-margin_top = 264.0
-margin_right = 400.0
-margin_bottom = 297.0
+margin_top = 300.0
+margin_right = 600.0
+margin_bottom = 333.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsDiv" parent="." instance=ExtResource( 4 )]
-margin_top = 301.0
-margin_right = 400.0
-margin_bottom = 334.0
+margin_top = 343.0
+margin_right = 600.0
+margin_bottom = 376.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsOne" parent="." instance=ExtResource( 8 )]
-margin_top = 338.0
-margin_right = 400.0
-margin_bottom = 371.0
+margin_top = 386.0
+margin_right = 600.0
+margin_bottom = 419.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIsTern" parent="." instance=ExtResource( 6 )]
-margin_top = 375.0
-margin_right = 400.0
-margin_bottom = 408.0
+margin_top = 429.0
+margin_right = 600.0
+margin_bottom = 462.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIs5" parent="." instance=ExtResource( 11 )]
-margin_top = 412.0
-margin_right = 400.0
-margin_bottom = 445.0
+margin_top = 472.0
+margin_right = 600.0
+margin_bottom = 505.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIs116" parent="." instance=ExtResource( 12 )]
-margin_top = 449.0
-margin_right = 400.0
-margin_bottom = 482.0
+margin_top = 515.0
+margin_right = 600.0
+margin_bottom = 548.0
 save_section = "calculator_arithmetic"
 
 [node name="WhatIs-58" parent="." instance=ExtResource( 13 )]
-margin_top = 486.0
-margin_right = 400.0
-margin_bottom = 519.0
+margin_top = 558.0
+margin_right = 600.0
+margin_bottom = 591.0
 save_section = "calculator_arithmetic"
 [connection signal="timeout" from="CheckAnswerTimer" to="." method="_on_CheckAnswerTimer_timeout"]

@@ -45,7 +45,7 @@ margin_bottom = 1080.0
 size_flags_horizontal = 3
 
 [node name="CalculatorReport" parent="HBoxContainer/CenterContainer2" instance=ExtResource( 2 )]
-margin_left = 277.0
-margin_top = 280.0
-margin_right = 677.0
-margin_bottom = 799.0
+margin_left = 177.0
+margin_top = 244.0
+margin_right = 777.0
+margin_bottom = 835.0
