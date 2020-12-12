@@ -325,6 +325,10 @@ impl Cpu {
                         unimplemented!();
                         // println!("test {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
+                    bt_le_pattern!(1,T,0) => { // shift
+                        self.regs.set_w(lhs_reg, Word::shift(lhs_value, i64::from(rhs_value) as isize).0);
+                        // println!("shift {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    },
                     _ => { return Err(Interrupt::InvalidOpcode); },
                 }
             },

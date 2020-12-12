@@ -72,6 +72,8 @@ opcodes = {
         "imod":     Op("T11vvvvxx", 1, 2),
         "iaddfz":   Op("T10vvvvxx", 1, 2),
         "isubfz":   Op("T0Tvvvvxx", 1, 2),
+        # 1 reg 1 imm logic
+        "shift":    Op("1T0vvvvxx", 1, 2),
         # 2 reg memory op
         "loadw":    Op("00TT1mmxx", 1, 2),
         "loadt":    Op("00TT0mmxx", 1, 2),
@@ -226,6 +228,7 @@ def test():
             '00T110001','00T100001','00T1T0001', # store
             '000000011','110000000','000000000', # callabs
             '00000001T','110T00000', # callrel
+            '1T0T00000', # shift
             ]
     test_code = """
     main:
@@ -264,6 +267,7 @@ def test():
         storeb [c] b
         callabs @wazzaa
         callrel :label
+        shift b D-1
     """
     compiled_code = compile(test_code)
     if compiled_code != expected_compiled_code:

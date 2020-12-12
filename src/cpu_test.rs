@@ -77,6 +77,33 @@ fn test_addsub_fz() {
 }
 
 #[test]
+fn test_shift() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    cpu.regs.b = Word::from(bt_le!(1));
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(1,T,0,1,0,0,0,0,0), // shift b, 1
+        byte_le!(1,T,0,0,1,0,0,0,0), // shift b, 3
+        byte_le!(1,T,0,T,T,0,0,0,0), // shift b, -4
+        byte_le!(1,T,0,1,1,0,1,0,0), // shift b, -4
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    println!("{}", cpu);
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.b), 3);
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.b), 81);
+    cpu.run(1);
+    assert_eq!(i64::from(cpu.regs.b), 1);
+    cpu.run(1);
+    println!("\n{}", cpu);
+    assert_eq!(i64::from(cpu.regs.b), 0);
+}
+
+#[test]
 fn test_inimm_insts() {
     let mut cpu = Cpu::new();
     cpu.init_default();
