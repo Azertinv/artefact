@@ -6,9 +6,9 @@
 answer = "is a button that process an operation"
 
 [node name="SymbolLabel" parent="." index="1"]
-margin_right = 36.0
+margin_right = 40.0
 text = "="
 
 [node name="Answer" parent="." index="2"]
-margin_left = 40.0
-margin_right = 155.0
+margin_left = 44.0
+margin_right = 159.0

@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="alien_re_game"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://gui/StartScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -38,6 +38,7 @@ gdscript/warnings/unsafe_call_argument=true
 window/size/width=1920
 window/size/height=1080
 window/size/resizable=false
+window/size/fullscreen=true
 
 [editor_plugins]
 

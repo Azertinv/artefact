@@ -20,8 +20,9 @@ func _ready() -> void:
 			first = false
 		answer_list.add_child(answer)
 
-func _process(_delta) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+func _input(event: InputEvent):
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().set_input_as_handled()
 		queue_free()
 
 func _on_Answer_pressed(answer) -> void:
