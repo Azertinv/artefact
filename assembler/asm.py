@@ -63,7 +63,7 @@ opcodes = {
         "ror":      Op("011T1yyxx", 1, 2),
         "rxor":     Op("011T0yyxx", 1, 2),
         # 2 reg utils
-        "rtest":    Op("01T00yyxx", 1, 2),
+        "rcmp":     Op("01T00yyxx", 1, 2),
         "rmov":     Op("01100yyxx", 1, 2),
         # 1 reg 1 imm arithmetics
         "iadd":     Op("TTTvvvvxx", 1, 2),
@@ -83,7 +83,7 @@ opcodes = {
         "storet":   Op("00T10yymm", 1, 2),
         "storeb":   Op("00T1Tyymm", 1, 2),
         # 1 reg 1 imm utils
-        "itest":    Op("T00vvvvxx", 1, 2),
+        "icmp":     Op("T00vvvvxx", 1, 2),
         "setw":     Op("0000T01xx", 3, 2),
         "sett":     Op("0000T00xx", 2, 2),
         "setb":     Op("0000T0Txx", 2, 2),
@@ -231,8 +231,8 @@ def test():
             '000000011','110000000','000000000', # callabs
             '00000001T','110T00000', # callrel
             '1T0T00000', # shift
-            '01T000000', # rtest
-            'T0001T011', # itest
+            '01T000000', # rcmp
+            'T0001T011', # icmp
             ]
     test_code = """
     main:
@@ -272,8 +272,8 @@ def test():
         callabs @wazzaa
         callrel :label
         shift b D-1
-        rtest b b
-        itest f 01T
+        rcmp b b
+        icmp f 01T
     """
     compiled_code = compile(test_code)
     if compiled_code != expected_compiled_code:

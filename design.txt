@@ -50,7 +50,7 @@ x           T1T div reg, reg
 x           T11 mod reg, reg
 x           T10 add_fz reg, reg
 x           T0T sub_fz reg, reg
-            T00 test reg, reg: does all comparaison and put result in flag reg
+x           T00 cmp reg, reg: does all comparaison and put result in flag reg
 x           1TT and reg, reg
 x           1T1 or reg, reg
 x           1T0 xor reg, reg
@@ -63,7 +63,7 @@ x           T1T div reg, inimm
 x           T11 mod reg, inimm
 x           T10 add_fz reg, inimm
 x           T0T sub_fz reg, inimm
-            T00 test reg, inimm: does all comparaison and put result in flag reg
+x           T00 cmp reg, inimm: does all comparaison and put result in flag reg
 x           1T0 shift reg, inimm
         not defined yet
             in imm

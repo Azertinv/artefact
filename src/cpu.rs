@@ -68,7 +68,7 @@ impl Cpu {
         Ok(value)
     }
 
-    pub fn test(&mut self, lhs: Word, rhs: Word) -> Word {
+    pub fn cmp(&mut self, lhs: Word, rhs: Word) -> Word {
         let mut result: Word = Word::ZERO;
         let tmp: (Word, Word) = Word::sub(lhs, rhs, Word::ZERO);
         let mut diff: Trit = tmp.1.sign();
@@ -281,9 +281,9 @@ impl Cpu {
                         self.regs.set_w(lhs_reg, new_value);
                         // println!("subfz {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
-                    bt_le_pattern!(T,0,0) => { // test
-                        self.regs.flags = self.test(lhs_value, rhs_value);
-                        // println!("test {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
+                    bt_le_pattern!(T,0,0) => { // cmp
+                        self.regs.flags = self.cmp(lhs_value, rhs_value);
+                        // println!("cmp {} {}", self.regs.to_str(lhs_reg), self.regs.to_str(rhs_reg));
                     },
                     bt_le_pattern!(1,T,T) => { // and
                         self.regs.set_w(lhs_reg, Word::and(lhs_value, rhs_value));
@@ -349,9 +349,9 @@ impl Cpu {
                         self.regs.set_w(lhs_reg, new_value);
                         // println!("subfz {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
-                    bt_le_pattern!(T,0,0) => { // test
-                        self.regs.flags = self.test(lhs_value, rhs_value);
-                        // println!("test {} {}", self.regs.to_str(lhs_reg), rhs_value);
+                    bt_le_pattern!(T,0,0) => { // cmp
+                        self.regs.flags = self.cmp(lhs_value, rhs_value);
+                        // println!("cmp {} {}", self.regs.to_str(lhs_reg), rhs_value);
                     },
                     bt_le_pattern!(1,T,0) => { // shift
                         self.regs.set_w(lhs_reg, Word::shift(lhs_value, i64::from(rhs_value) as isize).0);
