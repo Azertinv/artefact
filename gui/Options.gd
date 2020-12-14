@@ -1,5 +1,7 @@
 extends VBoxContainer
 
+export(bool) var can_reset_save = true
+
 var resolutions = [
 	Vector2(1280, 720),
 	Vector2(1366, 768),
@@ -31,6 +33,8 @@ func _ready():
 	resolution_popup.connect("index_pressed", self, "_on_Resolution_pressed")
 	for r in resolutions:
 		resolution_popup.add_item(res_to_str(r))
+	if not can_reset_save:
+		$ResetSave.visible = false
 
 func _on_Resolution_pressed(idx):
 	var resolution_popup = $Resolution/MenuButton.get_popup()
@@ -44,3 +48,11 @@ func _on_Fullscreen_toggled(button_pressed):
 	OS.window_fullscreen = button_pressed
 func _on_Borderless_toggled(button_pressed):
 	OS.window_borderless = button_pressed
+
+func _on_HSlider_value_changed(value):
+	pass # Replace with function body.
+
+func _on_ResetSave_confirmed_pressed():
+	print("Resetting save file")
+	Save.save = ConfigFile.new()
+	Save._exit_tree()

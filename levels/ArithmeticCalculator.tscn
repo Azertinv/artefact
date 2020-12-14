@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://calculator/CalculatorGui.tscn" type="PackedScene" id=1]
 [ext_resource path="res://report/ReportGui.tscn" type="PackedScene" id=2]
 [ext_resource path="res://gui/PauseScreen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/songs/bleeping-demo-by-kevin-macleod-from-filmmusic-io.ogg" type="AudioStream" id=4]
 
 [node name="Main" type="MarginContainer"]
 anchor_right = 1.0
@@ -52,3 +53,8 @@ margin_right = 777.0
 margin_bottom = 835.0
 
 [node name="CanvasLayer" parent="." instance=ExtResource( 3 )]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+autoplay = true

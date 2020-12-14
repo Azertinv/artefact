@@ -1,23 +1,36 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/font/hack_big/Normal.tres" type="DynamicFont" id=1]
 [ext_resource path="res://gui/Options.gd" type="Script" id=2]
 [ext_resource path="res://assets/theme/checkbox_unchecked.png" type="Texture" id=3]
 [ext_resource path="res://assets/theme/checkbox_checked.png" type="Texture" id=4]
+[ext_resource path="res://gui/ConfirmButton.gd" type="Script" id=5]
 
-[sub_resource type="StyleBoxEmpty" id=12]
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_width_top = 5
+border_width_bottom = 5
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing_size = 2
 
 [sub_resource type="StyleBoxEmpty" id=10]
 
-[sub_resource type="StyleBoxEmpty" id=11]
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0.188235 )
+border_width_top = 5
+border_width_bottom = 5
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing_size = 2
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=4]
 
-[sub_resource type="StyleBoxFlat" id=14]
-
-[sub_resource type="StyleBoxFlat" id=13]
-
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 border_width_top = 5
 border_width_bottom = 5
@@ -26,25 +39,25 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.196078, 0.196078, 0.196078, 1 )
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="Theme" id=1]
+[sub_resource type="Theme" id=9]
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
 Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = null
+Button/fonts/font = ExtResource( 1 )
 Button/styles/disabled = null
 Button/styles/focus = null
-Button/styles/hover = SubResource( 12 )
+Button/styles/hover = SubResource( 1 )
 Button/styles/normal = SubResource( 10 )
-Button/styles/pressed = SubResource( 11 )
+Button/styles/pressed = SubResource( 3 )
 CheckBox/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 CheckBox/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 CheckBox/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -52,15 +65,15 @@ CheckBox/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
 CheckBox/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 CheckBox/constants/check_vadjust = 0
 CheckBox/constants/hseparation = 4
-CheckBox/fonts/font = SubResource( 8 )
+CheckBox/fonts/font = SubResource( 4 )
 CheckBox/icons/checked = ExtResource( 4 )
 CheckBox/icons/radio_checked = null
 CheckBox/icons/radio_unchecked = null
 CheckBox/icons/unchecked = ExtResource( 3 )
 CheckBox/styles/disabled = null
 CheckBox/styles/focus = null
-CheckBox/styles/hover = SubResource( 14 )
-CheckBox/styles/hover_pressed = SubResource( 13 )
+CheckBox/styles/hover = null
+CheckBox/styles/hover_pressed = null
 CheckBox/styles/normal = null
 CheckBox/styles/pressed = null
 Label/colors/font_color = Color( 1, 1, 1, 1 )
@@ -80,9 +93,9 @@ MenuButton/constants/hseparation = 3
 MenuButton/fonts/font = ExtResource( 1 )
 MenuButton/styles/disabled = null
 MenuButton/styles/focus = null
-MenuButton/styles/hover = null
+MenuButton/styles/hover = SubResource( 1 )
 MenuButton/styles/normal = null
-MenuButton/styles/pressed = null
+MenuButton/styles/pressed = SubResource( 3 )
 PopupMenu/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 PopupMenu/colors/font_color_accel = Color( 0.7, 0.7, 0.7, 0.8 )
 PopupMenu/colors/font_color_disabled = Color( 0.4, 0.4, 0.4, 0.8 )
@@ -95,17 +108,29 @@ PopupMenu/icons/radio_checked = null
 PopupMenu/icons/radio_unchecked = null
 PopupMenu/icons/submenu = null
 PopupMenu/icons/unchecked = null
-PopupMenu/styles/hover = SubResource( 2 )
+PopupMenu/styles/hover = SubResource( 7 )
 PopupMenu/styles/labeled_separator_left = null
 PopupMenu/styles/labeled_separator_right = null
-PopupMenu/styles/panel = SubResource( 3 )
+PopupMenu/styles/panel = SubResource( 8 )
 PopupMenu/styles/panel_disabled = null
 PopupMenu/styles/separator = null
+
+[sub_resource type="StyleBoxFlat" id=16]
+
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxFlat" id=15]
+
+[sub_resource type="StyleBoxFlat" id=18]
+
+[sub_resource type="StyleBoxEmpty" id=19]
+
+[sub_resource type="StyleBoxFlat" id=20]
 
 [node name="Options" type="VBoxContainer"]
 margin_right = 20.0
 margin_bottom = 16.0
-theme = SubResource( 1 )
+theme = SubResource( 9 )
 custom_constants/separation = 15
 alignment = 1
 script = ExtResource( 2 )
@@ -173,6 +198,10 @@ margin_right = 329.0
 margin_bottom = 37.0
 focus_mode = 0
 size_flags_vertical = 4
+custom_styles/hover = SubResource( 16 )
+custom_styles/pressed = SubResource( 17 )
+custom_styles/hover_pressed = SubResource( 15 )
+pressed = true
 expand_icon = true
 
 [node name="Borderless" type="HBoxContainer" parent="."]
@@ -195,5 +224,32 @@ margin_right = 329.0
 margin_bottom = 37.0
 focus_mode = 0
 size_flags_vertical = 4
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 19 )
+custom_styles/hover_pressed = SubResource( 20 )
+
+[node name="ResetSave" type="HBoxContainer" parent="."]
+margin_top = 260.0
+margin_right = 600.0
+margin_bottom = 310.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="Label" type="Label" parent="ResetSave"]
+margin_top = 7.0
+margin_right = 300.0
+margin_bottom = 43.0
+rect_min_size = Vector2( 300, 0 )
+text = "Reset save file"
+
+[node name="Button" type="Button" parent="ResetSave"]
+margin_left = 304.0
+margin_right = 430.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+focus_mode = 0
+text = "Confirm"
+script = ExtResource( 5 )
+[connection signal="value_changed" from="SoundLevel/HSlider" to="." method="_on_HSlider_value_changed"]
 [connection signal="toggled" from="Fullscreen/CheckBox" to="." method="_on_Fullscreen_toggled"]
 [connection signal="toggled" from="Borderless/CheckBox" to="." method="_on_Borderless_toggled"]
+[connection signal="confirmed_pressed" from="ResetSave/Button" to="." method="_on_ResetSave_confirmed_pressed"]
