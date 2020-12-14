@@ -8,13 +8,15 @@ var node_to_key = {}
 
 func _enter_tree():
 	save = ConfigFile.new()
-	if save.load(save_path) == OK:
-		pass
-	else:
+	if save.load(save_path) != OK:
 		_exit_tree()
 
 func _exit_tree():
 	save.save(save_path)
+
+func reset():
+	save = ConfigFile.new()
+	_exit_tree()
 
 func register_node(section: String, key: String, node: Node):
 	if key_to_node.has(section+key):

@@ -33,6 +33,8 @@ func _ready():
 	resolution_popup.connect("index_pressed", self, "_on_Resolution_pressed")
 	for r in resolutions:
 		resolution_popup.add_item(res_to_str(r))
+	var bus_idx = AudioServer.get_bus_index("Master")
+	$MasterLevel/HSlider.value = AudioServer.get_bus_volume_db(bus_idx)
 	if not can_reset_save:
 		$ResetSave.visible = false
 
@@ -49,10 +51,9 @@ func _on_Fullscreen_toggled(button_pressed):
 func _on_Borderless_toggled(button_pressed):
 	OS.window_borderless = button_pressed
 
-func _on_HSlider_value_changed(value):
-	pass # Replace with function body.
+func _on_MasterLevel_value_changed(value):
+	var bus_idx = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_volume_db(bus_idx, value)
 
 func _on_ResetSave_confirmed_pressed():
-	print("Resetting save file")
-	Save.save = ConfigFile.new()
-	Save._exit_tree()
+	Save.reset()

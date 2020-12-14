@@ -138,26 +138,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SoundLevel" type="HBoxContainer" parent="."]
+[node name="MasterLevel" type="HBoxContainer" parent="."]
 margin_right = 600.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 600, 50 )
 
-[node name="Label" type="Label" parent="SoundLevel"]
+[node name="Label" type="Label" parent="MasterLevel"]
 margin_top = 7.0
 margin_right = 300.0
 margin_bottom = 43.0
 rect_min_size = Vector2( 300, 0 )
-text = "Sound Level"
+text = "Master Level"
 
-[node name="HSlider" type="HSlider" parent="SoundLevel"]
+[node name="HSlider" type="HSlider" parent="MasterLevel"]
 margin_left = 304.0
 margin_top = 17.0
 margin_right = 600.0
 margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
-value = 50.0
+min_value = -72.0
+max_value = 6.0
 
 [node name="Resolution" type="HBoxContainer" parent="."]
 margin_top = 65.0
@@ -249,7 +250,7 @@ rect_min_size = Vector2( 0, 50 )
 focus_mode = 0
 text = "Confirm"
 script = ExtResource( 5 )
-[connection signal="value_changed" from="SoundLevel/HSlider" to="." method="_on_HSlider_value_changed"]
+[connection signal="value_changed" from="MasterLevel/HSlider" to="." method="_on_MasterLevel_value_changed"]
 [connection signal="toggled" from="Fullscreen/CheckBox" to="." method="_on_Fullscreen_toggled"]
 [connection signal="toggled" from="Borderless/CheckBox" to="." method="_on_Borderless_toggled"]
 [connection signal="confirmed_pressed" from="ResetSave/Button" to="." method="_on_ResetSave_confirmed_pressed"]
