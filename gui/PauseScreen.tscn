@@ -52,7 +52,7 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 4 )
 
-[node name="PauseScreen" type="CanvasLayer"]
+[node name="PauseScreenLayer" type="CanvasLayer"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -72,7 +72,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-bg_color_rect_path = NodePath("../ColorRect")
+bg_color_rect_path = NodePath("../../PauseScreenLayer/ColorRect")
 
 [node name="PauseMenu" type="VBoxContainer" parent="PauseScreen"]
 margin_left = 785.0

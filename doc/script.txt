@@ -1,0 +1,16 @@
+Tutorial:
+    Start game
+    Quick monologue
+        study at xxx university
+        found a job out of school
+        first day on the job
+    Enter office
+        Introduction with resident researcher
+        First silicon based alien technology found
+        Years of Academy Training Wasted
+            Yeeeeah don't worry you'll get the hang of it
+        Start you on arith calc
+            quick hardware team recap
+        Get to work !
+    Arithmetic Calculator Level
+

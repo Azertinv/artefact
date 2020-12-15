@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 Helper="*res://scripts/Helper.gd"
 Config="*res://scripts/Config.gd"
 Save="*res://scripts/Save.gd"
+AudioStreamManager="*res://scripts/AudioStreamManager.gd"
 
 [debug]
 
