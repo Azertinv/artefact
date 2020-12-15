@@ -52,9 +52,19 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 4 )
 
-[node name="PauseScreenLayer" type="CanvasLayer"]
+[node name="PauseScreen" type="CanvasLayer"]
+pause_mode = 2
+layer = 10
+script = ExtResource( 2 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.756863 )
@@ -62,19 +72,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PauseScreen" type="HBoxContainer" parent="."]
-pause_mode = 2
+[node name="Centering" type="HBoxContainer" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 4 )
 alignment = 1
-script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-bg_color_rect_path = NodePath("../../PauseScreenLayer/ColorRect")
 
-[node name="PauseMenu" type="VBoxContainer" parent="PauseScreen"]
+[node name="PauseMenu" type="VBoxContainer" parent="Control/Centering"]
 margin_left = 785.0
 margin_right = 1135.0
 margin_bottom = 1080.0
@@ -82,7 +89,7 @@ rect_min_size = Vector2( 350, 0 )
 custom_constants/separation = 10
 alignment = 1
 
-[node name="Resume" type="Button" parent="PauseScreen/PauseMenu"]
+[node name="Resume" type="Button" parent="Control/Centering/PauseMenu"]
 margin_top = 425.0
 margin_right = 350.0
 margin_bottom = 495.0
@@ -91,7 +98,7 @@ focus_mode = 0
 custom_fonts/font = SubResource( 5 )
 text = "Resume"
 
-[node name="Options" type="Button" parent="PauseScreen/PauseMenu"]
+[node name="Options" type="Button" parent="Control/Centering/PauseMenu"]
 margin_top = 505.0
 margin_right = 350.0
 margin_bottom = 575.0
@@ -100,7 +107,7 @@ focus_mode = 0
 custom_fonts/font = SubResource( 5 )
 text = "Options"
 
-[node name="Quit" type="Button" parent="PauseScreen/PauseMenu"]
+[node name="Quit" type="Button" parent="Control/Centering/PauseMenu"]
 margin_top = 585.0
 margin_right = 350.0
 margin_bottom = 655.0
@@ -109,14 +116,14 @@ focus_mode = 0
 custom_fonts/font = SubResource( 5 )
 text = "Quit"
 
-[node name="Options" parent="PauseScreen" instance=ExtResource( 3 )]
+[node name="Options" parent="Control/Centering" instance=ExtResource( 3 )]
 visible = false
 margin_left = 837.0
 margin_right = 1437.0
 margin_bottom = 1080.0
 can_reset_save = false
 
-[node name="OptionsGoBack" type="Button" parent="PauseScreen/Options"]
+[node name="OptionsGoBack" type="Button" parent="Control/Centering/Options"]
 margin_top = 641.0
 margin_right = 600.0
 margin_bottom = 698.0
@@ -125,7 +132,7 @@ focus_mode = 0
 theme = SubResource( 4 )
 custom_fonts/font = SubResource( 6 )
 text = "Back"
-[connection signal="pressed" from="PauseScreen/PauseMenu/Resume" to="PauseScreen" method="_on_StartGame_pressed"]
-[connection signal="pressed" from="PauseScreen/PauseMenu/Options" to="PauseScreen" method="_on_Options_pressed"]
-[connection signal="pressed" from="PauseScreen/PauseMenu/Quit" to="PauseScreen" method="_on_Quit_pressed"]
-[connection signal="pressed" from="PauseScreen/Options/OptionsGoBack" to="PauseScreen" method="_on_OptionsGoBack_pressed"]
+[connection signal="pressed" from="Control/Centering/PauseMenu/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="Control/Centering/PauseMenu/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="Control/Centering/PauseMenu/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="Control/Centering/Options/OptionsGoBack" to="." method="_on_OptionsGoBack_pressed"]

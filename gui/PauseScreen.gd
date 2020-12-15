@@ -1,31 +1,36 @@
-extends HBoxContainer
+extends CanvasLayer
 
-export(NodePath) var bg_color_rect_path
-onready var bg_color_rect = get_node(bg_color_rect_path)
+onready var pause_menu = $Control/Centering/PauseMenu
+onready var options = $Control/Centering/Options
+
+export(bool) var can_pause: bool = false
 
 func _ready():
-	visible = false
-	bg_color_rect.visible = false
+	$Control.visible = false
 
 func _input(event: InputEvent):
-	if not visible and event.is_action_pressed("ui_cancel"):
+	if not can_pause:
+		return
+	if !$Control.visible and event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
 		get_tree().paused = true
-		visible = true
-		bg_color_rect.visible = true
+		$Control.visible = true
+	elif $Control.visible and event.is_action_pressed("ui_cancel"):
+		get_tree().set_input_as_handled()
+		_on_OptionsGoBack_pressed()
+		_on_Resume_pressed()
 
-func _on_StartGame_pressed():
+func _on_Resume_pressed():
 	get_tree().paused = false
-	visible = false
-	bg_color_rect.visible = false
+	$Control.visible = false
 
 func _on_Options_pressed():
-	$PauseMenu.visible = false
-	$Options.visible = true
+	pause_menu.visible = false
+	options.visible = true
 
 func _on_Quit_pressed():
 	get_tree().quit()
 
 func _on_OptionsGoBack_pressed():
-	$PauseMenu.visible = true
-	$Options.visible = false
+	pause_menu.visible = true
+	options.visible = false

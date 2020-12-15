@@ -1,13 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://artefact/Tooltips.gd" type="Script" id=1]
-[ext_resource path="res://assets/font/ttf/alien.ttf" type="DynamicFontData" id=2]
-
-
-[sub_resource type="DynamicFont" id=1]
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 2 )
 
 [node name="Tooltips" type="PanelContainer"]
 margin_top = 252.0
@@ -25,62 +18,13 @@ margin_right = 174.0
 margin_bottom = 101.0
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Label" type="RichTextLabel" parent="VBoxContainer"]
+margin_top = 32.0
 margin_right = 167.0
-margin_bottom = 17.0
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_top = 1.0
-margin_right = 155.0
-margin_bottom = 15.0
-text = "Press A to set a value to"
-
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 159.0
-margin_right = 167.0
-margin_bottom = 17.0
-custom_fonts/font = SubResource( 1 )
-text = "T"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 21.0
-margin_right = 167.0
-margin_bottom = 38.0
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
-margin_top = 1.0
-margin_right = 154.0
-margin_bottom = 15.0
-text = "Press Z to set a value to"
-
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 158.0
-margin_right = 166.0
-margin_bottom = 17.0
-custom_fonts/font = SubResource( 1 )
-text = "0"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 42.0
-margin_right = 167.0
-margin_bottom = 59.0
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
-margin_top = 1.0
-margin_right = 153.0
-margin_bottom = 15.0
-text = "Press E to set a value to"
-
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer3"]
-margin_left = 157.0
-margin_right = 165.0
-margin_bottom = 17.0
-custom_fonts/font = SubResource( 1 )
-text = "1"
-
-[node name="Label" type="Label" parent="VBoxContainer"]
-margin_top = 63.0
-margin_right = 167.0
-margin_bottom = 94.0
+margin_bottom = 62.0
+bbcode_enabled = true
+bbcode_text = "Left click and drag
+to set multiple trits."
 text = "Left click and drag
 to set multiple trits."
+fit_content_height = true

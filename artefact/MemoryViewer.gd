@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends MarginContainer
 
 export(NodePath) var artefact_path: NodePath
 onready var artefact: Node = get_node(artefact_path)
@@ -68,3 +68,6 @@ func _process(_delta: float) -> void:
 		for i in range(LINE_COUNT):
 			get_addr(i).value = addr + i * BYTE_PER_LINE
 		last_addr = addr
+
+func _on_MemoryViewer_mouse_entered():
+	TooltipManager.tooltip = "Memory editor"

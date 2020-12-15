@@ -1,9 +1,12 @@
-extends HBoxContainer
+extends MarginContainer
 
 export(NodePath) var artefact_path: NodePath
 onready var artefact: Node = get_node(artefact_path)
 
 export(bool) var max_speed: bool = true
+
+onready var run_pause_btn = $HBoxContainer/RunPause
+onready var step_btn = $HBoxContainer/Step
 
 enum {
 	STATE_RUNNING,
@@ -20,16 +23,18 @@ func _process(delta):
 				inst_per_frame -= 1 + inst_per_frame/100
 			else:
 				inst_per_frame += 1 + inst_per_frame/100
-			print(inst_per_frame * 60)
+			print(inst_per_frame)
 		artefact.run(inst_per_frame)
 
 func _on_RunPause_toggled(button_pressed):
 	if button_pressed:
 		state = STATE_RUNNING
-		$RunPause.text = "Pause"
+		run_pause_btn.text = "Pause"
+		step_btn.disabled = true
 	else:
 		state = STATE_PAUSED
-		$RunPause.text = "Run"
+		run_pause_btn.text = "Run"
+		step_btn.disabled = false
 
 func _on_Step_pressed():
 	if state == STATE_PAUSED:

@@ -4,6 +4,7 @@ func _ready():
 	AudioStreamManager.play("res://assets/songs/bleeping-demo-by-kevin-macleod-from-filmmusic-io.ogg")
 
 func _on_StartGame_pressed():
+	PauseScreen.can_pause = true
 	get_tree().change_scene_to(preload("res://levels/ArithmeticCalculator.tscn"))
 
 func _on_Options_pressed():
