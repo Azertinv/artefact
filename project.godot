@@ -28,6 +28,7 @@ AudioStreamManager="*res://scripts/AudioStreamManager.gd"
 PauseScreen="*res://gui/PauseScreen.tscn"
 Indicator="*res://gui/Indicator.tscn"
 TooltipManager="*res://scripts/TooltipManager.gd"
+DialogScene="*res://dialog/DialogScene.tscn"
 
 [debug]
 

@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-signal dialog_done
+signal dialog_completed
 
 var did: int = 0
 var nid: int = 0
@@ -18,7 +18,6 @@ func _ready() -> void:
 	story_reader = story_reader_class.new()
 	var story = preload("res://dialog/story_baked.tres")
 	story_reader.read(story)
-	play_dialog("Test")
 
 func play_dialog(record_name: String) -> void:
 	did = story_reader.get_did_via_record_name(record_name)
@@ -29,7 +28,7 @@ func play_dialog(record_name: String) -> void:
 func play_next_node() -> void:
 	nid = story_reader.get_nid_from_slot(did, nid, 0)
 	if story_reader.get_text(did, nid) == "<end>":
-		emit_signal("dialog_done")
+		emit_signal("dialog_completed")
 		$DialogScene.visible = false
 	else:
 		play_node()

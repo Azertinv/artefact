@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 TYPE = "EXP_Story_editor"
 names = {
+"ArithmeticCalculator/Done": 2,
 "Test": 1
 }
 story = {
@@ -81,6 +82,84 @@ story = {
 "text": "<speaker>Man 1</speaker>
 <portrait>man1</portrait>
 <dialog>Dialog 1 2</dialog>",
+"type": "line"
+}
+}
+},
+2: {
+"available_nid": [  ],
+"groups": [  ],
+"human_readable_description": "Started on AritCalc completed",
+"name": "ArithmeticCalculator/Done",
+"nodes": {
+1: {
+"graph_offset": Vector2( -480, 120 ),
+"links": {
+0: 4
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<start>",
+"type": "line"
+},
+2: {
+"graph_offset": Vector2( 480, 160 ),
+"links": {
+0: 6
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Woman 1</speaker>
+<portrait>woman1</portrait>
+<dialog>Heeey, good job on that report.
+I took a look at it with the hardware team ...</dialog>",
+"type": "line"
+},
+3: {
+"graph_offset": Vector2( 1920, 220 ),
+"links": {
+
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<end>",
+"type": "line"
+},
+4: {
+"graph_offset": Vector2( 0, 120 ),
+"links": {
+0: 2
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker></speaker>
+<portrait></portrait>
+<dialog>Welp I'm done with this, let's submit my report.</dialog>",
+"type": "line"
+},
+5: {
+"graph_offset": Vector2( 1460, 260 ),
+"links": {
+0: 3
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Woman 1</speaker>
+<portrait>woman1</portrait>
+<dialog>Speaking of it here it is, have fun.</dialog>",
+"type": "line"
+},
+6: {
+"graph_offset": Vector2( 940, 180 ),
+"links": {
+0: 5
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Woman 1</speaker>
+<portrait>woman1</portrait>
+<dialog>Heeey, good job on that report.
+I took a look at it with the hardware team and they made a breaktrough on another artefact thanks to it.</dialog>",
 "type": "line"
 }
 }
