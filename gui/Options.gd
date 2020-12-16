@@ -23,6 +23,7 @@ func _ready():
 	$Fullscreen/CheckBox.pressed = OS.window_fullscreen
 	$Borderless/CheckBox.pressed = OS.window_borderless
 	$Resolution/MenuButton.text = res_to_str(OS.window_size)
+	get_tree().root.connect("size_changed", self, "_on_root_size_changed")
 	var resolution_popup = $Resolution/MenuButton.get_popup()
 	resolution_popup.connect("index_pressed", self, "_on_Resolution_pressed")
 	for r in resolutions:
@@ -32,13 +33,12 @@ func _ready():
 	if not can_reset_save:
 		$ResetSave.visible = false
 
+func _on_root_size_changed():
+	$Resolution/MenuButton.text = res_to_str(OS.window_size)
+
 func _on_Resolution_pressed(idx):
 	var resolution_popup = $Resolution/MenuButton.get_popup()
-	var new_resolution = resolution_popup.get_item_text(idx)
-	$Resolution/MenuButton.text = resolution_popup.get_item_text(idx)
-	new_resolution = str_to_res(new_resolution)
-	get_viewport().size = new_resolution
-	OS.window_size = new_resolution
+	OS.window_size = str_to_res(resolution_popup.get_item_text(idx))
 
 func _on_Fullscreen_toggled(button_pressed):
 	OS.window_fullscreen = button_pressed
