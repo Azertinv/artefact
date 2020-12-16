@@ -5,6 +5,8 @@ onready var artefact: Node = get_node(artefact_path)
 export(NodePath) var memory_viewer_path: NodePath
 onready var memory_viewer: Node = get_node(memory_viewer_path)
 
+export(String, MULTILINE) var tooltip = "RegisterViewer"
+
 var registers = []
 func cache_register_nodes() -> void:
 	registers.append($VBoxContainer/PC)
@@ -21,7 +23,7 @@ func _ready() -> void:
 	cache_register_nodes()
 	if artefact == null:
 		push_error("RegisterViewer not connected to Artefact")
-		return
+		breakpoint
 	if memory_viewer == null:
 		push_error("RegisterViewer not connected to MemoryViewer")
 	for i in range(9):
@@ -42,4 +44,4 @@ func _on_Register_gui_value_changed(_new_value: int, new_trits: Array, reg: int)
 	artefact.set_reg_trits(reg, PoolIntArray(new_trits))
 
 func _on_RegisterViewer_mouse_entered():
-	TooltipManager.tooltip = "Register editor"
+	TooltipManager.tooltip = tooltip

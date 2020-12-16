@@ -3,17 +3,11 @@ extends VBoxContainer
 export(bool) var can_reset_save = true
 
 var resolutions = [
-	Vector2(1280, 720),
-	Vector2(1366, 768),
 	Vector2(1600, 900),
 	Vector2(1920, 1080),
 	Vector2(2560, 1440),
 	Vector2(3200, 1800),
 	Vector2(3840, 2160),
-	Vector2(800, 600),
-	Vector2(960, 720),
-	Vector2(1280, 960),
-	Vector2(1400, 1050),
 	Vector2(1600, 1200),
 ]
 

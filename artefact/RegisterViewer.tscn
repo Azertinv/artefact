@@ -4,13 +4,17 @@
 [ext_resource path="res://utils/WordEdit.tscn" type="PackedScene" id=2]
 
 [node name="RegisterViewer" type="MarginContainer"]
-margin_top = 252.0
 margin_right = 180.0
-margin_bottom = 252.0
+margin_bottom = 248.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+tooltip = "[b]A + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]T[/font]
+[b]Z + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]0[/font]
+[b]E + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]1[/font]
+[b]Right click[/b] to switch to decimal display
+[b]Double Left click[/b] to jump to the address"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 180.0

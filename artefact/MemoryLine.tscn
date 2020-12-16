@@ -4,8 +4,9 @@
 [ext_resource path="res://utils/ByteEdit.tscn" type="PackedScene" id=3]
 
 [node name="MemoryLine" type="HBoxContainer"]
-margin_right = 702.0
+margin_right = 534.0
 margin_bottom = 24.0
+rect_min_size = Vector2( 534, 0 )
 custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,6 +15,7 @@ __meta__ = {
 [node name="Address" parent="." instance=ExtResource( 2 )]
 margin_right = 180.0
 margin_bottom = 24.0
+editable = false
 
 [node name="VSeparator" type="VSeparator" parent="."]
 margin_left = 200.0

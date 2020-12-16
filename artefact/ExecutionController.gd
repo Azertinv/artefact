@@ -5,6 +5,8 @@ onready var artefact: Node = get_node(artefact_path)
 
 export(bool) var max_speed: bool = true
 
+export(String, MULTILINE) var tooltip = "RegisterViewer"
+
 onready var run_pause_btn = $HBoxContainer/RunPause
 onready var step_btn = $HBoxContainer/Step
 
@@ -39,3 +41,6 @@ func _on_RunPause_toggled(button_pressed):
 func _on_Step_pressed():
 	if state == STATE_PAUSED:
 		artefact.run(1)
+
+func _on_ExecutionController_mouse_entered():
+	TooltipManager.tooltip = tooltip

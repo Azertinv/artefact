@@ -4,6 +4,7 @@ signal gui_value_changed(new_value, new_trits)
 signal gui_double_click()
 
 export(int) var width = 9
+export(bool) var editable: bool = true setget set_editable
 
 enum {
 	STATE_TRITS,
@@ -28,6 +29,14 @@ func _ready() -> void:
 	number_edit.rect_min_size.x = get_trit_edit(0).rect_size.x * width
 	for i in range(width):
 		get_trit_edit(i).connect("gui_value_changed", self, "_on_TritEdit_gui_value_changed")
+	set_editable(editable)
+
+func set_editable(new_value):
+	if cached_trit_edits.empty():
+		cache_trit_edits()
+	for i in range(width):
+		get_trit_edit(i).editable = new_value
+	editable = new_value
 
 var last_left_click = 0
 func _gui_input(event) -> void:

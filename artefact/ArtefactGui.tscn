@@ -9,12 +9,8 @@
 [ext_resource path="res://artefact/WriterIndicator.tscn" type="PackedScene" id=7]
 
 [node name="ArtefactGui" type="MarginContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = 50
-custom_constants/margin_top = 200
-custom_constants/margin_left = 50
-custom_constants/margin_bottom = 50
+margin_right = 762.0
+margin_bottom = 654.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,73 +18,75 @@ __meta__ = {
 
 [node name="Artefact" parent="." instance=ExtResource( 3 )]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 50.0
-margin_top = 200.0
-margin_right = 1870.0
-margin_bottom = 1030.0
-alignment = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 762.0
+margin_bottom = 654.0
 
-[node name="LeftPanel" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 529.0
-margin_right = 529.0
-margin_bottom = 4.0
-size_flags_vertical = 0
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 762.0
+margin_bottom = 500.0
 
-[node name="Labels" type="VBoxContainer" parent="HBoxContainer/LeftPanel"]
+[node name="LeftPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_bottom = 500.0
 
-[node name="Xrefs" type="VBoxContainer" parent="HBoxContainer/LeftPanel"]
+[node name="Labels" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/LeftPanel"]
+
+[node name="Xrefs" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/LeftPanel"]
 margin_top = 4.0
 margin_bottom = 4.0
 
-[node name="MemoryViewer" parent="HBoxContainer" instance=ExtResource( 5 )]
+[node name="MemoryViewer" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 533.0
-margin_right = 1087.0
+margin_left = 4.0
+margin_right = 558.0
 margin_bottom = 500.0
-size_flags_vertical = 0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
-artefact_path = NodePath("../../Artefact")
+artefact_path = NodePath("../../../Artefact")
 
-[node name="RightPanel" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 1091.0
-margin_right = 1291.0
+[node name="RightPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 562.0
+margin_right = 762.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 0, 500 )
 size_flags_vertical = 0
 custom_constants/separation = 20
 
-[node name="RegisterViewer" parent="HBoxContainer/RightPanel" instance=ExtResource( 2 )]
-margin_top = 0.0
+[node name="RegisterViewer" parent="VBoxContainer/HBoxContainer/RightPanel" instance=ExtResource( 2 )]
 margin_right = 200.0
 margin_bottom = 268.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
-artefact_path = NodePath("../../../Artefact")
+artefact_path = NodePath("../../../../Artefact")
 memory_viewer_path = NodePath("../../MemoryViewer")
 
-[node name="Tooltips" parent="HBoxContainer/RightPanel" instance=ExtResource( 4 )]
-margin_top = 288.0
-margin_right = 200.0
-margin_bottom = 448.0
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/RightPanel"]
-margin_top = 468.0
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/RightPanel"]
+margin_top = 448.0
 margin_right = 200.0
 margin_bottom = 500.0
+size_flags_vertical = 10
 
-[node name="ExecutionController" parent="HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 6 )]
-margin_left = 0.0
-margin_right = 104.0
-artefact_path = NodePath("../../../../Artefact")
+[node name="ExecutionController" parent="VBoxContainer/HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 6 )]
+margin_right = 124.0
+margin_bottom = 52.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+artefact_path = NodePath("../../../../../Artefact")
 
-[node name="WriterIndicator" parent="HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 7 )]
-margin_left = 108.0
+[node name="WriterIndicator" parent="VBoxContainer/HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 7 )]
+margin_left = 128.0
+margin_top = 14.0
 margin_right = 200.0
+margin_bottom = 38.0
+
+[node name="Tooltips" parent="VBoxContainer" instance=ExtResource( 4 )]
+margin_top = 504.0
+margin_right = 762.0
+margin_bottom = 654.0

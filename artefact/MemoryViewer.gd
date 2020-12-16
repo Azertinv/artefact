@@ -3,6 +3,8 @@ extends MarginContainer
 export(NodePath) var artefact_path: NodePath
 onready var artefact: Node = get_node(artefact_path)
 
+export(String, MULTILINE) var tooltip = "MemoryViewer"
+
 var addr: int = 0
 var last_addr: int
 
@@ -70,4 +72,4 @@ func _process(_delta: float) -> void:
 		last_addr = addr
 
 func _on_MemoryViewer_mouse_entered():
-	TooltipManager.tooltip = "Memory editor"
+	TooltipManager.tooltip = tooltip

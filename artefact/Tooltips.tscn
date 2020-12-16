@@ -1,11 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://artefact/Tooltips.gd" type="Script" id=1]
+[ext_resource path="res://assets/font/hack_normal/Normal.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/font/hack_normal/BoldItalics.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/font/hack_normal/Italics.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/font/hack_normal/Bold.tres" type="DynamicFont" id=5]
 
 [node name="Tooltips" type="PanelContainer"]
 margin_top = 252.0
-margin_right = 181.0
-margin_bottom = 360.0
+margin_right = 150.0
+margin_bottom = 402.0
+rect_min_size = Vector2( 0, 150 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,17 +19,18 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 174.0
-margin_bottom = 101.0
+margin_right = 143.0
+margin_bottom = 143.0
 alignment = 1
 
 [node name="Label" type="RichTextLabel" parent="VBoxContainer"]
-margin_top = 32.0
-margin_right = 167.0
-margin_bottom = 62.0
+margin_top = 58.0
+margin_right = 136.0
+margin_bottom = 77.0
+custom_fonts/mono_font = ExtResource( 2 )
+custom_fonts/bold_italics_font = ExtResource( 3 )
+custom_fonts/italics_font = ExtResource( 4 )
+custom_fonts/bold_font = ExtResource( 5 )
+custom_fonts/normal_font = ExtResource( 2 )
 bbcode_enabled = true
-bbcode_text = "Left click and drag
-to set multiple trits."
-text = "Left click and drag
-to set multiple trits."
 fit_content_height = true

@@ -34,7 +34,6 @@ func _ready() -> void:
 	if answer == "":
 		push_error("Question "+self.name+" has empty answer")
 		breakpoint
-	Save.register_node(save_section, name, self)
 	if Save.has_section_key(save_section, name):
 		var save_data = Save.get_value(save_section, name)
 		if save_data["answered"]:
