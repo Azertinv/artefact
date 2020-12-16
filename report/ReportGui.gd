@@ -20,3 +20,11 @@ func _on_CheckAnswerTimer_timeout() -> void:
 	if completed:
 		$CheckAnswerTimer.stop()
 		emit_signal("completed")
+
+func _input(event: InputEvent):
+	if OS.is_debug_build() and event.is_action_pressed("cheat"):
+		for q in get_children():
+			if not q.is_in_group("questions"):
+				continue
+			q.mark_question_as_answered()
+			q.remove_from_group("questions")
