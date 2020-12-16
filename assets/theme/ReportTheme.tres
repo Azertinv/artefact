@@ -2,7 +2,8 @@
 
 [ext_resource path="res://assets/theme/checkbox_checked.png" type="Texture" id=1]
 [ext_resource path="res://assets/theme/checkbox_unchecked.png" type="Texture" id=2]
-[ext_resource path="res://assets/font/hack_normal/Normal.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/font/hack_small/Normal.tres" type="DynamicFont" id=3]
+
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 3.0

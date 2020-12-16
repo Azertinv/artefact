@@ -1,10 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://artefact/Tooltips.gd" type="Script" id=1]
-[ext_resource path="res://assets/font/hack_normal/Normal.tres" type="DynamicFont" id=2]
-[ext_resource path="res://assets/font/hack_normal/BoldItalics.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/font/hack_normal/Italics.tres" type="DynamicFont" id=4]
-[ext_resource path="res://assets/font/hack_normal/Bold.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/font/hack_small/Normal.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/font/hack_small/BoldItalics.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/font/hack_small/Italics.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/font/hack_small/Bold.tres" type="DynamicFont" id=5]
+
 
 [node name="Tooltips" type="PanelContainer"]
 margin_top = 252.0
