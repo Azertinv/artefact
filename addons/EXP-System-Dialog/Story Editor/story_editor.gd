@@ -89,17 +89,15 @@ func _on_Check_All_BTN_pressed():
 func _on_Close_BTN_pressed():
 	self.emit_signal("close_pressed")
 
-func _on_Save_BTN_pressed():
-	if self._save_filename != "":
-		self._save_data_to(self._save_filename)
-	else:
+func _on_Save_and_Bake_BTN_pressed():
+	if self._save_filename == "":
 		push_error("Can't save right now please provide filename with Save as")
-
-func _on_Bake_BTN_pressed():
-	if self._bake_filename != "":
-		self._bake_data_to(self._bake_filename)
-	else:
+		return
+	if self._bake_filename == "":
 		push_error("Can't bake right now please provide filename with Bake as")
+		return
+	self._save_data_to(self._save_filename)
+	self._bake_data_to(self._bake_filename)
 
 func _on_Create_Dialog_BTN_pressed():
 	self._create_dialog_record()

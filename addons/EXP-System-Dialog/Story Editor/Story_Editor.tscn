@@ -44,113 +44,104 @@ margin_left = 107.0
 margin_right = 111.0
 margin_bottom = 20.0
 
-[node name="Save_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Save_and_Bake_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_left = 115.0
-margin_right = 156.0
+margin_right = 205.0
 margin_bottom = 20.0
-text = "Save"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Bake_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 160.0
-margin_right = 203.0
-margin_bottom = 20.0
-text = "Bake"
+text = "Save & Bake"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VSeparator6" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-margin_left = 207.0
-margin_right = 211.0
+margin_left = 209.0
+margin_right = 213.0
 margin_bottom = 20.0
 
 [node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 215.0
+margin_left = 217.0
 margin_top = 3.0
-margin_right = 263.0
+margin_right = 265.0
 margin_bottom = 17.0
 text = "Dialog: "
 
 [node name="Create_Dialog_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 267.0
-margin_right = 320.0
+margin_left = 269.0
+margin_right = 322.0
 margin_bottom = 20.0
 hint_tooltip = "Create a new dialog record."
 text = "Create"
 
 [node name="Delete_Dialog_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 324.0
-margin_right = 379.0
+margin_left = 326.0
+margin_right = 381.0
 margin_bottom = 20.0
 hint_tooltip = "Delete all checked dialog records."
 text = "Delete"
 
 [node name="Check_All_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 383.0
-margin_right = 454.0
+margin_left = 385.0
+margin_right = 456.0
 margin_bottom = 20.0
 hint_tooltip = "Check all currently visible dialog records."
 text = "Check All"
 
 [node name="UnCheck_All_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 458.0
-margin_right = 547.0
+margin_left = 460.0
+margin_right = 549.0
 margin_bottom = 20.0
 hint_tooltip = "Uncheck all currently visible dialog records."
 text = "UnCheck All"
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-margin_left = 551.0
-margin_right = 555.0
+margin_left = 553.0
+margin_right = 557.0
 margin_bottom = 20.0
 
 [node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 559.0
+margin_left = 561.0
 margin_top = 3.0
-margin_right = 595.0
+margin_right = 597.0
 margin_bottom = 17.0
 text = "Tags: "
 
 [node name="Group_Manager_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 599.0
-margin_right = 690.0
+margin_left = 601.0
+margin_right = 692.0
 margin_bottom = 20.0
 hint_tooltip = "Toggles the Group Manager open and closed. Use the Group Manager to add and delete groups that can be applied to dialog records in this story project."
 toggle_mode = true
 text = "Tag Manager"
 
 [node name="VSeparator3" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-margin_left = 694.0
-margin_right = 698.0
+margin_left = 696.0
+margin_right = 700.0
 margin_bottom = 20.0
 
 [node name="Apply_Group_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 702.0
-margin_right = 750.0
+margin_left = 704.0
+margin_right = 752.0
 margin_bottom = 20.0
 hint_tooltip = "Apply the group selected in the Group selector menu to all checked dialog records."
 text = "Apply"
 
 [node name="Remove_Group_BTN" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 754.0
-margin_right = 818.0
+margin_left = 756.0
+margin_right = 820.0
 margin_bottom = 20.0
 hint_tooltip = "Remove the group selected in the Group selector menu from all checked dialog records if the group is applied to them."
 text = "Remove"
 
 [node name="Group_Selector_BTN" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
-margin_left = 822.0
-margin_right = 879.0
+margin_left = 824.0
+margin_right = 881.0
 margin_bottom = 20.0
 hint_tooltip = "Select a group to apply or remove from dialog records."
 text = "Tags"
 
 [node name="VSeparator4" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-margin_left = 883.0
-margin_right = 887.0
+margin_left = 885.0
+margin_right = 889.0
 margin_bottom = 20.0
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
@@ -276,8 +267,7 @@ margin_right = 640.0
 margin_bottom = 19.0
 text = "Unsaved Story"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Close_BTN" to="." method="_on_Close_BTN_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Save_BTN" to="." method="_on_Save_BTN_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Bake_BTN" to="." method="_on_Bake_BTN_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Save_and_Bake_BTN" to="." method="_on_Save_and_Bake_BTN_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Create_Dialog_BTN" to="." method="_on_Create_Dialog_BTN_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Delete_Dialog_BTN" to="." method="_on_Delete_Dialog_BTN_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Check_All_BTN" to="." method="_on_Check_All_BTN_pressed"]

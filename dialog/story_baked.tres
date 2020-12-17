@@ -100,12 +100,39 @@ I took a look at it with the hardware team ...</dialog>"
 "text": "<speaker>Woman 1</speaker>
 <portrait>woman1</portrait>
 <dialog>Heeey, good job on that report.
-I took a look at it with the hardware team and they made a breaktrough on another artefact thanks to it.</dialog>"
+I took a look at it with the hardware team ...
+
+and they made a breaktrough on another artefact thanks to it !</dialog>"
+}
+}
+},
+3: {
+"nodes": {
+1: {
+"links": {
+0: 3
+},
+"text": "<start>"
+},
+2: {
+"links": {
+
+},
+"text": "<end>"
+},
+3: {
+"links": {
+0: 2
+},
+"text": "<speaker>Woman 1</speaker>
+<portrait>woman1</portrait>
+<dialog>TODO tutorial for ArtefactGui</dialog>"
 }
 }
 }
 }
 names = {
+"ArithmeticArtefact/Tutorial": 3,
 "ArithmeticCalculator/Done": 2,
 "Test": 1
 }

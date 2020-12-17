@@ -37,6 +37,7 @@ func _input(event: InputEvent) -> void:
 	if not $DialogScene.visible:
 		return
 	if event.is_action_pressed("ui_accept"):
+		get_tree().set_input_as_handled()
 		play_next_node()
 
 func get_tagged_text(tag : String, text : String) -> String:

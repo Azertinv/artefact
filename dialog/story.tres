@@ -6,6 +6,7 @@
 script = ExtResource( 1 )
 TYPE = "EXP_Story_editor"
 names = {
+"ArithmeticArtefact/Tutorial": 3,
 "ArithmeticCalculator/Done": 2,
 "Test": 1
 }
@@ -159,7 +160,49 @@ I took a look at it with the hardware team ...</dialog>",
 "text": "<speaker>Woman 1</speaker>
 <portrait>woman1</portrait>
 <dialog>Heeey, good job on that report.
-I took a look at it with the hardware team and they made a breaktrough on another artefact thanks to it.</dialog>",
+I took a look at it with the hardware team ...
+
+and they made a breaktrough on another artefact thanks to it !</dialog>",
+"type": "line"
+}
+}
+},
+3: {
+"available_nid": [  ],
+"groups": [  ],
+"human_readable_description": "Tutorial for ArtefactGui",
+"name": "ArithmeticArtefact/Tutorial",
+"nodes": {
+1: {
+"graph_offset": Vector2( 120, 40 ),
+"links": {
+0: 3
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<start>",
+"type": "line"
+},
+2: {
+"graph_offset": Vector2( 360, 380 ),
+"links": {
+
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<end>",
+"type": "line"
+},
+3: {
+"graph_offset": Vector2( 220, 200 ),
+"links": {
+0: 2
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Woman 1</speaker>
+<portrait>woman1</portrait>
+<dialog>TODO tutorial for ArtefactGui</dialog>",
 "type": "line"
 }
 }
