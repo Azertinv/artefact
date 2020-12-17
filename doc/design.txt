@@ -122,28 +122,3 @@ achievement:
         find a buggy opcode and crash the cpu
     Stack overflow (no not the website):
         Memory fault on a push that overflow the stack pointer
-
-timeline:
-    Phase tutorial:
-        Arithmetic calculator
-            What is =,C,0,+,-,*,/,1,T,TT1,T0111,TT01T
-        No playground
-        Simple programs:
-            read only
-            registers manipulation
-            calculator like operations
-    Phase 1:
-        Arithmetic + logic calculator
-        locked playground:
-            only discovered opcodes
-        programs:
-            read only
-            logic operations
-            memory operations
-        break out of the locked playground by executing arbitrary opcodes, transition to phase 2
-    Phase 2:
-        unlocked playground
-        programs:
-            some read only, some read write
-            control flow
-            conditions

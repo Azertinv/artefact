@@ -1,0 +1,41 @@
+Phase tutorial:
+    Arithmetic calculator
+        What is =,C,0,+,-,*,/,1,T,TT1,T0111,TT01T
+    No playground
+    Artefact:
+        nop
+        arithmetic operations
+            iadd sub mul div mod add_fz sub_fz
+        registers manipulation
+            radd sub mul div mod add_fz sub_fz
+            set mov
+
+Phase 1:
+    Logic calculator
+    locked playground:
+        only discovered opcodes
+    programs:
+        logic operations
+            shift and or xor not
+        memory operations
+            load store
+    break out of the locked playground by executing arbitrary opcodes, transition to phase 2
+
+Phase 2:
+    unlocked playground
+    programs:
+        condition
+            cmp
+            cjumpabs cjumprel
+        control flow
+            callabs callrel
+        stack manipulation
+            push pop
+
+Phase 3:
+    devices and real programs
+
+TODO allocate:
+    intret
+    setup
+    in out
