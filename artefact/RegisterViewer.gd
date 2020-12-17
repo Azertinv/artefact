@@ -26,9 +26,12 @@ func _ready() -> void:
 		breakpoint
 	if memory_viewer == null:
 		push_error("RegisterViewer not connected to MemoryViewer")
+		breakpoint
+	var reg_perm = artefact.get_reg_perm()
 	for i in range(9):
 		registers[i].connect("gui_value_changed", self, "_on_Register_gui_value_changed", [i])
 		registers[i].connect("gui_double_click", self, "_on_Register_gui_double_click", [i])
+		registers[i].perm = reg_perm[i]
 
 func _process(_delta) -> void:
 	for i in range(9):
@@ -37,8 +40,7 @@ func _process(_delta) -> void:
 			registers[i].value = new_value
 
 func _on_Register_gui_double_click(reg: int) -> void:
-	if memory_viewer:
-		memory_viewer.goto(registers[reg].value)
+	memory_viewer.goto(registers[reg].value)
 
 func _on_Register_gui_value_changed(_new_value: int, new_trits: Array, reg: int) -> void:
 	artefact.set_reg_trits(reg, PoolIntArray(new_trits))

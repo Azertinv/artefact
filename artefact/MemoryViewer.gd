@@ -7,6 +7,7 @@ export(String, MULTILINE) var tooltip = "MemoryViewer"
 
 var addr: int = 0
 var last_addr: int
+var last_bytes_perm: PoolIntArray
 
 const BYTE_PER_LINE: int = 3
 const LINE_COUNT: int = 20
@@ -66,6 +67,11 @@ func _process(_delta: float) -> void:
 		else:
 			if get_byte(i).visible != false:
 				get_byte(i).visible = false
+	var bytes_perm: PoolIntArray = artefact.get_mem_perm(addr, BYTE_PER_LINE * LINE_COUNT)
+	if last_bytes_perm != bytes_perm:
+		for i in range(BYTE_PER_LINE * LINE_COUNT):
+			get_byte(i).perm = bytes_perm[i]
+		last_bytes_perm = bytes_perm
 	if last_addr != addr:
 		for i in range(LINE_COUNT):
 			get_addr(i).value = addr + i * BYTE_PER_LINE

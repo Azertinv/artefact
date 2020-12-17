@@ -15,7 +15,6 @@ __meta__ = {
 [node name="Address" parent="." instance=ExtResource( 2 )]
 margin_right = 180.0
 margin_bottom = 24.0
-editable = false
 
 [node name="VSeparator" type="VSeparator" parent="."]
 margin_left = 200.0

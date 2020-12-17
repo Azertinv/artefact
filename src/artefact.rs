@@ -49,6 +49,34 @@ impl Artefact {
     }
 
     #[export]
+    fn get_mem_perm(&self, _owner: &Node, addr_value: i64, size: i64) -> Int32Array {
+        let mut result = Int32Array::new();
+        for i in addr_value..addr_value+size {
+            if i >= 43046721 && i <= 43046722 {
+                result.push(0b111111000);
+            } else {
+                result.push(0);
+            }
+        }
+        result
+    }
+
+    #[export]
+    fn get_reg_perm(&self, _owner: &Node) -> Int32Array {
+        let mut result = Int32Array::new();
+        result.push(0b111111111111111111); // PC
+        result.push(0b111111111111111111); // SP
+        result.push(0b111111111111111111); // FLAGS
+        result.push(0b111111111111111111); // A
+        result.push(0b111111111111111111); // B
+        result.push(0b111111111111111111); // C
+        result.push(0b111111111111111111); // D
+        result.push(0b111111111111111111); // E
+        result.push(0b111111111111111111); // F
+        result
+    }
+
+    #[export]
     fn mem_read(&self, _owner: &Node, addr_value: i64, size: i64) -> GodotBytes {
         let mut result = GodotBytes::new();
         let addr: Word = Word::from(addr_value);

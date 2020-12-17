@@ -372,6 +372,7 @@ impl Cpu {
             if let Err(interrupt) = self.fetch_decode_execute_one() {
                 println!("unhandled interrupt: {:?}", interrupt);
                 println!("{}", self);
+                return;
             }
         }
     }
