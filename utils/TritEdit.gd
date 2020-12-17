@@ -2,7 +2,7 @@ extends Label
 
 signal gui_value_changed(new_value)
 
-export(bool) var editable: bool = true
+export(bool) var editable: bool = true setget set_editable
 
 var value: int = 0 setget set_value
 
@@ -10,6 +10,11 @@ func set_value(new_value: int) -> void:
 	if value != new_value:
 		value = new_value
 		update_text(false)
+
+func set_editable(new_value: bool):
+	if new_value != editable:
+		$WritePermIndicator.visible = new_value
+		editable = new_value
 
 func get_drag_data(_position) -> bool:
 	return true
@@ -19,6 +24,7 @@ func can_drop_data(_pos, _data) -> bool:
 	return true
 
 func _ready():
+	$WritePermIndicator.visible = editable
 	set_process(false)
 
 func update_text(emit: bool) -> void:
