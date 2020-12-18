@@ -4,7 +4,7 @@ use crate::byte::Byte;
 use crate::operation::Operation;
 use crate::byte_le;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Word {
     pub bytes: [Byte; Word::BYTE_COUNT],
 }

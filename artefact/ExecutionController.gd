@@ -26,16 +26,21 @@ func _process(delta):
 			else:
 				inst_per_frame += 1 + inst_per_frame/100
 			print(inst_per_frame)
-		artefact.run(inst_per_frame)
+		var result = artefact.run(inst_per_frame)
+		if result != 0:
+			print(result)
+			_on_RunPause_toggled(false)
 
 func _on_RunPause_toggled(button_pressed):
 	if button_pressed:
 		state = STATE_RUNNING
 		run_pause_btn.text = "Pause"
+		run_pause_btn.pressed = button_pressed
 		step_btn.disabled = true
 	else:
 		state = STATE_PAUSED
 		run_pause_btn.text = "Run"
+		run_pause_btn.pressed = button_pressed
 		step_btn.disabled = false
 
 func _on_Step_pressed():

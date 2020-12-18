@@ -5,6 +5,7 @@ use crate::word::Word;
 use crate::operation::Operation;
 use crate::register::Registers;
 use crate::interrupt::{Interrupt, Result};
+use std::collections::HashSet;
 
 use crate::byte_le;
 
@@ -20,11 +21,16 @@ macro_rules! bt_le_pattern {
 pub struct Cpu {
     pub regs: Registers,
     pub mem: [Option<MemorySpace>; 9],
+    pub breakpoints: HashSet<Word>,
 }
 
 impl Cpu {
     pub fn new() -> Cpu {
-        Cpu{regs: Registers::new(), mem: [None, None, None, None, None, None, None, None, None]}
+        Cpu{
+            regs: Registers::new(),
+            mem: [None, None, None, None, None, None, None, None, None],
+            breakpoints: HashSet::new(),
+        }
     }
 
     pub fn init_default(&mut self) {
@@ -109,7 +115,10 @@ impl Cpu {
         result
     }
 
-    pub fn fetch_decode_execute_one(&mut self) -> Result<()> {
+    pub fn fetch_decode_execute_one(&mut self, ignore_bp: bool) -> Result<()> {
+        if !ignore_bp && self.breakpoints.contains(&self.regs.pc) {
+            return Err(Interrupt::Breakpoint);
+        }
         let (pc_space, pc_offset) = self.get_space_and_offset(self.regs.pc)?;
         let b0: Byte = pc_space.get_byte(pc_offset)?;
         //print!("{}: ", self.regs.pc);
@@ -374,14 +383,15 @@ impl Cpu {
         Ok(())
     }
 
-    pub fn run(&mut self, inst_count: usize) {
-        for _ in 0..inst_count {
-            if let Err(interrupt) = self.fetch_decode_execute_one() {
+    pub fn run(&mut self, inst_count: usize) -> Result<()> {
+        for i in 0..inst_count {
+            if let Err(interrupt) = self.fetch_decode_execute_one(i == 0) {
                 println!("unhandled interrupt: {:?}", interrupt);
                 println!("{}", self);
-                return;
+                return Err(interrupt);
             }
         }
+        return Ok(());
     }
 }
 

@@ -23,7 +23,7 @@ macro_rules! byte_le {
     ($i:expr) => {$i};
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Byte {
     pub trits: [Trit; Byte::WIDTH],
 }

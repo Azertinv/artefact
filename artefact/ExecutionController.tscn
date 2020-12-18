@@ -29,7 +29,8 @@ __meta__ = {
 }
 max_speed = false
 tooltip = "[b]Space[/b] to run or pause the CPU
-[b]S[/b] to step one instruction"
+[b]S[/b] to step one instruction
+[b]R[/b] to reset the state of the computer"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 156.0

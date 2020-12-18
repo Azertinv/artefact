@@ -1,7 +1,7 @@
 use std::fmt;
 use super::operation::Operation;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Trit {
     pub val: i8,
 }

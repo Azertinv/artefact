@@ -23,7 +23,7 @@ fn test_init() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(6);
+    cpu.run(6).unwrap();
     println!("\n{}", cpu);
     // panic!();
 }
@@ -45,7 +45,7 @@ fn test_load() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(4);
+    cpu.run(4).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), bt_le!(T,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0));
     assert_eq!(i64::from(cpu.regs.c), bt_le!(0,0,0,0,0,0,0,1,0,0,0,T,T,1,0,0,0,1));
@@ -68,11 +68,11 @@ fn test_addsub_fz() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    assert_eq!(cpu.fetch_decode_execute_one(), Ok(()));
-    assert_eq!(cpu.fetch_decode_execute_one(), Ok(()));
+    assert_eq!(cpu.fetch_decode_execute_one(false), Ok(()));
+    assert_eq!(cpu.fetch_decode_execute_one(false), Ok(()));
     assert_eq!(i64::from(cpu.regs.c), -5);
     cpu.regs.c = Word::ZERO;
-    assert_eq!(cpu.fetch_decode_execute_one(), Err(Interrupt::AbsOpFromZero));
+    assert_eq!(cpu.fetch_decode_execute_one(false), Err(Interrupt::AbsOpFromZero));
     println!("\n{}", cpu);
 }
 
@@ -103,27 +103,27 @@ fn test_cmp() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,1,1,1));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,0,0));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,0,0,0));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(1,1,1,1,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,T,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(0,1,T,0,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.flags), bt_le!(T,T,T,0,0,1,T));
     println!("\n{}", cpu);
 }
@@ -144,13 +144,13 @@ fn test_shift() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.b), 3);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.b), 81);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.b), 1);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), 0);
 }
@@ -174,7 +174,7 @@ fn test_inimm_insts() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(8);
+    cpu.run(8).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), -1);
 }
@@ -196,14 +196,14 @@ fn test_andorxormov() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(cpu.regs.c, cpu.regs.d);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.d), bt_le!(0,T,T,T,0,T,0,1,T));
-    cpu.run(1);
+    cpu.run(1).unwrap();
     assert_eq!(i64::from(cpu.regs.d), bt_le!(0,1,T,0,1,T,0,1,T));
     println!("\n{}", cpu);
-    cpu.run(1);
+    cpu.run(1).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), bt_le!(0,1,0,0,0,1,0,T,T));
 }
@@ -227,12 +227,12 @@ fn test_store() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(2);
+    cpu.run(2).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), bt_le!(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0));
     assert_eq!(i64::from(cpu.regs.c), bt_le!(0,0,0,0,T,0,1));
     cpu.regs.a = Word::from(bt_le!(1,0,0,0,0,0,0,0,0,T));
-    cpu.run(4);
+    cpu.run(4).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.a), bt_le!(1,0,0,0,0,0,0,0,0,T));
     assert_eq!(i64::from(cpu.regs.c), bt_le!(1,0,0,0,0,0,0,0,0,T));
@@ -265,16 +265,16 @@ fn test_addsubmuldivmod_regreg() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(6);
+    cpu.run(6).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), 108);
     assert_eq!(i64::from(cpu.regs.c), 0);
     assert_eq!(i64::from(cpu.regs.d), -108);
-    cpu.run(2);
+    cpu.run(2).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), 108*3);
     assert_eq!(i64::from(cpu.regs.d), -108/3);
-    cpu.run(2);
+    cpu.run(2).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), 1);
 }
@@ -294,7 +294,7 @@ fn test_cjumprel() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(2);
+    cpu.run(2).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 29);
 }
@@ -316,7 +316,7 @@ fn test_cjumpabs() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(2);
+    cpu.run(2).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 27);
 }
@@ -340,7 +340,7 @@ fn test_callrel() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(4);
+    cpu.run(4).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 3);
 }
@@ -365,7 +365,7 @@ fn test_callabs() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     println!("{}", cpu);
-    cpu.run(4);
+    cpu.run(4).unwrap();
     println!("\n{}", cpu);
     assert_eq!(i64::from(cpu.regs.pc.bytes[0]), 4);
 }
@@ -387,7 +387,7 @@ fn test_set() {
     for (i, b) in shellcode.iter().enumerate() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
-    cpu.run(3);
+    cpu.run(3).unwrap();
     println!("{}", cpu);
     assert_eq!(i64::from(cpu.regs.b), bt_le!(0,0,0,0,T,1,1,1,1,0,0,0,0,1,T,T,T,T));
     assert_eq!(i64::from(cpu.regs.c), bt_le!(0,0,0,0,1,1,T,1,1,0,0,0,0,T,T,1,T,T));
@@ -415,7 +415,7 @@ fn test_push_pop() {
     for (i, b) in shellcode.iter().enumerate() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
-    cpu.run(10);
+    cpu.run(10).unwrap();
     assert_eq!(cpu.regs.b, cpu.regs.c);
     assert_eq!(cpu.regs.c, cpu.regs.d);
     assert_eq!(cpu.regs.d, cpu.regs.e);
@@ -437,7 +437,7 @@ fn test_not() {
     for (i, b) in shellcode.iter().enumerate() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
-    cpu.run(3);
+    cpu.run(3).unwrap();
     assert_eq!(i64::from(cpu.regs.b), -i64::from(cpu.regs.c))
 }
 
@@ -457,7 +457,7 @@ fn test_nop() {
         pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
     }
     let old_pc = cpu.regs.pc;
-    cpu.run(5);
+    cpu.run(5).unwrap();
     assert_eq!(i64::from(old_pc) + 5, i64::from(cpu.regs.pc))
 }
 }

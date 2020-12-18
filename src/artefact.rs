@@ -27,6 +27,7 @@ impl Artefact {
     fn new(owner: &Node) -> Self {
         let mut result = Artefact{cpu: Cpu::new()};
         result.reset(owner);
+        result.cpu.breakpoints.insert(Word::from(43046722 + 100));
         result
     }
 
@@ -49,8 +50,11 @@ impl Artefact {
     }
 
     #[export]
-    fn run(&mut self, _owner: &Node, i: usize) {
-        self.cpu.run(i);
+    fn run(&mut self, _owner: &Node, i: usize) -> isize {
+        if let Err(interrupt) = self.cpu.run(i) {
+            return interrupt as isize;
+        }
+        return 0;
     }
 
     #[export]
