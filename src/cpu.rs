@@ -31,7 +31,14 @@ impl Cpu {
         self.mem[4] = Some(MemorySpace::new()); // general purpose space
         self.mem[5] = Some(MemorySpace::new()); // code space
         self.regs.pc = Word{bytes: [Byte::ZERO, byte_le!(0,0,0,0,0,0,0,1,0)]}; // start in code space
-        self.regs.sp = Word{bytes: [Byte::TERN, Byte::ZERO]}; // start in code space
+        self.regs.sp = Word{bytes: [Byte::TERN, Byte::ZERO]};
+        self.regs.flags = Word::ZERO;
+        self.regs.a = Word::ZERO;
+        self.regs.b = Word::ZERO;
+        self.regs.c = Word::ZERO;
+        self.regs.d = Word::ZERO;
+        self.regs.e = Word::ZERO;
+        self.regs.f = Word::ZERO;
     }
 
     fn get_space_index(addr: Word) -> usize {

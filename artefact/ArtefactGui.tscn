@@ -19,11 +19,11 @@ __meta__ = {
 [node name="Artefact" parent="." instance=ExtResource( 3 )]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 762.0
+margin_right = 772.0
 margin_bottom = 654.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 762.0
+margin_right = 772.0
 margin_bottom = 500.0
 
 [node name="LeftPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
@@ -49,14 +49,14 @@ artefact_path = NodePath("../../../Artefact")
 
 [node name="RightPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 562.0
-margin_right = 762.0
+margin_right = 772.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 0, 500 )
 size_flags_vertical = 0
 custom_constants/separation = 20
 
 [node name="RegisterViewer" parent="VBoxContainer/HBoxContainer/RightPanel" instance=ExtResource( 2 )]
-margin_right = 200.0
+margin_right = 210.0
 margin_bottom = 268.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
@@ -67,12 +67,12 @@ memory_viewer_path = NodePath("../../MemoryViewer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/RightPanel"]
 margin_top = 448.0
-margin_right = 200.0
+margin_right = 210.0
 margin_bottom = 500.0
 size_flags_vertical = 10
 
 [node name="ExecutionController" parent="VBoxContainer/HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 6 )]
-margin_right = 124.0
+margin_right = 176.0
 margin_bottom = 52.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
@@ -81,12 +81,12 @@ custom_constants/margin_bottom = 10
 artefact_path = NodePath("../../../../../Artefact")
 
 [node name="WriterIndicator" parent="VBoxContainer/HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 7 )]
-margin_left = 128.0
+margin_left = 180.0
 margin_top = 14.0
-margin_right = 200.0
+margin_right = 210.0
 margin_bottom = 38.0
 
 [node name="Tooltips" parent="VBoxContainer" instance=ExtResource( 4 )]
 margin_top = 504.0
-margin_right = 762.0
+margin_right = 772.0
 margin_bottom = 654.0

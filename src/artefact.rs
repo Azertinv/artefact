@@ -24,10 +24,21 @@ fn word_to_godot_trits(value: Word) -> GodotTrits {
 
 #[methods]
 impl Artefact {
-    fn new(_owner: &Node) -> Self {
-        let mut cpu: Cpu = Cpu::new();
-        cpu.init_default();
-        let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    fn new(owner: &Node) -> Self {
+        let mut result = Artefact{cpu: Cpu::new()};
+        result.reset(owner);
+        result
+    }
+
+    #[export]
+    fn _ready(&self, _owner: &Node) {
+        godot_print!("Artefact Initialized");
+    }
+
+    #[export]
+    fn reset(&mut self, _owner: &Node) {
+        self.cpu.init_default();
+        let (pc_space, pc_offset) = self.cpu.get_mut_space_and_offset(self.cpu.regs.pc).unwrap();
         let shellcode = [
             byte_le!(T,T,T,1,0,0,0,0,0), // add b, 1
             byte_le!(T,T,1,1,0,0,0,T,T), // sub pc, 1
@@ -35,12 +46,6 @@ impl Artefact {
         for (i, b) in shellcode.iter().enumerate() {
             pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
         }
-        Artefact{cpu}
-    }
-
-    #[export]
-    fn _ready(&self, _owner: &Node) {
-        godot_print!("Artefact Initialized");
     }
 
     #[export]
