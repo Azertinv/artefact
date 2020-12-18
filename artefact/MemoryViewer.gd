@@ -36,11 +36,23 @@ func _ready() -> void:
 		breakpoint
 	for i in range(BYTE_PER_LINE * LINE_COUNT):
 		get_byte(i).connect("gui_value_changed", self, "_on_ByteEdit_gui_value_changed", [i])
+		get_byte(i).connect("gui_left_click", self, "_on_ByteEdit_gui_left_click", [i])
 	addr = artefact.get_reg_value(0)
 	last_addr = 0
 
 func _on_ByteEdit_gui_value_changed(new_value, _new_trits, index):
 	artefact.mem_write(addr + index, PoolIntArray([new_value]))
+
+func _on_ByteEdit_gui_left_click(index):
+	if Input.is_action_pressed("dbg_breakpoint"):
+		var bps = artefact.get_breakpoints()
+		var target = addr + index
+		if target in bps:
+			print("del bp " + str(target))
+			artefact.del_breakpoint(target)
+		else:
+			print("add bp " + str(target))
+			artefact.add_breakpoint(target)
 
 func _input(event: InputEvent):
 	if not visible:

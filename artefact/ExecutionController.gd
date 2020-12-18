@@ -32,16 +32,14 @@ func _process(delta):
 			_on_RunPause_toggled(false)
 
 func _on_RunPause_toggled(button_pressed):
+	run_pause_btn.pressed = button_pressed
+	step_btn.disabled = button_pressed
 	if button_pressed:
 		state = STATE_RUNNING
 		run_pause_btn.text = "Pause"
-		run_pause_btn.pressed = button_pressed
-		step_btn.disabled = true
 	else:
 		state = STATE_PAUSED
 		run_pause_btn.text = "Run"
-		run_pause_btn.pressed = button_pressed
-		step_btn.disabled = false
 
 func _on_Step_pressed():
 	if state == STATE_PAUSED:

@@ -1,6 +1,7 @@
 extends HBoxContainer
 
 signal gui_value_changed(new_value, new_trits)
+signal gui_left_click()
 signal gui_double_click()
 
 export(int) var width = 9
@@ -47,6 +48,7 @@ func _gui_input(event) -> void:
 					get_trit_edit(i).visible = true
 				number_edit.visible = false
 		elif event.button_index == BUTTON_LEFT:
+			emit_signal("gui_left_click")
 			var left_click = OS.get_ticks_msec()
 			if left_click - last_left_click < 200:
 				emit_signal("gui_double_click")

@@ -27,7 +27,6 @@ impl Artefact {
     fn new(owner: &Node) -> Self {
         let mut result = Artefact{cpu: Cpu::new()};
         result.reset(owner);
-        result.cpu.breakpoints.insert(Word::from(43046722 + 100));
         result
     }
 
@@ -55,6 +54,25 @@ impl Artefact {
             return interrupt as isize;
         }
         return 0;
+    }
+
+    #[export]
+    fn add_breakpoint(&mut self, _owner: &Node, addr_value: i64) {
+        self.cpu.breakpoints.insert(Word::from(addr_value));
+    }
+
+    #[export]
+    fn del_breakpoint(&mut self, _owner: &Node, addr_value: i64) {
+        self.cpu.breakpoints.remove(&Word::from(addr_value));
+    }
+
+    #[export]
+    fn get_breakpoints(&mut self, _owner: &Node) -> Int32Array {
+        let mut result = Int32Array::new();
+        for a in &self.cpu.breakpoints {
+            result.push(i64::from(*a) as i32);
+        }
+        result
     }
 
     #[export]
