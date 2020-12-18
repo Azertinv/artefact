@@ -1,32 +1,30 @@
 extends CanvasLayer
 
-signal cleared
+signal cleared()
 
-var queue = []
+onready var box = $Box
+
 var indicated: Node
 
 func _ready():
-	$Box.visible = false
+	box.visible = false
 	set_process(false)
 
 func clear() -> void:
 	$AnimationPlayer.stop()
-	$Box.visible = false
+	box.visible = false
 	indicated = null
 	set_process(false)
 	emit_signal("cleared")
-	if not queue.empty():
-		indicate(queue.pop_front())
 
-func indicate(node: Control) -> void:
-	if $Box.visible:
-		queue.append(node)
-		return
-	$Box.visible = true
+func indicate(node: Control, blink: bool = true) -> void:
+	box.visible = true
 	indicated = node
 	set_process(true)
-	$AnimationPlayer.play("blink")
+	$AnimationPlayer.stop()
+	if blink:
+		$AnimationPlayer.play("blink")
 
 func _process(_delta):
-	$Box.rect_global_position = indicated.rect_global_position
-	$Box.rect_size = indicated.rect_size
+	box.rect_global_position = indicated.rect_global_position
+	box.rect_size = indicated.rect_size

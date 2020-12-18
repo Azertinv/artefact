@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://artefact/MemoryViewer.gd" type="Script" id=1]
+[ext_resource path="res://gui/Indicator.tscn" type="PackedScene" id=2]
 [ext_resource path="res://artefact/MemoryLine.tscn" type="PackedScene" id=4]
 
 [node name="MemoryViewer" type="MarginContainer"]
@@ -117,4 +118,6 @@ margin_bottom = 456.0
 margin_top = 456.0
 margin_right = 1920.0
 margin_bottom = 480.0
+
+[node name="Indicator" parent="." instance=ExtResource( 2 )]
 [connection signal="mouse_entered" from="." to="." method="_on_MemoryViewer_mouse_entered"]

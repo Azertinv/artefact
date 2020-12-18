@@ -16,7 +16,7 @@ enum {
 }
 
 var state = STATE_PAUSED
-var inst_per_frame: int = 1009
+var inst_per_frame: int = 1237
 
 func _process(delta):
 	if state == STATE_RUNNING:

@@ -2,12 +2,15 @@ extends MarginContainer
 
 export(NodePath) var artefact_path: NodePath
 onready var artefact: Node = get_node(artefact_path)
+onready var pc_indicator: Node = $Indicator
 
 export(String, MULTILINE) var tooltip = "MemoryViewer"
 
 var addr: int = 0
 var last_addr: int
+var last_pc: int
 var last_bytes_perm: PoolIntArray
+var last_breakpoints: PoolIntArray
 
 const BYTE_PER_LINE: int = 3
 const LINE_COUNT: int = 20
@@ -48,10 +51,8 @@ func _on_ByteEdit_gui_left_click(index):
 		var bps = artefact.get_breakpoints()
 		var target = addr + index
 		if target in bps:
-			print("del bp " + str(target))
 			artefact.del_breakpoint(target)
 		else:
-			print("add bp " + str(target))
 			artefact.add_breakpoint(target)
 
 func _input(event: InputEvent):
@@ -84,6 +85,21 @@ func _process(_delta: float) -> void:
 		for i in range(BYTE_PER_LINE * LINE_COUNT):
 			get_byte(i).perm = bytes_perm[i]
 		last_bytes_perm = bytes_perm
+	var breakpoints = artefact.get_breakpoints()
+	if last_addr != addr or last_breakpoints != breakpoints:
+		for i in range(BYTE_PER_LINE * LINE_COUNT):
+			if addr + i in breakpoints:
+				get_byte(i).modulate = Color.red
+			else:
+				get_byte(i).modulate = Color.white
+		last_breakpoints = breakpoints
+	var pc = artefact.get_reg_value(0)
+	if last_addr != addr or last_pc != pc:
+		if pc >= addr and pc < addr + BYTE_PER_LINE * LINE_COUNT:
+			pc_indicator.indicate(get_byte(pc - addr), false)
+		else:
+			pc_indicator.clear()
+		last_pc = pc
 	if last_addr != addr:
 		for i in range(LINE_COUNT):
 			get_addr(i).value = addr + i * BYTE_PER_LINE
