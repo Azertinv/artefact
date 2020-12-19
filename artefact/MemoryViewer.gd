@@ -70,6 +70,7 @@ func goto(new_addr: int) -> void:
 	addr = new_addr
 
 func _process(_delta: float) -> void:
+	# update values
 	var bytes: PoolIntArray = artefact.mem_read(addr, BYTE_PER_LINE * LINE_COUNT)
 	for i in range(BYTE_PER_LINE * LINE_COUNT):
 		if i < bytes.size():
@@ -80,11 +81,13 @@ func _process(_delta: float) -> void:
 		else:
 			if get_byte(i).visible != false:
 				get_byte(i).visible = false
+	# indicate permissions
 	var bytes_perm: PoolIntArray = artefact.get_mem_perm(addr, BYTE_PER_LINE * LINE_COUNT)
 	if last_bytes_perm != bytes_perm:
 		for i in range(BYTE_PER_LINE * LINE_COUNT):
 			get_byte(i).perm = bytes_perm[i]
 		last_bytes_perm = bytes_perm
+	# indicate breakpoints
 	var breakpoints = artefact.get_breakpoints()
 	if last_addr != addr or last_breakpoints != breakpoints:
 		for i in range(BYTE_PER_LINE * LINE_COUNT):
@@ -93,6 +96,7 @@ func _process(_delta: float) -> void:
 			else:
 				get_byte(i).modulate = Color.white
 		last_breakpoints = breakpoints
+	# indicate where pc is at
 	var pc = artefact.get_reg_value(0)
 	if last_addr != addr or last_pc != pc:
 		if pc >= addr and pc < addr + BYTE_PER_LINE * LINE_COUNT:
@@ -100,6 +104,7 @@ func _process(_delta: float) -> void:
 		else:
 			pc_indicator.clear()
 		last_pc = pc
+	# update addresses
 	if last_addr != addr:
 		for i in range(LINE_COUNT):
 			get_addr(i).value = addr + i * BYTE_PER_LINE

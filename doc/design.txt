@@ -30,6 +30,9 @@ x           0 nop
         00000001_: 1 imm.b/w
 x           1 callabs imm.w
 x           T callrel imm.b
+        00000T_xx:
+            1 rcallabs reg
+            T rcallrel reg
         000001_xx: 1 index
 x           0 not reg
 x           T push reg

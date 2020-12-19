@@ -26,7 +26,7 @@ func _process(delta):
 			else:
 				inst_per_frame += 1 + inst_per_frame/100
 			print(inst_per_frame)
-		var result = artefact.run(inst_per_frame)
+		var result = artefact.run(inst_per_frame + randi() % 7)
 		if result != 0:
 			print(result)
 			_on_RunPause_toggled(false)

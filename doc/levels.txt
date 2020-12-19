@@ -9,12 +9,15 @@ Phase tutorial:
         registers manipulation
             radd sub mul div mod add_fz sub_fz
             set mov
+    Programs:
+        Fibonnacci sequence
+        Prime number
 
 Phase 1:
     Logic calculator
     locked playground:
         only discovered opcodes
-    programs:
+    Artefact:
         logic operations
             shift and or xor not
         memory operations
@@ -23,7 +26,7 @@ Phase 1:
 
 Phase 2:
     unlocked playground
-    programs:
+    Artefact:
         condition
             cmp
             cjumpabs cjumprel
@@ -31,9 +34,12 @@ Phase 2:
             callabs callrel
         stack manipulation
             push pop
+    programs:
+        Array sorting
 
 Phase 3:
     devices and real programs
+    interrupts
 
 TODO allocate:
     intret

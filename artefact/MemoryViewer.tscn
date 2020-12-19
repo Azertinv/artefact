@@ -14,7 +14,8 @@ __meta__ = {
 tooltip = "[b]A + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]T[/font]
 [b]Z + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]0[/font]
 [b]E + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]1[/font]
-[b]Right click[/b] to switch to decimal display"
+[b]Right click[/b] to switch to decimal display
+[b]B + Left Click[/b] to toggle a breakpoint"
 
 [node name="Memory" type="VBoxContainer" parent="."]
 margin_right = 1920.0
