@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+import sys
+import json
+
 from copy import deepcopy
 
 class ParsingError(Exception):
@@ -159,6 +162,18 @@ def dec_to_bt(dec):
     result = result.ljust(18, '0')
     return result
 
+def bt_to_dec(bt):
+    if len(bt) == 0:
+        return 0
+    head = bt[0]
+    if head == "0":
+        result = 0
+    elif head == "1":
+        result = 1
+    elif head == "T":
+        result = -1
+    return result + 3 * bt_to_dec(bt[1:])
+
 def get_imm(opcode, labels):
     imm = opcode.args.pop(0)
     if imm[0] == "D": # decimal value
@@ -280,17 +295,34 @@ def test():
         print(compiled_code)
         print("Test failed: compiled code differ from expected compiled code")
         embed()
-        # raise Exception("Test failed: compiled code differ from expected compiled code")
+        raise Exception("Test failed: compiled code differ from expected compiled code")
     else:
         print("test passed")
 
 def main():
-    with open("test.asm", 'r') as f:
+    with open(sys.argv[1], 'r') as f:
         compiled_code = compile(f.read())
-        print(compiled_code)
-
-from IPython import embed
+        result = {
+            "regs": [],
+            "data_chunks": [
+                {
+                    "memspace": 5,
+                    "addr": 0,
+                    "data": [bt_to_dec(x) for x in compiled_code]
+                }
+            ],
+            "perm_chunks": [
+                {
+                    "memspace": 5,
+                    "addr": 0,
+                    "perm": [0xf]
+                }
+            ]
+        }
+        print(json.dumps(result))
 
 if __name__ == "__main__":
-    # main()
-    test()
+    if len(sys.argv) == 2:
+        main()
+    else:
+        test()
