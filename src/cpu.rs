@@ -5,6 +5,7 @@ use crate::word::Word;
 use crate::operation::Operation;
 use crate::register::Registers;
 use crate::interrupt::{Interrupt, Result};
+use crate::program::DataChunk;
 use std::collections::HashSet;
 
 use crate::byte_le;
@@ -45,6 +46,23 @@ impl Cpu {
         self.regs.d = Word::ZERO;
         self.regs.e = Word::ZERO;
         self.regs.f = Word::ZERO;
+    }
+
+    pub fn load_data_chunks(&mut self, data_chunks: &[DataChunk]) {
+        for dc in data_chunks {
+            if dc.memspace > 9
+                    || dc.addr < MemorySpace::MIN_ADDR
+                    || dc.addr + dc.data.len() as isize > MemorySpace::MAX_ADDR {
+                continue;
+            }
+            if self.mem[dc.memspace].is_none() {
+                self.mem[dc.memspace] = Some(MemorySpace::new());
+            }
+            let memspace: &mut MemorySpace = self.mem[dc.memspace].as_mut().unwrap();
+            for (i, b) in dc.data.iter().enumerate() {
+                memspace.set_byte(dc.addr+(i as isize), *b).unwrap();
+            }
+        }
     }
 
     fn get_space_index(addr: Word) -> usize {

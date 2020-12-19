@@ -10,7 +10,7 @@ Phase tutorial:
             radd sub mul div mod add_fz sub_fz
             set mov
     Programs:
-        Fibonnacci sequence
+        Lucas Sequence
         Prime number
 
 Phase 1:

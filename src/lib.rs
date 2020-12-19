@@ -9,6 +9,7 @@ pub mod cpu_test;
 pub mod memory;
 pub mod interrupt;
 pub mod register;
+pub mod program;
 
 pub use trit::Trit;
 pub use byte::Byte;

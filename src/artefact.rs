@@ -2,6 +2,7 @@ use crate::byte::Byte;
 use crate::word::Word;
 use crate::cpu::Cpu;
 use crate::byte_le;
+use crate::program::Program;
 
 use gdnative::prelude::*;
 
@@ -9,6 +10,7 @@ use gdnative::prelude::*;
 #[inherit(Node)]
 pub struct Artefact {
     cpu: Cpu,
+    program: Option<Program>,
 }
 
 type GodotTrits = Int32Array;
@@ -25,7 +27,7 @@ fn word_to_godot_trits(value: Word) -> GodotTrits {
 #[methods]
 impl Artefact {
     fn new(owner: &Node) -> Self {
-        let mut result = Artefact{cpu: Cpu::new()};
+        let mut result = Artefact{cpu: Cpu::new(), program: None};
         result.reset(owner);
         result
     }
@@ -33,6 +35,22 @@ impl Artefact {
     #[export]
     fn _ready(&self, _owner: &Node) {
         godot_print!("Artefact Initialized");
+    }
+
+    #[export]
+    fn load_program_from_json(&mut self, _owner: &Node, json: String) {
+        let program_result = Program::load_from_json(json);
+        match program_result {
+            Err(err) => {
+                godot_print!("Program load failed {:?}", err);
+                self.program = None;
+            },
+            Ok(program) => {
+                godot_print!("Program loaded successfully");
+                self.cpu.load_data_chunks(&program.data_chunks);
+                self.program = Some(program);
+            }
+        }
     }
 
     #[export]

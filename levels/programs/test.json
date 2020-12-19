@@ -1,0 +1,21 @@
+{
+    "regs": [],
+    "data_chunks": [
+        {
+            "memspace": 5,
+            "addr": 0,
+            "data": [
+                123, 123, 124
+            ]
+        }
+    ],
+    "perm_chunks": [
+        {
+            "memspace": 5,
+            "addr": 123456,
+            "perm": [
+                123, 123, 123
+            ]
+        }
+    ]
+}

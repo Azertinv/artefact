@@ -15,6 +15,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+program_path = "res://levels/programs/test.json"
 
 [node name="Artefact" parent="." instance=ExtResource( 3 )]
 
