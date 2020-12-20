@@ -5,7 +5,7 @@ func _ready():
 
 func _on_StartGame_pressed():
 	PauseScreen.can_pause = true
-	get_tree().change_scene_to(load("res://levels/ArithmeticCalculator.tscn"))
+	get_tree().change_scene_to(load("res://cutscenes/IntroCutscene.tscn"))
 
 func _on_Options_pressed():
 	$StartMenu.visible = false

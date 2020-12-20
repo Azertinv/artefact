@@ -39,6 +39,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		get_tree().set_input_as_handled()
 		play_next_node()
+	elif event.is_action_pressed("cheat"):
+		get_tree().set_input_as_handled()
+		emit_signal("dialog_completed")
+		$DialogScene.visible = false
 
 func get_tagged_text(tag : String, text : String) -> String:
 	var start_tag = "<" + tag + ">"

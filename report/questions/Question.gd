@@ -39,7 +39,7 @@ func _ready() -> void:
 		if save_data["answered"]:
 			mark_question_as_answered()
 		elif save_data["response"]:
-			# already setup variable from _ready will saved with the node
+			# already setup variable from _ready will be saved with the node
 			$Answer/AnswerBox.add_child(Helper.unpack_node_tree(save_data["response"]))
 	else:
 		_exit_tree()

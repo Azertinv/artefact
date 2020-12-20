@@ -8,6 +8,7 @@ TYPE = "EXP_Story_editor"
 names = {
 "ArithmeticArtefact/Tutorial": 3,
 "ArithmeticCalculator/Done": 2,
+"IntroCutscene": 4,
 "Test": 1
 }
 story = {
@@ -203,6 +204,186 @@ and they made a breaktrough on another artefact thanks to it !</dialog>",
 "text": "<speaker>Woman 1</speaker>
 <portrait>woman1</portrait>
 <dialog>TODO tutorial for ArtefactGui</dialog>",
+"type": "line"
+}
+}
+},
+4: {
+"available_nid": [  ],
+"groups": [  ],
+"human_readable_description": "Dialog to present the player and the lore",
+"name": "IntroCutscene",
+"nodes": {
+1: {
+"graph_offset": Vector2( 40, 40 ),
+"links": {
+0: 3
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<start>",
+"type": "line"
+},
+2: {
+"graph_offset": Vector2( 40, 2120 ),
+"links": {
+
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<end>",
+"type": "line"
+},
+3: {
+"graph_offset": Vector2( 40, 200 ),
+"links": {
+0: 4
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>You</speaker>
+<portrait></portrait>
+<dialog>[i]After 5 years of studies at the Alien Technology Institute I've finally graduated.[/i]</dialog>",
+"type": "line"
+},
+4: {
+"graph_offset": Vector2( 40, 360 ),
+"links": {
+0: 5
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>You</speaker>
+<portrait></portrait>
+<dialog>[i]I got lucky and found a job right out of school and today is my first day!
+With this job I'll finally get my hands on a real Alien Construct, not a lame emulated one like at the institute.[/i]</dialog>",
+"type": "line"
+},
+5: {
+"graph_offset": Vector2( 40, 520 ),
+"links": {
+0: 6
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>You</speaker>
+<portrait></portrait>
+<dialog>[i]Finally, here is the building.
+Mmh, why is there nobody at the front desk ?[/i]</dialog>",
+"type": "line"
+},
+6: {
+"graph_offset": Vector2( 40, 680 ),
+"links": {
+0: 7
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>You</speaker>
+<portrait></portrait>
+<dialog>[i]I guess I work here now anyway.
+I'll just go and find the Alien Construct Research Lab (ACRL).[/i]</dialog>",
+"type": "line"
+},
+7: {
+"graph_offset": Vector2( 40, 840 ),
+"links": {
+0: 8
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>You</speaker>
+<portrait></portrait>
+<dialog>[i]Ah here it is, do I just knock ?[/i]</dialog>",
+"type": "line"
+},
+8: {
+"graph_offset": Vector2( 40, 1000 ),
+"links": {
+0: 9
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>???</speaker>
+<portrait>woman1</portrait>
+<dialog>Oh hey, you're the new hire right ?</dialog>",
+"type": "line"
+},
+9: {
+"graph_offset": Vector2( 40, 1160 ),
+"links": {
+0: 10
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>You</speaker>
+<portrait></portrait>
+<dialog>Hi, yes, there wasn't anybody at the front desk so I just walked around to find the lab.</dialog>",
+"type": "line"
+},
+10: {
+"graph_offset": Vector2( 40, 1320 ),
+"links": {
+0: 11
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>???</speaker>
+<portrait>woman1</portrait>
+<dialog>We have a front desk ?</dialog>",
+"type": "line"
+},
+11: {
+"graph_offset": Vector2( 40, 1480 ),
+"links": {
+0: 12
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Yelena</speaker>
+<portrait>woman1</portrait>
+<dialog>Anyway my name's Yelena, welcome to the ACRL!
+I'm the head researcher by default since I'm the only one assigned to this lab.</dialog>",
+"type": "line"
+},
+12: {
+"graph_offset": Vector2( 40, 1640 ),
+"links": {
+0: 13
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Yelena</speaker>
+<portrait>woman1</portrait>
+<dialog>I'm gonna start you on this new artefact the hardware team managed to get to work.
+Unfortunately it's not an Alien Construct BUT it's the first silicon based alien tech we ever found! Exciting!</dialog>",
+"type": "line"
+},
+13: {
+"graph_offset": Vector2( 40, 1800 ),
+"links": {
+0: 14
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>You</speaker>
+<portrait></portrait>
+<dialog>Wait isn't silicon really old technology ?
+And I don't even know anything about silicon based computers, I only studied Alien Constructs!</dialog>",
+"type": "line"
+},
+14: {
+"graph_offset": Vector2( 40, 1960 ),
+"links": {
+0: 2
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Yelena</speaker>
+<portrait>woman1</portrait>
+<dialog>Yeeeeah, don't worry about that! I'm sure you'll get the hang of it.
+Anyway, gotta go do something else right now.
+Get to work, I'll check your report when I get back, good luck!</dialog>",
 "type": "line"
 }
 }

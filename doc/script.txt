@@ -1,16 +1,51 @@
 Tutorial:
     Start game
     Quick monologue
-        study at xxx university
-        found a job out of school
-        first day on the job
-    Enter office
-        Introduction with resident researcher
-        First silicon based alien technology found
-        Years of Academy Training Wasted
-            Yeeeeah don't worry you'll get the hang of it
-        Start you on arith calc
-            quick hardware team recap
-        Get to work !
-    Arithmetic Calculator Level
+        After years of studies at the Alien Technology Institute I've finally graduated.
+        I got lucky and found a job right out of school and today is my first day!
+        With this job I'll finally get my hands on a real Alien Construct,
+        not a lame emulated one like at the institute.
 
+    Enter office
+        TODO:
+            mention report earlier
+
+        Finally, here is the building.
+
+        Mmh, why is there nobody at the front desk ?
+
+        I guess I work here now anyway.
+        I'll just go and find the Alien Construct Research Lab (ACRL).
+
+        Ah here it is, do I just knock ?
+
+        - ???
+        Hey you're the new hire right ?
+
+        - You
+        Hi, yes, there wasn't anybody at the front desk so I just walked around to find the lab.
+
+        - ???
+        We have a front desk ?
+
+        - Yelena
+        Anyway my name's Yelena, welcome to the ACRL!
+        I'm the head researcher by default since I'm the only one assigned to this lab.
+
+        - Yelena
+        I'm gonna start you on this new artefact the hardware team managed to get to work.
+        Unfortunately it's not an Alien Construct BUT it's the first
+        silicon based alien tech we ever found! Exciting!
+
+        - You
+        Wait isn't silicon really old technology ?
+        And I don't even know anything about silicon based computers, I only studied Alien Constructs.
+
+        - Yelena
+        Yeeeeah, don't worry about that! I'm sure you'll get the hang of it.
+        Anyway, gotta go do something else right now.
+        Get to work, I'll check your report when I get back, good luck!
+    Arithmetic Calculator Level
+        TODO:
+            level done
+            good job on the report
