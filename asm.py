@@ -93,6 +93,7 @@ opcodes = {
         # 1 imm control flow
         "callabs":  Op("000000011", 3, 1),
         "callrel":  Op("00000001T", 2, 1),
+        "jump":     Op("TTTvvvvTT", 1, 1),
         }
 
 def parse_inst(head, tail, line, offset):
