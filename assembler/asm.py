@@ -203,10 +203,19 @@ def get_imm(opcode, labels):
         imm = dec_to_bt(labels[imm[1:]].offset)
     return imm.ljust(18, '0')
 
+def encoding_to_perm(encoding):
+    result = 0b111111111
+    for i, t in enumerate(encoding):
+        if t in "01T":
+            result ^= 1 << i
+    return result
+
 def compile_final(parsed_code, labels):
-    result = []
+    bytecode = []
+    permissions = []
     for op in parsed_code:
         encoding = op.encoding
+        permissions.append(encoding_to_perm(encoding))
         if "xx" in encoding:
             encoding = encoding.replace("xx", get_reg(op))
         if "mm" in encoding:
@@ -215,19 +224,21 @@ def compile_final(parsed_code, labels):
             encoding = encoding.replace("yy", get_reg(op))
         if "vvvv" in encoding:
             encoding = encoding.replace("vvvv", get_imm(op, labels)[:4])
-        result.append(encoding)
+        bytecode.append(encoding)
         if op.size > 1:
             imm = get_imm(op, labels)
-            result.append(imm[0:9])
+            bytecode.append(imm[0:9])
+            permissions.append(0b111111111)
             if op.size == 3:
-                result.append(imm[9:18])
-    return result
+                bytecode.append(imm[9:18])
+                permissions.append(0b111111111)
+    return (bytecode, permissions)
 
 def compile(code):
     lexed_code = lexer(code)
     parsed_code, labels = parse(lexed_code)
-    compiled_code = compile_final(parsed_code, labels)
-    return compiled_code
+    compiled_code, permissions = compile_final(parsed_code, labels)
+    return (compiled_code, permissions)
 
 def test():
     expected_compiled_code = [
@@ -301,7 +312,7 @@ def test():
 
 def main():
     with open(sys.argv[1], 'r') as f:
-        compiled_code = compile(f.read())
+        compiled_code, permissions = compile(f.read())
         result = {
             "regs": {
                 "pc": 43046721,
@@ -325,7 +336,7 @@ def main():
                 {
                     "memspace": 5,
                     "addr": 0,
-                    "perm": [0xf]
+                    "perm": permissions
                 }
             ]
         }
