@@ -20,6 +20,7 @@ func clear() -> void:
 func indicate(node: Control, blink: bool = true) -> void:
 	box.visible = true
 	indicated = node
+	_process(0) # avoid the stray indicator for 1 frame
 	set_process(true)
 	$AnimationPlayer.stop()
 	if blink:
