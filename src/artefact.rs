@@ -3,6 +3,7 @@ use crate::word::Word;
 use crate::cpu::Cpu;
 use crate::byte_le;
 use crate::program::Program;
+use crate::memory::MemorySpace;
 
 use gdnative::prelude::*;
 
@@ -105,7 +106,28 @@ impl Artefact {
         let mut result = Int32Array::new();
         if let Some(ref program) = self.program {
             for _ in 0..size {
-                result.push(0b111111111);
+                result.push(0b000000000);
+            }
+            let memspace: usize = ((addr_value as isize + MemorySpace::MAX_ADDR) / MemorySpace::SIZE as isize + 4) as usize;
+            let addr: isize = addr_value as isize - ((memspace-4) * MemorySpace::SIZE) as isize;
+            for pc in &program.perm_chunks {
+                if memspace != pc.memspace {
+                    continue;
+                }
+                if addr + size as isize <= pc.addr
+                    || pc.addr + pc.permissions.len() as isize <= addr {
+                    continue;
+                }
+                let (mut i, mut pc_i) = if pc.addr < addr {
+                    (0, addr - pc.addr)
+                } else {
+                    (pc.addr - addr, 0)
+                };
+                while i < size as isize && pc_i < pc.permissions.len() as isize {
+                    result.set(i as i32, pc.permissions.get(pc_i as i32));
+                    i += 1;
+                    pc_i += 1;
+                }
             }
         } else {
             for _ in 0..size {
