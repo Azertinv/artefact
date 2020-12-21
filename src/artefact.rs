@@ -56,14 +56,20 @@ impl Artefact {
 
     #[export]
     fn reset(&mut self, _owner: &Node) {
-        self.cpu.init_default();
-        let (pc_space, pc_offset) = self.cpu.get_mut_space_and_offset(self.cpu.regs.pc).unwrap();
-        let shellcode = [
-            byte_le!(T,T,T,1,0,0,0,0,0), // add b, 1
-            byte_le!(T,T,1,1,0,0,0,T,T), // sub pc, 1
-        ];
-        for (i, b) in shellcode.iter().enumerate() {
-            pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+        if let Some(ref program) = self.program {
+            self.cpu.mem = [None, None, None, None, None, None, None, None, None];
+            self.cpu.regs = program.regs;
+            self.cpu.load_data_chunks(&program.data_chunks);
+        } else {
+            self.cpu.init_default();
+            let (pc_space, pc_offset) = self.cpu.get_mut_space_and_offset(self.cpu.regs.pc).unwrap();
+            let shellcode = [
+                byte_le!(T,T,T,1,0,0,0,0,0), // add b, 1
+                byte_le!(T,T,1,1,0,0,0,T,T), // sub pc, 1
+            ];
+            for (i, b) in shellcode.iter().enumerate() {
+                pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+            }
         }
     }
 
@@ -98,12 +104,8 @@ impl Artefact {
     fn get_mem_perm(&self, _owner: &Node, addr_value: i64, size: i64) -> Int32Array {
         let mut result = Int32Array::new();
         if let Some(ref program) = self.program {
-            for i in addr_value..addr_value+size {
-                if i >= 43046721 && i <= 43046723 {
-                    result.push(0b111111000);
-                } else {
-                    result.push(0);
-                }
+            for _ in 0..size {
+                result.push(0b111111111);
             }
         } else {
             for _ in 0..size {
