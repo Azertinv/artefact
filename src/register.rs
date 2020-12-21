@@ -4,7 +4,7 @@ use crate::word::Word;
 
 type Reg = Word;
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct Registers {
     pub pc: Reg, // program counter
     pub sp: Reg, // stack pointer

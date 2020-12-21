@@ -47,6 +47,7 @@ impl Artefact {
             },
             Ok(program) => {
                 godot_print!("Program loaded successfully");
+                self.cpu.regs = program.regs;
                 self.cpu.load_data_chunks(&program.data_chunks);
                 self.program = Some(program);
             }
@@ -96,13 +97,19 @@ impl Artefact {
     #[export]
     fn get_mem_perm(&self, _owner: &Node, addr_value: i64, size: i64) -> Int32Array {
         let mut result = Int32Array::new();
-        for i in addr_value..addr_value+size {
-            if i >= 43046721 && i <= 43046722 {
-                result.push(0b111111000);
-            } else {
-                result.push(0);
+        if let Some(ref program) = self.program {
+            for i in addr_value..addr_value+size {
+                if i >= 43046721 && i <= 43046723 {
+                    result.push(0b111111000);
+                } else {
+                    result.push(0);
+                }
             }
-        }
+        } else {
+            for _ in 0..size {
+                result.push(0b111111111);
+            }
+        };
         result
     }
 

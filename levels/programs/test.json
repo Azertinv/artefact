@@ -1,1 +1,1 @@
-{"regs": [], "data_chunks": [{"memspace": 5, "addr": 0, "data": [14, 6575, -8815]}], "perm_chunks": [{"memspace": 5, "addr": 0, "perm": [15]}]}
+{"regs": {"pc": 43046721, "sp": -1, "flags": 0, "a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0}, "data_chunks": [{"memspace": 5, "addr": 0, "data": [14, 6575, -8815]}], "perm_chunks": [{"memspace": 5, "addr": 0, "perm": [15]}]}

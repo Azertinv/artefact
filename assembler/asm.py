@@ -303,7 +303,17 @@ def main():
     with open(sys.argv[1], 'r') as f:
         compiled_code = compile(f.read())
         result = {
-            "regs": [],
+            "regs": {
+                "pc": 43046721,
+                "sp": -1,
+                "flags": 0,
+                "a": 0,
+                "b": 0,
+                "c": 0,
+                "d": 0,
+                "e": 0,
+                "f": 0,
+            },
             "data_chunks": [
                 {
                     "memspace": 5,

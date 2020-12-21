@@ -1,4 +1,5 @@
 use crate::byte::Byte;
+use crate::word::Word;
 use crate::register::Registers;
 
 use json::{JsonError, JsonValue};
@@ -27,8 +28,26 @@ impl Program {
     pub fn load_from_json(json_str: String) -> json::Result<Program> {
         let json_object = json::parse(&json_str)?;
 
-        // TODO load registers from the compiled file
+        // load registers from the compiled file
         let mut regs = Registers::new();
+        regs.pc = Word::from(json_object["regs"]["pc"]
+            .as_i64().ok_or(JsonError::WrongType("pc".to_string()))?);
+        regs.sp = Word::from(json_object["regs"]["sp"]
+            .as_i64().ok_or(JsonError::WrongType("sp".to_string()))?);
+        regs.flags = Word::from(json_object["regs"]["flags"]
+            .as_i64().ok_or(JsonError::WrongType("flags".to_string()))?);
+        regs.a = Word::from(json_object["regs"]["a"]
+            .as_i64().ok_or(JsonError::WrongType("a".to_string()))?);
+        regs.b = Word::from(json_object["regs"]["b"]
+            .as_i64().ok_or(JsonError::WrongType("b".to_string()))?);
+        regs.c = Word::from(json_object["regs"]["c"]
+            .as_i64().ok_or(JsonError::WrongType("c".to_string()))?);
+        regs.d = Word::from(json_object["regs"]["d"]
+            .as_i64().ok_or(JsonError::WrongType("d".to_string()))?);
+        regs.e = Word::from(json_object["regs"]["e"]
+            .as_i64().ok_or(JsonError::WrongType("e".to_string()))?);
+        regs.f = Word::from(json_object["regs"]["f"]
+            .as_i64().ok_or(JsonError::WrongType("f".to_string()))?);
 
         // load data chunks from the compiled file
         let mut data_chunks: Vec<DataChunk> = vec!();
