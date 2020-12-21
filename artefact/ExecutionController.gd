@@ -49,4 +49,5 @@ func _on_ExecutionController_mouse_entered():
 	TooltipManager.tooltip = tooltip
 
 func _on_Reset_pressed():
+	_on_RunPause_toggled(false)
 	artefact.reset()

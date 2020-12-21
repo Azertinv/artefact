@@ -12,3 +12,18 @@ func load_program_from_file(path: String) -> void:
 	var content = file.get_as_text()
 	file.close()
 	$Artefact.load_program_from_json(content)
+
+var in_diag = false
+func _input(event: InputEvent):
+	if not in_diag and OS.is_debug_build() and event.is_action_pressed("cheat"):
+		in_diag = true
+		var diag = FileDialog.new()
+		diag.current_dir = "res://levels/programs/"
+		diag.mode = FileDialog.MODE_OPEN_FILE
+		diag.filters = PoolStringArray(["*.json"])
+		add_child(diag)
+		diag.popup(Rect2(1920/2-500/2, 1080/2-500/2, 500, 500))
+		program_path = yield(diag, "file_selected")
+		load_program_from_file(program_path)
+		diag.queue_free()
+		in_diag = false

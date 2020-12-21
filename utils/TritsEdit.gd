@@ -68,7 +68,7 @@ func update_value() -> void:
 	update_decimal_display()
 
 #update trits based on value
-func update_trits() -> void:
+func update_trits(check_perm: bool = false) -> void:
 	var remainder = value
 	for i in range(width):
 		var trit = remainder % 3
@@ -76,13 +76,15 @@ func update_trits() -> void:
 			trit += 3
 		if trit == 2:
 			trit = -1
-		get_trit_edit(i).value = trit
+		if !check_perm or get_trit_edit(i).editable:
+			get_trit_edit(i).value = trit
 		remainder -= trit
 		remainder /= 3
 	update_decimal_display()
 
 func _on_NumberEdit_gui_value_changed(new_value: String) -> void:
-	set_value(int(new_value))
+	set_value(int(new_value), true)
+	update_value()
 	emit_signal("gui_value_changed", value, get_trits())
 
 func _on_TritEdit_gui_value_changed(_new_value: int) -> void:
@@ -95,10 +97,10 @@ func set_perm(new_perm: int) -> void:
 		get_trit_edit(i).editable = new_perm & 1
 		new_perm = new_perm >> 1
 
-func set_value(new_value: int) -> void:
+func set_value(new_value: int, check_perm: bool = false) -> void:
 	if value != new_value:
 		value = new_value
-		update_trits()
+		update_trits(check_perm)
 
 func set_trits(new_trits: Array) -> void:
 	var updated = false

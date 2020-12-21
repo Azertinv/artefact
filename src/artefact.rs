@@ -48,9 +48,8 @@ impl Artefact {
             },
             Ok(program) => {
                 godot_print!("Program loaded successfully");
-                self.cpu.regs = program.regs;
-                self.cpu.load_data_chunks(&program.data_chunks);
                 self.program = Some(program);
+                self.reset(_owner);
             }
         }
     }
