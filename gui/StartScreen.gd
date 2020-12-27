@@ -1,7 +1,7 @@
 extends HBoxContainer
 
 func _ready():
-	AudioStreamManager.play("res://assets/songs/bleeping-demo-by-kevin-macleod.ogg")
+	PauseScreen.can_pause = false
 
 func _on_StartGame_pressed():
 	PauseScreen.can_pause = true

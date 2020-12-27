@@ -13,9 +13,10 @@ func _ready():
 		available.append(p)
 		p.connect("finished", self, "_on_stream_finished", [p])
 		p.bus = bus
+	AudioStreamManager.play("res://assets/songs/bleeping-demo-by-kevin-macleod.ogg")
 
-func _on_stream_finished(stream):
-	available.append(stream)
+func _on_stream_finished(player):
+	available.append(player)
 
 func play(sound_path: String):
 	queue.append(sound_path)
