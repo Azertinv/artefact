@@ -27,5 +27,8 @@ func indicate(node: Control, blink: bool = true) -> void:
 		$AnimationPlayer.play("blink")
 
 func _process(_delta):
-	box.rect_global_position = indicated.rect_global_position
-	box.rect_size = indicated.rect_size
+	if indicated != null:
+		box.rect_global_position = indicated.rect_global_position
+		box.rect_size = indicated.rect_size
+	else:
+		clear()

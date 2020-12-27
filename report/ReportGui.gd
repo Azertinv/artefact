@@ -27,3 +27,16 @@ func _input(event: InputEvent):
 				continue
 			if not q.get_node("CheckBox").pressed:
 				q.mark_question_as_answered()
+
+func _ready():
+	if !Save.has_section_key("ReportGui", "TutorialDone"):
+		report_tutorial()
+
+func report_tutorial():
+	var answer_box = $WhatIsEqual/Answer/AnswerBox
+	Indicator.indicate(answer_box)
+	$Dialog.play_dialog("ReportGui/Tutorial")
+	yield($Dialog, "dialog_completed")
+	yield(answer_box, "mouse_entered")
+	Indicator.clear()
+	Save.set_value("ReportGui", "TutorialDone", true)

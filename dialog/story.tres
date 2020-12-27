@@ -9,6 +9,7 @@ names = {
 "ArithmeticArtefact/Tutorial": 3,
 "ArithmeticCalculator/Done": 2,
 "IntroCutscene": 4,
+"ReportGui/Tutorial": 5,
 "Test": 1
 }
 story = {
@@ -91,7 +92,7 @@ story = {
 2: {
 "available_nid": [  ],
 "groups": [  ],
-"human_readable_description": "Started on AritCalc completed",
+"human_readable_description": "AritCalc completed, segway into AritArte Tutorial",
 "name": "ArithmeticCalculator/Done",
 "nodes": {
 1: {
@@ -105,7 +106,7 @@ story = {
 "type": "line"
 },
 2: {
-"graph_offset": Vector2( 480, 160 ),
+"graph_offset": Vector2( 520, 120 ),
 "links": {
 0: 6
 },
@@ -118,7 +119,7 @@ I took a look at it with the hardware team ...</dialog>",
 "type": "line"
 },
 3: {
-"graph_offset": Vector2( 1920, 220 ),
+"graph_offset": Vector2( 1960, 160 ),
 "links": {
 
 },
@@ -132,7 +133,7 @@ I took a look at it with the hardware team ...</dialog>",
 "links": {
 0: 2
 },
-"rect_size": Vector2( 324, 137 ),
+"rect_size": Vector2( 441, 236 ),
 "slot_amount": 1,
 "text": "<speaker></speaker>
 <portrait></portrait>
@@ -140,7 +141,7 @@ I took a look at it with the hardware team ...</dialog>",
 "type": "line"
 },
 5: {
-"graph_offset": Vector2( 1460, 260 ),
+"graph_offset": Vector2( 1500, 160 ),
 "links": {
 0: 3
 },
@@ -152,7 +153,7 @@ I took a look at it with the hardware team ...</dialog>",
 "type": "line"
 },
 6: {
-"graph_offset": Vector2( 940, 180 ),
+"graph_offset": Vector2( 1020, 140 ),
 "links": {
 0: 5
 },
@@ -384,6 +385,46 @@ And I don't even know anything about silicon based computers, I only studied Ali
 <dialog>Yeeeeah, don't worry about that! I'm sure you'll get the hang of it.
 Anyway, gotta go do something else right now.
 Get to work, I'll check your report when I get back, good luck!</dialog>",
+"type": "line"
+}
+}
+},
+5: {
+"available_nid": [  ],
+"groups": [  ],
+"human_readable_description": "Tutorial on how to fill a report",
+"name": "ReportGui/Tutorial",
+"nodes": {
+1: {
+"graph_offset": Vector2( 40, 40 ),
+"links": {
+0: 3
+},
+"rect_size": Vector2( 0, 0 ),
+"slot_amount": 1,
+"text": "<start>",
+"type": "line"
+},
+2: {
+"graph_offset": Vector2( 1020, 60 ),
+"links": {
+
+},
+"rect_size": Vector2( 0, 0 ),
+"slot_amount": 1,
+"text": "<end>",
+"type": "line"
+},
+3: {
+"graph_offset": Vector2( 540, 60 ),
+"links": {
+0: 2
+},
+"rect_size": Vector2( 0, 0 ),
+"slot_amount": 1,
+"text": "<speaker></speaker>
+<portrait></portrait>
+<dialog>You can fill the report by clicking on an empty box an putting your answer.</dialog>",
 "type": "line"
 }
 }

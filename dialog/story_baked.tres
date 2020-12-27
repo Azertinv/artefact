@@ -249,11 +249,36 @@ Anyway, gotta go do something else right now.
 Get to work, I'll check your report when I get back, good luck!</dialog>"
 }
 }
+},
+5: {
+"nodes": {
+1: {
+"links": {
+0: 3
+},
+"text": "<start>"
+},
+2: {
+"links": {
+
+},
+"text": "<end>"
+},
+3: {
+"links": {
+0: 2
+},
+"text": "<speaker></speaker>
+<portrait></portrait>
+<dialog>You can fill the report by clicking on an empty box an putting your answer.</dialog>"
+}
+}
 }
 }
 names = {
 "ArithmeticArtefact/Tutorial": 3,
 "ArithmeticCalculator/Done": 2,
 "IntroCutscene": 4,
+"ReportGui/Tutorial": 5,
 "Test": 1
 }
