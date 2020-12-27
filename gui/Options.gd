@@ -30,6 +30,8 @@ func _ready():
 		resolution_popup.add_item(res_to_str(r))
 	var bus_idx = AudioServer.get_bus_index("Master")
 	$MasterLevel/HSlider.value = AudioServer.get_bus_volume_db(bus_idx)
+	bus_idx = AudioServer.get_bus_index("Music")
+	$MusicLevel/HSlider.value = AudioServer.get_bus_volume_db(bus_idx)
 	if not can_reset_save:
 		$ResetSave.visible = false
 
@@ -47,6 +49,10 @@ func _on_Borderless_toggled(button_pressed):
 
 func _on_MasterLevel_value_changed(value):
 	var bus_idx = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_volume_db(bus_idx, value)
+
+func _on_MusicLevel_value_changed(value):
+	var bus_idx = AudioServer.get_bus_index("Music")
 	AudioServer.set_bus_volume_db(bus_idx, value)
 
 func _on_ResetSave_confirmed_pressed():

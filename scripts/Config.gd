@@ -5,6 +5,7 @@ var config = null
 
 var saved_bus_level = [
 	"Master",
+	"Music",
 ]
 
 func _enter_tree():
