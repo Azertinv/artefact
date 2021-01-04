@@ -6,8 +6,8 @@
 script = ExtResource( 1 )
 TYPE = "EXP_Story_editor"
 names = {
-"ArithmeticArtefact/Tutorial": 3,
 "ArithmeticCalculator/Done": 2,
+"ArtefactGui/Tutorial": 3,
 "IntroCutscene": 4,
 "ReportGui/Tutorial": 5,
 "Test": 1
@@ -92,7 +92,7 @@ story = {
 2: {
 "available_nid": [  ],
 "groups": [  ],
-"human_readable_description": "AritCalc completed, segway into AritArte Tutorial",
+"human_readable_description": "AritCalc completed, segway into ArtefactGui tutorial",
 "name": "ArithmeticCalculator/Done",
 "nodes": {
 1: {
@@ -173,10 +173,10 @@ and they made a breaktrough on another artefact thanks to it !</dialog>",
 "available_nid": [  ],
 "groups": [  ],
 "human_readable_description": "Tutorial for ArtefactGui",
-"name": "ArithmeticArtefact/Tutorial",
+"name": "ArtefactGui/Tutorial",
 "nodes": {
 1: {
-"graph_offset": Vector2( 120, 40 ),
+"graph_offset": Vector2( -300, 0 ),
 "links": {
 0: 3
 },
@@ -186,7 +186,7 @@ and they made a breaktrough on another artefact thanks to it !</dialog>",
 "type": "line"
 },
 2: {
-"graph_offset": Vector2( 360, 380 ),
+"graph_offset": Vector2( 620, 0 ),
 "links": {
 
 },
@@ -196,7 +196,7 @@ and they made a breaktrough on another artefact thanks to it !</dialog>",
 "type": "line"
 },
 3: {
-"graph_offset": Vector2( 220, 200 ),
+"graph_offset": Vector2( 160, 0 ),
 "links": {
 0: 2
 },
@@ -424,7 +424,7 @@ Get to work, I'll check your report when I get back, good luck!</dialog>",
 "slot_amount": 1,
 "text": "<speaker></speaker>
 <portrait></portrait>
-<dialog>You can fill the report by clicking on an empty box an putting your answer.</dialog>",
+<dialog>You can fill the report by clicking on an empty box and choosing your answer.</dialog>",
 "type": "line"
 }
 }

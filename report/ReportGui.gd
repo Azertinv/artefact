@@ -35,7 +35,7 @@ func _ready():
 func report_tutorial():
 	var answer_box = $WhatIsEqual/Answer/AnswerBox
 	Indicator.indicate(answer_box)
-	$Dialog.play_dialog("ReportGui/Tutorial")
+	$Dialog.play_dialog("ReportGui/Tutorial", false)
 	yield($Dialog, "dialog_completed")
 	yield(answer_box, "mouse_entered")
 	Indicator.clear()

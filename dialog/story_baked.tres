@@ -270,14 +270,14 @@ Get to work, I'll check your report when I get back, good luck!</dialog>"
 },
 "text": "<speaker></speaker>
 <portrait></portrait>
-<dialog>You can fill the report by clicking on an empty box an putting your answer.</dialog>"
+<dialog>You can fill the report by clicking on an empty box and choosing your answer.</dialog>"
 }
 }
 }
 }
 names = {
-"ArithmeticArtefact/Tutorial": 3,
 "ArithmeticCalculator/Done": 2,
+"ArtefactGui/Tutorial": 3,
 "IntroCutscene": 4,
 "ReportGui/Tutorial": 5,
 "Test": 1

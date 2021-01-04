@@ -1,16 +1,20 @@
 extends Node
 
-func pack_node_tree(node: Node) -> Array:
-	var result = []
-	for c in node.get_children():
-		result.append(pack_node_tree(c))
-	return [node, result]
+func pack_node_tree(node: Node) -> PackedScene:
+	set_owners(node)
+	var packed_answer = PackedScene.new()
+	packed_answer.pack(node)
+	return packed_answer
 
-func unpack_node_tree(data: Array) -> Node:
-	var node = data[0]
-	for c in data[1]:
-		node.add_child(unpack_node_tree(c))
-	return node
+func set_owners(node: Node):
+	set_owners_helper(node, node)
+
+func set_owners_helper(node: Node, new_owner: Node):
+	if node != new_owner:
+		node.owner = new_owner
+	for c in node.get_children():
+		c.owner = new_owner
+		set_owners_helper(c, new_owner)
 
 #TODO FIXME make it support multiple events for 1 action
 #func set_event_for_action(action, event):

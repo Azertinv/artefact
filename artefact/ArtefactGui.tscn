@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://artefact/ArtefactGui.gd" type="Script" id=1]
 [ext_resource path="res://artefact/RegisterViewer.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://artefact/MemoryViewer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://artefact/ExecutionController.tscn" type="PackedScene" id=6]
 [ext_resource path="res://artefact/WriterIndicator.tscn" type="PackedScene" id=7]
+[ext_resource path="res://dialog/DialogScene.tscn" type="PackedScene" id=8]
 
 [node name="ArtefactGui" type="MarginContainer"]
 margin_right = 762.0
@@ -21,14 +22,14 @@ program_path = "res://levels/programs/test.json"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 772.0
-margin_bottom = 654.0
+margin_bottom = 760.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 772.0
-margin_bottom = 500.0
+margin_bottom = 606.0
 
 [node name="LeftPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_bottom = 500.0
+margin_bottom = 606.0
 
 [node name="Labels" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/LeftPanel"]
 
@@ -37,11 +38,9 @@ margin_top = 4.0
 margin_bottom = 4.0
 
 [node name="MemoryViewer" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 5 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 4.0
 margin_right = 558.0
-margin_bottom = 500.0
+margin_bottom = 606.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -51,13 +50,13 @@ artefact_path = NodePath("../../../Artefact")
 [node name="RightPanel" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 562.0
 margin_right = 772.0
-margin_bottom = 500.0
-rect_min_size = Vector2( 0, 500 )
+margin_bottom = 606.0
+rect_min_size = Vector2( 0, 606 )
 size_flags_vertical = 0
 
 [node name="RegisterViewer" parent="VBoxContainer/HBoxContainer/RightPanel" instance=ExtResource( 2 )]
 margin_right = 210.0
-margin_bottom = 268.0
+margin_bottom = 298.0
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -66,9 +65,9 @@ artefact_path = NodePath("../../../../Artefact")
 memory_viewer_path = NodePath("../../MemoryViewer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/RightPanel"]
-margin_top = 448.0
+margin_top = 554.0
 margin_right = 210.0
-margin_bottom = 500.0
+margin_bottom = 606.0
 size_flags_vertical = 10
 
 [node name="ExecutionController" parent="VBoxContainer/HBoxContainer/RightPanel/HBoxContainer" instance=ExtResource( 6 )]
@@ -87,6 +86,8 @@ margin_right = 210.0
 margin_bottom = 38.0
 
 [node name="Tooltips" parent="VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 504.0
+margin_top = 610.0
 margin_right = 772.0
-margin_bottom = 654.0
+margin_bottom = 760.0
+
+[node name="Dialog" parent="." instance=ExtResource( 8 )]

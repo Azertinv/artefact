@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://artefact/MemoryViewer.gd" type="Script" id=1]
 [ext_resource path="res://gui/Indicator.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/font/hack_small/Normal.tres" type="DynamicFont" id=3]
 [ext_resource path="res://artefact/MemoryLine.tscn" type="PackedScene" id=4]
 
 [node name="MemoryViewer" type="MarginContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 534.0
+margin_bottom = 494.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -18,107 +19,121 @@ tooltip = "[b]A + Left Click[/b] to write [font=res://assets/font/alien_small/No
 [b]B + Left Click[/b] to toggle a breakpoint"
 
 [node name="Memory" type="VBoxContainer" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
-custom_constants/separation = 0
+margin_right = 534.0
+margin_bottom = 586.0
+
+[node name="Labels" type="HBoxContainer" parent="Memory"]
+margin_right = 534.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 534, 0 )
+custom_constants/separation = 20
+
+[node name="Addresses" type="Label" parent="Memory/Labels"]
+margin_right = 180.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 180, 0 )
+custom_fonts/font = ExtResource( 3 )
+text = "Address"
+align = 1
+
+[node name="VSeparator" type="VSeparator" parent="Memory/Labels"]
+margin_left = 200.0
+margin_right = 204.0
+margin_bottom = 18.0
+
+[node name="Data" type="Label" parent="Memory/Labels"]
+margin_left = 224.0
+margin_right = 534.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "Memory"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Memory"]
+margin_top = 22.0
+margin_right = 534.0
+margin_bottom = 26.0
 
 [node name="Line0" parent="Memory" instance=ExtResource( 4 )]
-margin_right = 1920.0
+margin_top = 30.0
+margin_bottom = 54.0
 
 [node name="Line1" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 24.0
-margin_right = 1920.0
-margin_bottom = 48.0
+margin_top = 58.0
+margin_bottom = 82.0
 
 [node name="Line2" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 48.0
-margin_right = 1920.0
-margin_bottom = 72.0
+margin_top = 86.0
+margin_bottom = 110.0
 
 [node name="Line3" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 72.0
-margin_right = 1920.0
-margin_bottom = 96.0
+margin_top = 114.0
+margin_bottom = 138.0
 
 [node name="Line4" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 96.0
-margin_right = 1920.0
-margin_bottom = 120.0
+margin_top = 142.0
+margin_bottom = 166.0
 
 [node name="Line5" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 120.0
-margin_right = 1920.0
-margin_bottom = 144.0
+margin_top = 170.0
+margin_bottom = 194.0
 
 [node name="Line6" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 144.0
-margin_right = 1920.0
-margin_bottom = 168.0
+margin_top = 198.0
+margin_bottom = 222.0
 
 [node name="Line7" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 168.0
-margin_right = 1920.0
-margin_bottom = 192.0
+margin_top = 226.0
+margin_bottom = 250.0
 
 [node name="Line8" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 192.0
-margin_right = 1920.0
-margin_bottom = 216.0
+margin_top = 254.0
+margin_bottom = 278.0
 
 [node name="Line9" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 216.0
-margin_right = 1920.0
-margin_bottom = 240.0
+margin_top = 282.0
+margin_bottom = 306.0
 
 [node name="Line10" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 240.0
-margin_right = 1920.0
-margin_bottom = 264.0
+margin_top = 310.0
+margin_bottom = 334.0
 
 [node name="Line11" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 264.0
-margin_right = 1920.0
-margin_bottom = 288.0
+margin_top = 338.0
+margin_bottom = 362.0
 
 [node name="Line12" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 288.0
-margin_right = 1920.0
-margin_bottom = 312.0
+margin_top = 366.0
+margin_bottom = 390.0
 
 [node name="Line13" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 312.0
-margin_right = 1920.0
-margin_bottom = 336.0
+margin_top = 394.0
+margin_bottom = 418.0
 
 [node name="Line14" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 336.0
-margin_right = 1920.0
-margin_bottom = 360.0
+margin_top = 422.0
+margin_bottom = 446.0
 
 [node name="Line15" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 360.0
-margin_right = 1920.0
-margin_bottom = 384.0
+margin_top = 450.0
+margin_bottom = 474.0
 
 [node name="Line16" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 384.0
-margin_right = 1920.0
-margin_bottom = 408.0
+margin_top = 478.0
+margin_bottom = 502.0
 
 [node name="Line17" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 408.0
-margin_right = 1920.0
-margin_bottom = 432.0
+margin_top = 506.0
+margin_bottom = 530.0
 
 [node name="Line18" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 432.0
-margin_right = 1920.0
-margin_bottom = 456.0
+margin_top = 534.0
+margin_bottom = 558.0
 
 [node name="Line19" parent="Memory" instance=ExtResource( 4 )]
-margin_top = 456.0
-margin_right = 1920.0
-margin_bottom = 480.0
+margin_top = 562.0
+margin_bottom = 586.0
 
 [node name="Indicator" parent="." instance=ExtResource( 2 )]
 [connection signal="mouse_entered" from="." to="." method="_on_MemoryViewer_mouse_entered"]

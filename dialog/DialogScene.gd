@@ -1,10 +1,15 @@
 extends CanvasLayer
 
+# don't use next_node_played signal when allowing the player to skip
+# the dialog, will mess with yield order and number
+signal next_node_played
 signal dialog_completed
 
 var did: int = 0
 var nid: int = 0
 var story_reader
+
+var can_skip: bool = true
 
 onready var speaker_box = $DialogScene/VBoxContainer/NinePatchRect/Speaker
 onready var speaker_label = $DialogScene/VBoxContainer/NinePatchRect/Speaker/Label
@@ -19,7 +24,8 @@ func _ready() -> void:
 	var story = preload("res://dialog/story_baked.tres")
 	story_reader.read(story)
 
-func play_dialog(record_name: String) -> void:
+func play_dialog(record_name: String, allow_skip: bool = true) -> void:
+	can_skip = allow_skip
 	did = story_reader.get_did_via_record_name(record_name)
 	nid = story_reader.get_nid_via_exact_text(did, "<start>")
 	play_next_node()
@@ -32,6 +38,7 @@ func play_next_node() -> void:
 		$DialogScene.visible = false
 	else:
 		play_node()
+		emit_signal("next_node_played")
 
 func _input(event: InputEvent) -> void:
 	if not $DialogScene.visible:
@@ -39,10 +46,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		get_tree().set_input_as_handled()
 		play_next_node()
-	elif event.is_action_pressed("cheat"):
+	elif event.is_action_pressed("cheat") and can_skip:
 		get_tree().set_input_as_handled()
-		emit_signal("dialog_completed")
 		$DialogScene.visible = false
+		emit_signal("dialog_completed")
 
 func get_tagged_text(tag : String, text : String) -> String:
 	var start_tag = "<" + tag + ">"
