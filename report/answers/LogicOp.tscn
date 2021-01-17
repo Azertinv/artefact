@@ -20,6 +20,6 @@ text = "the logic operator"
 
 [node name="AnswerBox" parent="." instance=ExtResource( 1 )]
 margin_left = 117.0
-margin_right = 167.0
+margin_right = 217.0
 mouse_filter = 1
-possible_answers = [ "Or", "And", "Not" ]
+possible_answers = [ "logic_op/Or", "logic_op/And", "logic_op/Not" ]

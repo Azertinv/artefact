@@ -6,6 +6,7 @@
 margin_left = 183.0
 margin_right = 241.0
 margin_bottom = 24.0
+context_menu_enabled = false
 caret_blink = true
 script = ExtResource( 1 )
 __meta__ = {

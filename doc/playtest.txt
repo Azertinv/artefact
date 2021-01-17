@@ -1,0 +1,14 @@
+Yo I'm looking to trade playtests with someone, 2 hours of playtime max.
+You either finished the first demo (https://azertinv.itch.io/artefact) or are into programming puzzle game like Shenzen I/O or TIS-100.
+I'll play your game and test whatever you want me to and can record it, only problem is I'm on linux so your game needs to at least run in proton, I can test it myself but off the shelf engines run well usually.
+I also have access to a MacOS computer so I can test or debug your build (it's 10 years old though so don't expect your game to run well).
+
+pre-test questions:
+    Do you know how to count in binary ?
+    Do you know what assembly is ? and did you ever write any ?
+    Do you know what reverse-engineering is ?
+
+post-test questions:
+    What prior knowledge do you think helped you complete each level ?
+    Was it too difficult, too easy ?
+    Did you rike it ?

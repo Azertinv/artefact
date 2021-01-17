@@ -49,3 +49,16 @@ Tutorial:
         TODO:
             level done
             good job on the report
+
+    Arithmetic Artefact Level
+        Tutorial:
+        instructions
+        registers
+        step
+        run
+        pause
+        addresses
+        memory
+        permissions
+        write trit
+        reset

@@ -9,7 +9,7 @@ func _ready():
 		artefact_tutorial()
 
 func artefact_tutorial():
-	$Dialog.play_dialog("ArtefactGui/Tutorial", false)
+	$Dialog.play_dialog("ArtefactGui/Tutorial", OS.is_debug_build())
 	yield($Dialog, "dialog_completed")
 	Save.set_value("ArtefactGui", "TutorialDone", true)
 

@@ -39,10 +39,16 @@ func _ready() -> void:
 		if save_data["answered"]:
 			mark_question_as_answered()
 		elif save_data["response"]:
-			# already setup variable from _ready will be saved with the node
 			$Answer/AnswerBox.add_child(save_data["response"].instance())
 	else:
 		_exit_tree()
+
+func set_owners_on_answers(new_owner: Node, node: Node):
+	if new_owner != node and node is Answer:
+		node.owner = new_owner
+		print(node)
+	for c in node.get_children():
+		set_owners_on_answers(new_owner, c)
 
 func _exit_tree():
 	var save_data = {}
@@ -51,7 +57,11 @@ func _exit_tree():
 	else:
 		save_data["answered"] = false
 		if $Answer/AnswerBox.get_child_count() > 0:
-			save_data["response"] = Helper.pack_node_tree($Answer/AnswerBox.get_child(0))
+			var to_save = $Answer/AnswerBox.get_child(0)
+			set_owners_on_answers(to_save, to_save)
+			var packed_scene = PackedScene.new()
+			packed_scene.pack(to_save)
+			save_data["response"] = packed_scene
 		else:
 			save_data["response"] = null
 	Save.set_value(save_section, name, save_data)

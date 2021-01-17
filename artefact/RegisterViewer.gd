@@ -9,15 +9,15 @@ export(String, MULTILINE) var tooltip = "RegisterViewer"
 
 var registers = []
 func cache_register_nodes() -> void:
-	registers.append($VBoxContainer/PC)
-	registers.append($VBoxContainer/SP)
-	registers.append($VBoxContainer/FLAGS)
-	registers.append($VBoxContainer/A)
-	registers.append($VBoxContainer/B)
-	registers.append($VBoxContainer/C)
-	registers.append($VBoxContainer/D)
-	registers.append($VBoxContainer/E)
-	registers.append($VBoxContainer/F)
+	registers.append($VBoxContainer/HBoxContainer/Registers/PC)
+	registers.append($VBoxContainer/HBoxContainer/Registers/SP)
+	registers.append($VBoxContainer/HBoxContainer/Registers/FLAGS)
+	registers.append($VBoxContainer/HBoxContainer/Registers/A)
+	registers.append($VBoxContainer/HBoxContainer/Registers/B)
+	registers.append($VBoxContainer/HBoxContainer/Registers/C)
+	registers.append($VBoxContainer/HBoxContainer/Registers/D)
+	registers.append($VBoxContainer/HBoxContainer/Registers/E)
+	registers.append($VBoxContainer/HBoxContainer/Registers/F)
 
 func _ready() -> void:
 	cache_register_nodes()

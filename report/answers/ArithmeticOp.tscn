@@ -20,6 +20,6 @@ text = "the arithmetic operator"
 
 [node name="AnswerBox" parent="." instance=ExtResource( 1 )]
 margin_left = 153.0
-margin_right = 203.0
+margin_right = 253.0
 mouse_filter = 1
-possible_answers = [ "Add", "Sub", "Mul", "Div", "Mod" ]
+possible_answers = [ "arithmetic_op/Add", "arithmetic_op/Sub", "arithmetic_op/Mul", "arithmetic_op/Div", "arithmetic_op/Mod" ]

@@ -1,3 +1,4 @@
+class_name Answer
 extends Control
 
 signal pressed(answer)

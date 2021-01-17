@@ -16,7 +16,8 @@ tooltip = "[b]A + Left Click[/b] to write [font=res://assets/font/alien_small/No
 [b]Z + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]0[/font]
 [b]E + Left Click[/b] to write [font=res://assets/font/alien_small/Normal.tres]1[/font]
 [b]Right click[/b] to switch to decimal display
-[b]B + Left Click[/b] to toggle a breakpoint"
+[b]B + Left Click[/b] to toggle a breakpoint
+[b]Mouse Wheel[/b] to scroll trough the memory"
 
 [node name="Memory" type="VBoxContainer" parent="."]
 margin_right = 534.0

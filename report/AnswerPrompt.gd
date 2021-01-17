@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 var destination = null
-var possible_answers_scenes = []
+var possible_answers = []
 
 onready var answer_list = $CenterContainer/VBoxContainer
 
@@ -10,8 +10,8 @@ func _ready() -> void:
 	if current_focus_control:
 		current_focus_control.release_focus()
 	var first = true
-	for s in possible_answers_scenes:
-		var answer = s.instance()
+	for a in possible_answers:
+		var answer = load("res://report/answers/"+a+".tscn").instance()
 		answer.interactable = false
 		answer.connect("pressed", self, "_on_Answer_pressed")
 		if not first:
