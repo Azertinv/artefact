@@ -44,9 +44,10 @@ func _ready() -> void:
 		_exit_tree()
 
 func set_owners_on_answers(new_owner: Node, node: Node):
-	if new_owner != node and node is Answer:
-		node.owner = new_owner
-		print(node)
+	if node is Answer:
+		if new_owner != node:
+			node.owner = new_owner
+		node.update_saved_properties()
 	for c in node.get_children():
 		set_owners_on_answers(new_owner, c)
 

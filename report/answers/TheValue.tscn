@@ -11,6 +11,9 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+saved_properties = {
+"NumberEdit:text": ""
+}
 
 [node name="Label" type="Label" parent="."]
 margin_top = 5.0

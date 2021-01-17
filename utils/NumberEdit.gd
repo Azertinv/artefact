@@ -7,6 +7,7 @@ var regex = RegEx.new()
 func _ready():
 	regex.compile("^\\-?[0-9]*$")
 	caret_position = 0
+	connect("text_changed", self, "_on_NumberEdit_text_changed")
 
 var old_text: String = ""
 

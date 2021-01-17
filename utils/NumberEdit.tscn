@@ -12,4 +12,3 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="text_changed" from="." to="." method="_on_NumberEdit_text_changed"]
