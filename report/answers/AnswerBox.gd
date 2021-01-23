@@ -4,10 +4,10 @@ export(Array, String) var possible_answers = []
 
 var answer_prompt_scene = preload("res://report/AnswerPrompt.tscn")
 
-func _ready() -> void:
-	if possible_answers.size() == 0:
-		push_error("AnswerBox: possible answers cannot be empty")
-		breakpoint
+#TODO
+#func _ready() -> void:
+#	for pa in possible_answers:
+#		push_error("AnswerBox: possible answer \""+pa+"\" not found")
 
 func prompt_for_new_answer() -> void:
 	var answer_prompt = answer_prompt_scene.instance()

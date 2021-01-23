@@ -3,25 +3,26 @@ extends HBoxContainer
 export(String, MULTILINE) var answer = ""
 export(String) var save_section = "CHANGEME"
 
-func get_answer(answer_box) -> String:
+func get_answer_helper(answer_box) -> String:
 	var result = ""
 	for c in answer_box.get_children():
 		if c is Label:
 			result += c.text
 		elif c is LineEdit:
-			result += " " + c.get_number()
+			result += " " + c.get_number() + " "
 		elif c is HBoxContainer: # not an AnswerBox
-			result += get_answer(c)
+			result += get_answer_helper(c)
 		elif c is CanvasLayer:
 			pass
 		else:
-			result += " " + get_answer(c)
+			result += " " + get_answer_helper(c)
 	return result
 
+func get_answer() -> String:
+	return get_answer_helper($Answer).strip_edges()
+
 func is_good_answer() -> bool:
-	var response = get_answer($Answer)
-#	print(response)
-	return answer == response
+	return answer == get_answer()
 
 func mark_question_as_answered() -> void:
 	$CheckBox.pressed = true

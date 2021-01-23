@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://report/questions/WhatIsIaddB1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://report/questions/instructions/WhatIsIaddB2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/font/hack_big/Bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/theme/ReportTheme.tres" type="Theme" id=3]
 [ext_resource path="res://report/ReportGui.gd" type="Script" id=4]
+[ext_resource path="res://report/questions/instructions/WhatIsIaddA1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://dialog/DialogScene.tscn" type="PackedScene" id=7]
 
 [node name="ArtefactReport" type="VBoxContainer"]
@@ -16,6 +17,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+min_question_to_check = 1
 
 [node name="Label" type="Label" parent="."]
 margin_right = 600.0
@@ -29,7 +31,7 @@ align = 1
 wait_time = 0.2
 autostart = true
 
-[node name="WhatIsIaddB1" parent="." instance=ExtResource( 1 )]
+[node name="WhatIsIaddA1" parent="." instance=ExtResource( 5 )]
 margin_top = 85.0
 margin_right = 600.0
 margin_bottom = 118.0

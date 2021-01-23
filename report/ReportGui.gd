@@ -1,5 +1,7 @@
 extends VBoxContainer
 
+export(int, 0, 100) var min_question_to_check = 3
+
 signal completed
 
 func _on_CheckAnswerTimer_timeout() -> void:
@@ -13,7 +15,7 @@ func _on_CheckAnswerTimer_timeout() -> void:
 		completed = false
 		if q.is_good_answer():
 			good_answers.append(q)
-	if good_answers.size() >= 3:
+	if good_answers.size() >= min_question_to_check:
 		for a in good_answers:
 			a.mark_question_as_answered()
 	if completed:
@@ -22,8 +24,10 @@ func _on_CheckAnswerTimer_timeout() -> void:
 
 func _input(event: InputEvent):
 	if OS.is_debug_build() and event.is_action_pressed("cheat"):
+		get_tree().set_input_as_handled()
 		for q in get_children():
 			if not q.is_in_group("questions"):
 				continue
 			if not q.get_node("CheckBox").pressed:
+				print(q.name + ": " + q.get_answer())
 				q.mark_question_as_answered()

@@ -27,6 +27,7 @@ margin_left = 67.0
 margin_top = 160.0
 margin_right = 886.0
 margin_bottom = 920.0
+program_path = "res://levels/programs/inc.json"
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 margin_left = 958.0
@@ -41,8 +42,8 @@ size_flags_horizontal = 3
 
 [node name="CalculatorReport" parent="HBoxContainer/CenterContainer" instance=ExtResource( 4 )]
 margin_left = 177.0
-margin_top = 481.0
+margin_top = 459.0
 margin_right = 777.0
-margin_bottom = 599.0
+margin_bottom = 620.0
 
 [node name="Dialog" parent="." instance=ExtResource( 3 )]
