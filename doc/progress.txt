@@ -1,0 +1,4 @@
+Didn't post any progress for a long time but whatever.
+I'm making a game about reverse-engineering an alien computer, I made the Artefact demo for DD35 which was the tutorial level for this.
+The esoteric computer is working and the player can reverse-engineer its instruction set, later levels will be about reverse-engineering programs.
+[spoiler]If anyone is interested in trading playtests with me, like once every week we test each other's games for an hour or two or something, you can add me on discord: Azertinv 7015[/spoiler]

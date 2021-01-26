@@ -94,6 +94,8 @@ opcodes = {
         "callabs":  Op("000000011", 3, 1),
         "callrel":  Op("00000001T", 2, 1),
         "jump":     Op("TTTvvvvTT", 1, 1),
+        # 1 imm control flow
+        "cjumprel": Op("00001Tvii", 2, 3),
         }
 
 def parse_inst(head, tail, line, offset):
@@ -225,6 +227,11 @@ def compile_final(parsed_code, labels):
             encoding = encoding.replace("yy", get_reg(op))
         if "vvvv" in encoding:
             encoding = encoding.replace("vvvv", get_imm(op, labels)[:4])
+        if "v" in encoding:
+            encoding = encoding.replace("v", get_imm(op, labels)[:1])
+        if "ii" in encoding:
+            encoding = encoding.replace("ii", get_imm(op, labels)[:2])
+
         bytecode.append(encoding)
         if op.size > 1:
             imm = get_imm(op, labels)
@@ -260,6 +267,7 @@ def test():
             '1T0T00000', # shift
             '01T000000', # rcmp
             'T0001T011', # icmp
+            '00001T0TT','T00T00000' # cjumprel
             ]
     test_code = """
     main:
@@ -301,11 +309,13 @@ def test():
         shift b D-1
         rcmp b b
         icmp f 01T
+        cjumprel 0 TT :label
     """
-    compiled_code = compile(test_code)
+    compiled_code = compile(test_code)[0]
     if compiled_code != expected_compiled_code:
         print(compiled_code)
         print("Test failed: compiled code differ from expected compiled code")
+        from IPython import embed
         embed()
         raise Exception("Test failed: compiled code differ from expected compiled code")
     else:

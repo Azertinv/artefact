@@ -148,6 +148,22 @@ impl Calculator {
                     self.rhs = None;
                 }
             },
+            EQUAL if self.last_rhs.is_some() && self.last_op.is_some() => {
+                let op = self.last_op.unwrap();
+                let rhs = self.last_rhs.unwrap();
+                if !(op == Operator::Div && rhs == Byte::ZERO) {
+                    let lhs = match op {
+                        Operator::Add => Byte::add(self.lhs, rhs, Byte::ZERO).0,
+                        Operator::Sub => Byte::sub(self.lhs, rhs, Byte::ZERO).0,
+                        Operator::Mul => Byte::mul(self.lhs, rhs).0,
+                        Operator::Div => Byte::div(self.lhs, rhs).0,
+                    };
+                    self.last_lhs = Some(self.lhs);
+                    self.lhs = lhs;
+                    self.op = None;
+                    self.rhs = None;
+                }
+            },
             EQUAL => {},
             ADD => { self.op = Some(Operator::Add); },
             SUB => { self.op = Some(Operator::Sub); },

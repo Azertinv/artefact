@@ -27,6 +27,7 @@ cpu
         00000000_: no param
 x           0 nop
             intret
+            halt
         00000001_: 1 imm.b/w
 x           1 callabs imm.w
 x           T callrel imm.b

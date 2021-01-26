@@ -1,41 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Test.gd" type="Script" id=1]
-[ext_resource path="res://artefact/Artefact.tscn" type="PackedScene" id=2]
-[ext_resource path="res://calculator/Calculator.tscn" type="PackedScene" id=3]
-[ext_resource path="res://utils/ByteEdit.tscn" type="PackedScene" id=4]
-[ext_resource path="res://utils/WordEdit.tscn" type="PackedScene" id=5]
+[ext_resource path="res://artefact/ArtefactGui.tscn" type="PackedScene" id=2]
 
-[node name="MarginContainer" type="MarginContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = 200
-custom_constants/margin_top = 200
-custom_constants/margin_left = 200
-custom_constants/margin_bottom = 200
+[node name="Node2D" type="Node2D"]
+
+[node name="MarginContainer" type="CenterContainer" parent="."]
+margin_right = 1921.0
+margin_bottom = 1080.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Test" type="Node2D" parent="."]
-
-[node name="Artefact" parent="Test" instance=ExtResource( 2 )]
-
-[node name="Calculator" parent="Test" instance=ExtResource( 3 )]
-
-[node name="HBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 200.0
-margin_top = 200.0
-margin_right = 824.0
-margin_bottom = 400.0
-custom_constants/separation = 0
-
-[node name="ByteEdit" parent="HBoxContainer" instance=ExtResource( 4 )]
-margin_right = 624.0
-margin_bottom = 24.0
-
-[node name="WordEdit" parent="HBoxContainer" instance=ExtResource( 5 )]
-margin_top = 24.0
-margin_right = 624.0
-margin_bottom = 48.0
+[node name="ArtefactGui" parent="MarginContainer" instance=ExtResource( 2 )]
+margin_left = 551.0
+margin_top = 160.0
+margin_right = 1370.0
+margin_bottom = 920.0
+program_path = "res://levels/programs/inc.json"

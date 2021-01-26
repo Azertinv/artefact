@@ -14,4 +14,4 @@ margin_left = 140.0
 margin_right = 255.0
 
 [node name="AnswerBox" parent="Answer" index="1"]
-possible_answers = [ "InstAdd" ]
+possible_answers = [ "InstAdd", "InstSub" ]

@@ -424,7 +424,9 @@ Get to work, I'll check your report when I get back, good luck!</dialog>",
 "slot_amount": 1,
 "text": "<speaker></speaker>
 <portrait></portrait>
-<dialog>You can fill the report by clicking on an empty box and choosing your answer.</dialog>",
+<dialog>You can fill the report by clicking on an empty box and choosing your answer.
+
+Your answers will be confirmed once at least 3 answers are right.</dialog>",
 "type": "line"
 }
 }
