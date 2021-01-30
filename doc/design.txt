@@ -12,6 +12,8 @@ cpu
                 you can't add/sub_fz if the lhs_value is 0
             invalid opcode
             space fault: when cpu access unmapped memory
+            memory fault
+            Halted: Cpu tried to execute an instruction in halted mode
         devices can't fire interrupts when cpu is in interrupt handler
         interrupt handler is responsible of PC on interrupt handler exit
     instruction set
@@ -27,7 +29,7 @@ cpu
         00000000_: no param
 x           0 nop
             intret
-            halt
+x           1 halt
         00000001_: 1 imm.b/w
 x           1 callabs imm.w
 x           T callrel imm.b
@@ -89,6 +91,7 @@ x           1T0 shift reg, inimm
             program pointer
             stack pointer
             flag register: each trit correspond to one comp
+            1st Byte
                 TT diff, T if lesser, 0 if equal, 1 if greater
                 0T greater_or_equal_diff, T if lesser, 1 if greater or equal
                 1T lesser_or_equal_diff, T if lesser or equal, 1 if greater

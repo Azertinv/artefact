@@ -97,12 +97,6 @@ impl Calculator {
         Self::get_op_helper(&self.last_op)
     }
 
-    fn push_to_last(&mut self) {
-        self.last_lhs = Some(self.lhs);
-        self.last_rhs = self.rhs;
-        self.last_op = self.op;
-    }
-
     #[export]
     fn push_button(&mut self, _owner: &Node, button: i64) {
         match button {
@@ -142,7 +136,9 @@ impl Calculator {
                         Operator::Mul => Byte::mul(self.lhs, rhs).0,
                         Operator::Div => Byte::div(self.lhs, rhs).0,
                     };
-                    self.push_to_last();
+                    self.last_lhs = Some(self.lhs);
+                    self.last_rhs = self.rhs;
+                    self.last_op = self.op;
                     self.lhs = lhs;
                     self.op = None;
                     self.rhs = None;
@@ -170,7 +166,9 @@ impl Calculator {
             MUL => { self.op = Some(Operator::Mul); },
             DIV => { self.op = Some(Operator::Div); },
             CLEAR => {
-                self.push_to_last();
+                self.last_lhs = Some(self.lhs);
+                self.last_rhs = self.rhs;
+                self.last_op = self.op;
                 self.lhs = Byte::ZERO;
                 self.op = None;
                 self.rhs = None;

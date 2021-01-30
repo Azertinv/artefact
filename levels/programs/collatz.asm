@@ -1,3 +1,4 @@
+    setw a D13
 loop:
     iadd b D1
     icmp a D1
@@ -15,4 +16,4 @@ even:
     idiv a D2
     jump :loop
 end:
-    jump :end
+    halt

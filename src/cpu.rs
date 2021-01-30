@@ -146,6 +146,10 @@ impl Cpu {
             bt_le_pattern!(0,0,0,0,0,0,0,0,0) => {
                 // println!("nop");
             },
+            bt_le_pattern!(0,0,0,0,0,0,0,0,1) => {
+                // println!("halt");
+                return Err(Interrupt::Halted)
+            },
             bt_le_pattern!(0,0,0,0,0,0,0,1,1) => { // callabs
                 inst_size += Word::BYTE_COUNT;
                 let imm: Word = pc_space.get_word(pc_offset + 1)?;

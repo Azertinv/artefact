@@ -5,6 +5,7 @@ pub enum Interrupt {
     InvalidOpcode = 3,
     SpaceFault = 4, // unmapped space access
     MemoryFault = 5, // word access on space boundary
+    Halted = 6,
 
     BadCode = -1, // not a cpu interrupt, just bad code
     Breakpoint = -2,

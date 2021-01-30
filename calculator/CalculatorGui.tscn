@@ -5,7 +5,6 @@
 [ext_resource path="res://calculator/CalculatorButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/font/ttf/alien.ttf" type="DynamicFontData" id=4]
 
-
 [sub_resource type="DynamicFont" id=1]
 size = 30
 use_mipmaps = true

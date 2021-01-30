@@ -52,6 +52,21 @@ fn test_load() {
     assert_eq!(i64::from(cpu.regs.d), bt_le!(0,0,0,0,0,0,0,1,0));
     assert_eq!(i64::from(cpu.regs.e), bt_le!(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0));
 }
+
+#[test]
+fn test_halt() {
+    let mut cpu = Cpu::new();
+    cpu.init_default();
+    let (pc_space, pc_offset) = cpu.get_mut_space_and_offset(cpu.regs.pc).unwrap();
+    let shellcode = [
+        byte_le!(0,0,0,0,0,0,0,0,1), // addfz c, b
+    ];
+    for (i, b) in shellcode.iter().enumerate() {
+        pc_space.set_byte(pc_offset+(i as isize), *b).unwrap();
+    }
+    assert_eq!(cpu.fetch_decode_execute_one(false), Err(Interrupt::Halted));
+}
+
 #[test]
 fn test_addsub_fz() {
     let mut cpu = Cpu::new();

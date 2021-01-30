@@ -48,6 +48,7 @@ class Op:
 
 opcodes = {
         "nop":      Op("000000000", 1, 0),
+        "halt":     Op("000000001", 1, 0),
         # 1 reg logic
         "not":      Op("0000010xx", 1, 1),
         # 1 reg stack
