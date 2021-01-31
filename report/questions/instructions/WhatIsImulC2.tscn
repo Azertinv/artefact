@@ -2,12 +2,12 @@
 
 [ext_resource path="res://report/questions/Question.tscn" type="PackedScene" id=1]
 
-[node name="WhatIsIaddA1" instance=ExtResource( 1 )]
-answer = "is an instruction that add the value 1 to the A register"
+[node name="WhatIsImulC2" instance=ExtResource( 1 )]
+answer = "is an instruction that multiply the C register by the value 2"
 
 [node name="SymbolLabel" parent="." index="1"]
 margin_right = 136.0
-text = "TTT10000T"
+text = "TT0T10001"
 
 [node name="Answer" parent="." index="2"]
 margin_left = 140.0

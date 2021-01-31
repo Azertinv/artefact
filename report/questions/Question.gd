@@ -7,15 +7,15 @@ func get_answer_helper(answer_box) -> String:
 	var result = ""
 	for c in answer_box.get_children():
 		if c is Label:
-			result += c.text
+			result += c.text + " "
 		elif c is LineEdit:
-			result += " " + c.get_number() + " "
+			result += c.get_number() + " "
 		elif c is HBoxContainer: # not an AnswerBox
 			result += get_answer_helper(c)
 		elif c is CanvasLayer:
 			pass
 		else:
-			result += " " + get_answer_helper(c)
+			result += get_answer_helper(c)
 	return result
 
 func get_answer() -> String:
