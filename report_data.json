@@ -29,62 +29,62 @@
     "WhatIsEqual" : {
         "format": "%a=%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%a=%t is a button that process an operation"
     },
     "WhatIsClear" : {
         "format": "%aC%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%aC%t is a button that clears the screen"
     },
     "WhatIsZero" : {
         "format": "%a0%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%a0%t is a value equal to 0"
     },
     "WhatIsAdd" : {
         "format": "%a+%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%a+%t is the arithmetic operator add"
     },
     "WhatIsSub" : {
         "format": "%a-%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%a-%t is the arithmetic operator substract"
     },
     "WhatIsMul" : {
         "format": "%a*%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%a*%t is the arithmetic operator multiply"
     },
     "WhatIsDiv" : {
         "format": "%a/%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%a/%t is the arithmetic operator divide"
     },
     "WhatIsOne" : {
         "format": "%a1%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%a1%t is a value equal to 1"
     },
     "WhatIsTern" : {
         "format": "%aT%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%aT%t is a value equal to -1"
     },
     "WhatIs5" : {
         "format": "%aTT1%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%aTT1%t is a value equal to 5"
     },
     "WhatIs116" : {
         "format": "%aT0111%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%aT0111%t is a value equal to 116"
     },
     "WhatIs-58" : {
         "format": "%aTT01T%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
-        "answer": ""
+        "answer": "%aTT01T%t is a value equal to -58"
     }
 },
 

@@ -15,3 +15,8 @@ __meta__ = {
 [node name="CheckBox" type="CheckBox" parent="."]
 margin_right = 24.0
 margin_bottom = 40.0
+
+[node name="Answer" type="HBoxContainer" parent="."]
+margin_left = 28.0
+margin_right = 28.0
+margin_bottom = 40.0
