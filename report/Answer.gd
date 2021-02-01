@@ -1,7 +1,6 @@
 extends HBoxContainer
 
 export(String) var answer_id = ""
-export(Dictionary) var saved_properties = {}
 
 signal pressed()
 
@@ -16,18 +15,11 @@ func _ready() -> void:
 		format = data["format"]
 		if data.has("possibilities"):
 			possibilities = data["possibilities"]
-	Helper.init_format(self, format, possibilities)
+	# if the answer has already been initialized (from a PackedScene)
+	# skip the format initialization
+	if get_child_count() == 0:
+		Helper.init_format(self, format, possibilities)
 	set_interactable(interactable)
-	#TODO
-	for nps in saved_properties:
-		var np = NodePath(nps)
-		get_node(np).set_indexed(np.get_concatenated_subnames(), saved_properties[nps])
-
-#TODO
-func update_saved_properties() -> void:
-	for nps in saved_properties:
-		var np = NodePath(nps)
-		saved_properties[nps] = get_node(np).get_indexed(np.get_concatenated_subnames())
 
 func set_interactable(new_value: bool) -> void:
 	var new_filter = MOUSE_FILTER_IGNORE

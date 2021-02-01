@@ -13,7 +13,33 @@ func _ready():
 	answer_format = data["answer"]
 	answer = answer_format.replace("%a", "")
 	answer = answer.replace("%t", "")
-	Helper.init_format($Answer, data["format"], data["possibilities"])
+	if Save.has_section_key("Questions", question_id):
+		var save_data = Save.get_value("Questions", question_id)
+		if save_data["answered"]:
+			mark_question_as_answered()
+		elif save_data["response"]:
+			$Answer.replace_by(save_data["response"].instance())
+	else:
+		Helper.init_format($Answer, data["format"], data["possibilities"])
+		_exit_tree()
+
+func set_owners_on_answers(new_owner: Node, node: Node):
+	if new_owner != node:
+		node.owner = new_owner
+	for c in node.get_children():
+		set_owners_on_answers(new_owner, c)
+
+func _exit_tree():
+	var save_data = {}
+	if $CheckBox.pressed:
+		save_data["answered"] = true
+	else:
+		save_data["answered"] = false
+		set_owners_on_answers($Answer, $Answer)
+		var packed_scene = PackedScene.new()
+		packed_scene.pack($Answer)
+		save_data["response"] = packed_scene
+	Save.set_value("Questions", question_id, save_data)
 
 func get_answer_helper(answer_box) -> String:
 	var result = ""
@@ -38,5 +64,3 @@ func mark_question_as_answered() -> void:
 	$CheckBox.pressed = true
 	$Answer.queue_free()
 	Helper.init_format(self, answer_format, [])
-
-#TODO save system
