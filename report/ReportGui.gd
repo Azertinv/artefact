@@ -1,8 +1,17 @@
 extends VBoxContainer
 
 export(int, 0, 100) var min_question_to_check = 3
+export(Array, String) var questions = []
 
 signal completed
+
+var question_scene = preload("res://report/Question.tscn")
+
+func _ready():
+	for q in questions:
+		var question = question_scene.instance()
+		question.question_id = q
+		add_child(question)
 
 func _on_CheckAnswerTimer_timeout() -> void:
 	var completed = true

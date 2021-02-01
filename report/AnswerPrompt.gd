@@ -4,6 +4,7 @@ var destination = null
 var possible_answers = []
 
 onready var answer_list = $CenterContainer/VBoxContainer
+var answer_scene = preload("res://report/Answer.tscn")
 
 func _ready() -> void:
 	var current_focus_control = answer_list.get_focus_owner()
@@ -11,9 +12,10 @@ func _ready() -> void:
 		current_focus_control.release_focus()
 	var first = true
 	for a in possible_answers:
-		var answer = load("res://report/answers/"+a+".tscn").instance()
+		var answer = answer_scene.instance()
+		answer.answer_id = a
 		answer.interactable = false
-		answer.connect("pressed", self, "_on_Answer_pressed")
+		answer.connect("pressed", self, "_on_Answer_pressed", [answer])
 		if not first:
 			answer_list.add_child(HSeparator.new())
 		else:
@@ -26,7 +28,6 @@ func _input(event: InputEvent):
 		queue_free()
 
 func _on_Answer_pressed(answer) -> void:
-#	print("AnswerPrompt: " + str(answer))
 	if answer.get_parent():
 		answer.get_parent().remove_child(answer)
 	answer.interactable = true

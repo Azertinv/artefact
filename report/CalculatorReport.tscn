@@ -1,20 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://report/questions/operations/WhatIsSub.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/font/hack_big/Bold.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/theme/ReportTheme.tres" type="Theme" id=3]
 [ext_resource path="res://report/ReportGui.gd" type="Script" id=4]
-[ext_resource path="res://report/questions/WhatIsClear.tscn" type="PackedScene" id=5]
-[ext_resource path="res://report/questions/values/WhatIsZero.tscn" type="PackedScene" id=6]
-[ext_resource path="res://report/questions/values/WhatIs116.tscn" type="PackedScene" id=8]
-[ext_resource path="res://report/questions/values/WhatIs5.tscn" type="PackedScene" id=9]
-[ext_resource path="res://report/questions/values/WhatIsTern.tscn" type="PackedScene" id=10]
-[ext_resource path="res://report/questions/operations/WhatIsMul.tscn" type="PackedScene" id=11]
-[ext_resource path="res://report/questions/values/WhatIs-58.tscn" type="PackedScene" id=12]
-[ext_resource path="res://report/questions/operations/WhatIsAdd.tscn" type="PackedScene" id=13]
-[ext_resource path="res://report/questions/values/WhatIsOne.tscn" type="PackedScene" id=14]
-[ext_resource path="res://report/questions/WhatIsEqual.tscn" type="PackedScene" id=15]
-[ext_resource path="res://report/questions/operations/WhatIsDiv.tscn" type="PackedScene" id=16]
 
 [node name="CalculatorReport" type="VBoxContainer"]
 margin_right = 62.0
@@ -26,6 +14,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+questions = [ "WhatIsEqual", "WhatIsClear", "WhatIsZero", "WhatIsAdd", "WhatIsSub", "WhatIsMul", "WhatIsDiv", "WhatIsOne", "WhatIsTern", "WhatIs5", "WhatIs116", "WhatIs-58" ]
 
 [node name="Label" type="Label" parent="."]
 margin_right = 600.0
@@ -38,76 +27,4 @@ align = 1
 [node name="CheckAnswerTimer" type="Timer" parent="."]
 wait_time = 0.2
 autostart = true
-
-[node name="WhatIsEqual" parent="." instance=ExtResource( 15 )]
-margin_top = 85.0
-margin_right = 600.0
-margin_bottom = 118.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsClear" parent="." instance=ExtResource( 5 )]
-margin_top = 128.0
-margin_right = 600.0
-margin_bottom = 161.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsZero" parent="." instance=ExtResource( 6 )]
-margin_top = 171.0
-margin_right = 600.0
-margin_bottom = 204.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsAdd" parent="." instance=ExtResource( 13 )]
-margin_top = 214.0
-margin_right = 600.0
-margin_bottom = 247.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsSub" parent="." instance=ExtResource( 1 )]
-margin_top = 257.0
-margin_right = 600.0
-margin_bottom = 290.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsMul" parent="." instance=ExtResource( 11 )]
-margin_top = 300.0
-margin_right = 600.0
-margin_bottom = 333.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsDiv" parent="." instance=ExtResource( 16 )]
-margin_top = 343.0
-margin_right = 600.0
-margin_bottom = 376.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsOne" parent="." instance=ExtResource( 14 )]
-margin_top = 386.0
-margin_right = 600.0
-margin_bottom = 419.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIsTern" parent="." instance=ExtResource( 10 )]
-margin_top = 429.0
-margin_right = 600.0
-margin_bottom = 462.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIs5" parent="." instance=ExtResource( 9 )]
-margin_top = 472.0
-margin_right = 600.0
-margin_bottom = 505.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIs116" parent="." instance=ExtResource( 8 )]
-margin_top = 515.0
-margin_right = 600.0
-margin_bottom = 548.0
-save_section = "calculator_arithmetic"
-
-[node name="WhatIs-58" parent="." instance=ExtResource( 12 )]
-margin_top = 558.0
-margin_right = 600.0
-margin_bottom = 591.0
-save_section = "calculator_arithmetic"
 [connection signal="timeout" from="CheckAnswerTimer" to="." method="_on_CheckAnswerTimer_timeout"]
