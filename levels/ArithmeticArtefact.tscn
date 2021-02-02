@@ -3,7 +3,7 @@
 [ext_resource path="res://artefact/ArtefactGui.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/ArithmeticArtefact.gd" type="Script" id=2]
 [ext_resource path="res://dialog/DialogScene.tscn" type="PackedScene" id=3]
-[ext_resource path="res://report/ArtefactReport.tscn" type="PackedScene" id=4]
+[ext_resource path="res://report/ReportGui.tscn" type="PackedScene" id=4]
 
 [node name="ArithmeticArtefact" type="MarginContainer"]
 anchor_right = 1.0
@@ -40,10 +40,12 @@ margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
 
-[node name="ArithmeticReport" parent="HBoxContainer/CenterContainer" instance=ExtResource( 4 )]
+[node name="ReportGui" parent="HBoxContainer/CenterContainer" instance=ExtResource( 4 )]
 margin_left = 177.0
-margin_top = 395.0
+margin_top = 502.0
 margin_right = 777.0
-margin_bottom = 685.0
+margin_bottom = 577.0
+min_question_to_check = 1
+filepath = "res://report/data/ArtefactReport.json"
 
 [node name="Dialog" parent="." instance=ExtResource( 3 )]

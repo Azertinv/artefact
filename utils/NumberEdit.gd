@@ -17,6 +17,12 @@ func set_text(new_text: String) -> void:
 	old_text = text
 	caret_position = old_caret_position
 
+func _input(event):
+	if has_focus() and event is InputEventKey:
+		if char(event.unicode) in "0123456789+-":
+			return
+		release_focus()
+
 func _on_NumberEdit_text_changed(new_text: String) -> void:
 	var old_caret_position: int = caret_position
 	if regex.search(new_text):

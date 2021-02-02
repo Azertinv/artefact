@@ -8,7 +8,7 @@ func prompt_for_new_answer() -> void:
 	var answer_prompt = answer_prompt_scene.instance()
 	answer_prompt.destination = self
 	answer_prompt.possible_answers = possible_answers
-	get_tree().get_root().add_child(answer_prompt)
+	add_child(answer_prompt)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

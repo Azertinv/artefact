@@ -1,0 +1,75 @@
+{
+"questions": {
+    "WhatIsIaddA1" : {
+        "format": "%aTTT10000T%t is %b",
+        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
+        "answer": "%aTTT10000T%t is an instruction that add the value 1 to the A register"
+    },
+    "WhatIsIaddB1" : {
+        "format": "%aTTT100000%t is %b",
+        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
+        "answer": "%aTTT100000%t is an instruction that add the value 1 to the B register"
+    },
+    "WhatIsImulC2" : {
+        "format": "%aTT0T10001%t is %b",
+        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
+        "answer": "%aTT0T10001%t is an instruction that multiply the C register by the value 2"
+    },
+    "WhatIsIdivC2" : {
+        "format": "%aT1TT10001%t is %b",
+        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
+        "answer": "%aT1TT10001%t is  an instruction that divide the C register by the value 2"
+    },
+    "WhatIsImulA3" : {
+        "format": "%aTT001000T%t is %b",
+        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
+        "answer": "%aTT001000T%t is an instruction that multiply the A register by the value 3"
+    },
+    "WhatIsHalt": {
+        "format": "%a000000001%t is %b",
+        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
+        "answer": "%aTT001000T%t is "
+    }
+},
+
+"answers" : {
+    "InstAdd": {
+        "format": "an instruction that add %b%t to %b",
+        "possibilities": [
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"],
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"]
+        ]
+    },
+    "InstSub": {
+        "format": "an instruction that substract %b%t from %b",
+        "possibilities": [
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"],
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"]
+        ]
+    },
+    "InstMul": {
+        "format": "an instruction that multiply %b%t by %b",
+        "possibilities": [
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"],
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"]
+        ]
+    },
+    "InstDiv": {
+        "format": "an instruction that divide %b%t by %b",
+        "possibilities": [
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"],
+            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"]
+        ]
+    },
+    "r/PC": {"format" : "the PC register" },
+    "r/SP": {"format" : "the SP register" },
+    "r/FLAGS": {"format" : "the FLAGS register" },
+    "r/A": {"format" : "the A register" },
+    "r/B": {"format" : "the B register" },
+    "r/C": {"format" : "the C register" },
+    "r/D": {"format" : "the D register" },
+    "r/E": {"format" : "the E register" },
+    "r/F": {"format" : "the F register" },
+    "TheValue": {"format": "the value %d"}
+}
+}

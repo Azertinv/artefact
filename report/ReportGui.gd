@@ -1,13 +1,25 @@
 extends VBoxContainer
 
 export(int, 0, 100) var min_question_to_check = 3
-export(Array, String) var questions = []
+export(String, FILE, "*.json") var filepath
 
 signal completed
 
 var question_scene = preload("res://report/Question.tscn")
 
+var questions: Dictionary
+var answers: Dictionary
+
 func _ready():
+	if filepath == "":
+		push_error("ReportGui loaded with no data")
+		return
+	var file = File.new()
+	file.open(filepath, File.READ)
+	var content = JSON.parse(file.get_as_text()).result
+	file.close()
+	questions = content["questions"]
+	answers = content["answers"]
 	for q in questions:
 		var question = question_scene.instance()
 		question.question_id = q

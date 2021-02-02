@@ -57,3 +57,8 @@ func init_format(target, format, possibilities):
 				target.add_child(tmp)
 			TAG_NUMBER_EDIT:
 				target.add_child(number_edit_scene.instance())
+
+func get_parent_report(node: Node) -> Node:
+	while not node.is_in_group("report"):
+		node = node.get_parent()
+	return node

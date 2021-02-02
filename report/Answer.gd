@@ -11,7 +11,7 @@ var interactable = true setget set_interactable
 func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_PASS
 	if answer_id != "":
-		var data = ReportLoader.answers[answer_id]
+		var data = Helper.get_parent_report(self).answers[answer_id]
 		format = data["format"]
 		if data.has("possibilities"):
 			possibilities = data["possibilities"]

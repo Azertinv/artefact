@@ -42,6 +42,7 @@ func _gui_input(event) -> void:
 				for i in range(width):
 					get_trit_edit(i).visible = false
 				number_edit.visible = true
+				number_edit.grab_focus()
 			elif state == STATE_DECIMAL:
 				state = STATE_TRITS
 				for i in range(width):

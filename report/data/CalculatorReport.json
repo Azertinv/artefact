@@ -1,31 +1,5 @@
 {
 "questions": {
-    "WhatIsIaddA1" : {
-        "format": "%aTTT10000T%t is %b",
-        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
-        "answer": ""
-    },
-    "WhatIsIaddB1" : {
-        "format": "%aTTT100000%t is %b",
-        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
-        "answer": ""
-    },
-    "WhatIsImulC2" : {
-        "format": "%aTT0T10001%t is %b",
-        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
-        "answer": ""
-    },
-    "WhatIsIdivC2" : {
-        "format": "%aT1TT10001%t is %b",
-        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
-        "answer": ""
-    },
-    "WhatIsImulA3" : {
-        "format": "%aTT001000T%t is %b",
-        "possibilities": [["InstAdd", "InstSub", "InstMul", "InstDiv"]],
-        "answer": ""
-    },
-
     "WhatIsEqual" : {
         "format": "%a=%t is %b",
         "possibilities": [["ArithmeticOp", "LogicOp", "Value", "ClearButton", "EqualButton"]],
@@ -89,45 +63,6 @@
 },
 
 "answers" : {
-    "InstAdd": {
-        "format": "an instruction that add %b%t to %b",
-        "possibilities": [
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"],
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"]
-        ]
-    },
-    "InstSub": {
-        "format": "an instruction that substract %b%t from %b",
-        "possibilities": [
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"],
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"]
-        ]
-    },
-    "InstMul": {
-        "format": "an instruction that multiply %b%t by %b",
-        "possibilities": [
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"],
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"]
-        ]
-    },
-    "InstDiv": {
-        "format": "an instruction that divide %b%t by %b",
-        "possibilities": [
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F"],
-            ["r/PC", "r/SP", "r/FLAGS", "r/A", "r/B", "r/C", "r/D", "r/E", "r/F", "TheValue"]
-        ]
-    },
-    "r/PC": {"format" : "the PC register" },
-    "r/SP": {"format" : "the SP register" },
-    "r/FLAGS": {"format" : "the FLAGS register" },
-    "r/A": {"format" : "the A register" },
-    "r/B": {"format" : "the B register" },
-    "r/C": {"format" : "the C register" },
-    "r/D": {"format" : "the D register" },
-    "r/E": {"format" : "the E register" },
-    "r/F": {"format" : "the F register" },
-    "TheValue": {"format": "the value %d"},
-
     "Value": {"format": "a value equal to %d"},
     "ClearButton": {"format": "a button that clears the screen"},
     "EqualButton": {"format": "a button that process an operation"},

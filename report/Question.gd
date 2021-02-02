@@ -9,7 +9,7 @@ func _ready():
 	if question_id == "":
 		push_error("NewQuestion spawned with no id")
 		return
-	var data = ReportLoader.questions[question_id]
+	var data = Helper.get_parent_report(self).questions[question_id]
 	answer_format = data["answer"]
 	answer = answer_format.replace("%a", "")
 	answer = answer.replace("%t", "")
@@ -24,6 +24,8 @@ func _ready():
 		_exit_tree()
 
 func set_owners_on_answers(new_owner: Node, node: Node):
+	if node is CanvasLayer:
+		return
 	if new_owner != node:
 		node.owner = new_owner
 	for c in node.get_children():
